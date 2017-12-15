@@ -1,0 +1,11 @@
+built/
+node_modules/
+reports/
+src/
+.gitignore
+config.json
+config.template.json
+gulpfile.js
+tsconfig.json
+tsconfig.package.json
+tslint.json

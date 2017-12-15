@@ -1,0 +1,58 @@
+{
+  "name": "swagger-specification-ts",
+  "version": "1.0.0",
+  "description": "Generate and serve swagger.json",
+  "main": "built/main.js",
+  "scripts": {
+    "package": "echo \"Packaging...\" && node node_modules/rimraf/bin.js dist && node node_modules/typescript/bin/tsc -p tsconfig.package.json",
+    "build": "echo \"Building...\" && node node_modules/gulp/bin/gulp.js build",
+    "test": "echo \"Testing...\" && node node_modules/gulp/bin/gulp.js test",
+    "test:coverage": "echo \"Testing coverage...\" && node node_modules/gulp/bin/gulp.js test:coverage",
+    "tslint": "echo \"TsLint...\" && node node_modules/gulp/bin/gulp.js tslint",
+    "dev": "echo \"Developing...\" && node node_modules/gulp/bin/gulp.js dev",
+    "start": "echo \"Starting...\" && npm run build && node built/main.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/olivierlsc/swagger-specification-ts.git"
+  },
+  "author": "",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/olivierlsc/swagger-specification-ts/issues"
+  },
+  "homepage": "https://github.com/olivierlsc/swagger-specification-ts#readme",
+  "dependencies": {
+    "@types/body-parser": "^1.16.8",
+    "@types/compression": "0.0.35",
+    "@types/helmet": "0.0.37",
+    "body-parser": "^1.18.2",
+    "compression": "^1.7.1",
+    "helmet": "^3.9.0",
+    "inversify": "^4.5.1",
+    "inversify-express-utils": "^4.2.2",
+    "reflect-metadata": "^0.1.10"
+  },
+  "devDependencies": {
+    "@types/chai": "^4.0.10",
+    "@types/mocha": "^2.2.44",
+    "@types/sinon": "^4.1.2",
+    "chai": "^4.1.2",
+    "gulp": "^3.9.1",
+    "gulp-clean": "^0.3.2",
+    "gulp-istanbul": "^1.1.2",
+    "gulp-jenkins-reporter": "^1.0.2",
+    "gulp-mocha": "^4.3.1",
+    "gulp-nodemon": "^2.2.1",
+    "gulp-sourcemaps": "^2.6.1",
+    "gulp-tslint": "^8.1.2",
+    "gulp-tslint-jenkins-reporter": "^1.1.0",
+    "gulp-typescript": "^3.2.3",
+    "mocha": "^4.0.1",
+    "mocha-jenkins-reporter": "^0.3.10",
+    "rimraf": "^2.6.2",
+    "sinon": "^4.1.2",
+    "tslint": "^5.8.0",
+    "typescript": "^2.6.2"
+  }
+}
