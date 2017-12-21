@@ -60,6 +60,6 @@
     "built"
   ],
   "include": [
-    "src/lib/swagger-specification/**/*"
+    "src/lib/swagger-specification/**/*.ts"
   ]
 }
