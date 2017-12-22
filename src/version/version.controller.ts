@@ -1,8 +1,9 @@
 import * as express from "express";
 import { injectable } from "inversify";
 import { controller, httpGet, interfaces } from "inversify-express-utils";
-import { ApiPath, ApiGet } from "../lib/swagger-specification";
+import { ApiPath, ApiGet } from "../lib/swagger-specification/index";
 const pkg = require( "../../package.json" );
+import "reflect-metadata";
 
 @ApiPath( "/" )
 @controller( "/" )

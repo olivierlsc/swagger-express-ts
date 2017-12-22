@@ -3,7 +3,7 @@ export interface IApiGetArgs {
     summary: string;
 }
 
-export function ApiGet( args: IApiGetArgs ) {
+export function ApiGet( args: IApiGetArgs ) : MethodDecorator {
     console.log( args );
     return function ( target: any, propertyKey: string, descriptor: PropertyDescriptor ) {
         console.log( target );

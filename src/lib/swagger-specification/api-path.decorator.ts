@@ -1,8 +1,6 @@
-export function ApiPath( path: string ) {
+export function ApiPath( path: string ): ClassDecorator {
     console.log( path );
-    return function ( target: any, propertyKey: string, descriptor: PropertyDescriptor ) {
+    return function ( target: any ) {
         console.log( target );
-        console.log( propertyKey );
-        console.log( descriptor );
-    };
+    }
 }
