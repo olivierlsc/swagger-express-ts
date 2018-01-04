@@ -3,10 +3,11 @@ import * as express from "express";
 import "reflect-metadata";
 import { Container } from "inversify";
 import { interfaces, InversifyExpressServer, TYPE } from "inversify-express-utils";
-const config = require( "../config.json" );
 import { VersionController } from "./version/version.controller";
 import * as compression from "compression";
 import * as helmet from "helmet";
+import * as swagger from "./lib/swagger-specification";
+const config = require( "../config.json" );
 
 // set up container
 const container = new Container();
@@ -27,6 +28,7 @@ server.setConfig( ( app: any ) => {
     app.use( bodyParser.json() );
     app.use( compression() );
     app.use( helmet() );
+    app.use( swagger.express() );
 } );
 
 server.setErrorConfig( ( app: any ) => {

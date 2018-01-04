@@ -1,20 +1,20 @@
-export interface ILicenseData {
+export interface ILicense {
     name: string;
     url?: string;
 }
 
-export interface IContactData {
+export interface IContact {
     name?: string;
     url?: string;
     email?: string;
 }
 
-export interface IInfoData {
+export interface IInfo {
     title: string;
     description?: string;
     termsOfService?: string;
-    contact: IContactData;
-    license: ILicenseData;
+    contact: IContact;
+    license: ILicense;
     version: string;
 }
 
@@ -53,10 +53,10 @@ export interface IOperation {
     parameters?: [IParameter];
 }
 
-export interface ISwaggerData {
+export interface ISwagger {
     basePath?: string;
     openapi: string;
-    info: IInfoData;
+    info: IInfo;
     servers?: [IServer];
     paths: any;
 }
