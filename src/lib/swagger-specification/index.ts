@@ -1,4 +1,4 @@
 export { ApiPath } from "./api-path.decorator";
 export { IApiGetArgs, ApiGet } from "./api-get.decorator";
-export { ISwaggerOptions } from "./i-swagger-options";
+export { ISwaggerExpressOptions } from "./i-swagger-express-options";
 export { express } from "./express.configurator";

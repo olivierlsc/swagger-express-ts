@@ -28,7 +28,9 @@ server.setConfig( ( app: any ) => {
     app.use( bodyParser.json() );
     app.use( compression() );
     app.use( helmet() );
-    app.use( swagger.express() );
+    app.use( swagger.express({
+        path: "/docs"
+    }) );
 } );
 
 server.setErrorConfig( ( app: any ) => {

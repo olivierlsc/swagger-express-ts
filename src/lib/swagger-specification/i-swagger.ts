@@ -59,4 +59,5 @@ export interface ISwagger {
     info: IInfo;
     servers?: [IServer];
     paths: any;
+    host?: string;
 }
