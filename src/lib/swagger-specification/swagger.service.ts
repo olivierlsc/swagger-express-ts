@@ -2,25 +2,29 @@ import { ISwagger, IContact, ILicense, IInfo, ITag } from "./i-swagger";
 import { IApiPathArgs } from "./api-path.decorator";
 import { IApiGetArgs } from "../../../dist/api-get.decorator";
 import { IApiPostArgs } from "./api-post.decorator";
+import { ApiProduceConstant } from "./api-produce.constant";
+import * as _ from "lodash";
 
-interface IPath {
+interface IAction {
     path?: string;
     description: string;
     summary: string;
     tags: string[];
     operationId: string | symbol;
+    produces: string[]
 }
 
-interface IPaths {
-    get?: IPath;
-    post?: IPath;
-    put?: IPath;
-    delete?: IPath;
+interface IPath {
+    path: string;
+    get?: IAction;
+    post?: IAction;
+    put?: IAction;
+    delete?: IAction;
 }
 
 interface IController {
     path?: string;
-    paths?: IPaths;
+    paths?: {[key: string]: IPath}[];
     name?: string;
     description?: string;
 }
@@ -44,14 +48,14 @@ export class SwaggerService {
     };
 
     public static getData(): ISwagger {
-        let data: ISwagger = SwaggerService.data;
+        let data: ISwagger = _.cloneDeep( SwaggerService.data );
         for ( let controllerIndex in SwaggerService.controllerMap ) {
-            let controller = SwaggerService.controllerMap[ controllerIndex ];
+            let controller: IController = SwaggerService.controllerMap[ controllerIndex ];
             data.paths[ controller.path ] = controller.paths;
             for ( let pathsIndex in data.paths ) {
-                let paths = data.paths[ pathsIndex ];
+                let paths: IPaths | any = data.paths[ pathsIndex ];
                 for ( let pathIndex in paths ) {
-                    let path = paths[ pathIndex ];
+                    let path: IPath = paths[ pathIndex ];
                     path.tags = [ controller.name ];
                 }
             }
@@ -81,7 +85,7 @@ export class SwaggerService {
             description : args.description
         };
         for ( let index in SwaggerService.controllerMap ) {
-            let controller = SwaggerService.controllerMap[ index ];
+            let controller: IController = SwaggerService.controllerMap[ index ];
             if ( index === target.name ) {
                 currentController = controller;
                 currentController.path = args.path;
@@ -102,7 +106,7 @@ export class SwaggerService {
 
     private static addAction( action: string, args: any = {}, target: any, propertyKey: string | symbol ): void {
         let currentController: IController = {
-            paths : <IPaths>{}
+            paths : []
         };
         for ( let index in SwaggerService.controllerMap ) {
             let controller = SwaggerService.controllerMap[ index ];
@@ -110,15 +114,40 @@ export class SwaggerService {
                 currentController = controller;
             }
         }
-        if ( action === "get" ) {
-            currentController.paths.get = args;
-            currentController.paths.get.operationId = propertyKey;
+
+        if ( args.path && args.path.length > 0 ) {
+            currentController.paths.push();
+        } else {
+
         }
-        if ( action === "post" ) {
-            currentController.paths.post = args;
-            currentController.paths.post.operationId = propertyKey;
+
+        if ( "get" === action ) {
+            currentController.paths.get = SwaggerService.buildAction( args, target, propertyKey );
         }
+
+        if ( "post" === action ) {
+            currentController.paths.post = SwaggerService.buildAction( args, target, propertyKey );
+        }
+
         SwaggerService.controllerMap[ target.constructor.name ] = currentController;
+    }
+
+    private static buildAction( args: any = {}, target: any, propertyKey: string | symbol ): IPath {
+        let path: IPath = {
+            description : args.description,
+            summary : args.summary,
+            operationId : propertyKey,
+            produces : [ ApiProduceConstant.JSON ],
+            tags : []
+        };
+        if ( args.produces && args.produces.length > 0 ) {
+            path.produces = [];
+            for ( let produceIndex in args.produces ) {
+                let produce: string = args.produces[ produceIndex ];
+                path.produces.push( produce );
+            }
+        }
+        return path;
     }
 
 }

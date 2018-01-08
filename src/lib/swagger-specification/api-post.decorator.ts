@@ -1,7 +1,7 @@
 import { SwaggerService } from "./swagger.service";
-export interface IApiPostArgs {
-    description: string;
-    summary: string;
+import { IApiActionArgsBase } from "./i-api-action-args.base";
+export interface IApiPostArgs extends IApiActionArgsBase {
+
 }
 
 export function ApiPost( args: IApiPostArgs ): MethodDecorator {

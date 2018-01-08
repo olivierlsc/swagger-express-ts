@@ -7,8 +7,8 @@ const pkg = require( "../../package.json" );
 
 @ApiPath( {
     path : "/version",
-    name: "Version",
-    description: "Everything about version"
+    name : "Version",
+    description : "Everything about version"
 } )
 @controller( "/version" )
 @injectable()

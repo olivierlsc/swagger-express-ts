@@ -26,11 +26,13 @@
     "@types/body-parser": "^1.16.8",
     "@types/compression": "0.0.35",
     "@types/helmet": "0.0.37",
+    "@types/lodash": "^4.14.92",
     "body-parser": "^1.18.2",
     "compression": "^1.7.1",
     "helmet": "^3.9.0",
     "inversify": "^4.5.1",
     "inversify-express-utils": "^4.2.2",
+    "lodash": "^4.17.4",
     "reflect-metadata": "^0.1.10",
     "swagger-ui-dist": "^3.6.1"
   },
