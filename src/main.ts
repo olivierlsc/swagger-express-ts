@@ -21,6 +21,8 @@ container.bind<interfaces.Controller>( TYPE.Controller )
 const server = new InversifyExpressServer( container );
 
 server.setConfig( ( app: any ) => {
+    app.use('/api-docs/swagger', express.static('swagger'));
+    app.use('/api-docs/swagger/assets', express.static('node_modules/swagger-ui-dist'));
     // add body parser
     app.use( bodyParser.urlencoded( {
         extended : true,
@@ -28,9 +30,21 @@ server.setConfig( ( app: any ) => {
     app.use( bodyParser.json() );
     app.use( compression() );
     app.use( helmet() );
-    app.use( swagger.express({
-        path: "/docs"
-    }) );
+    app.use( swagger.express( {
+        specification : {
+            basePath : "/v2",
+            info: {
+                title: "Mon api",
+                version: "1.0",
+                contact: {
+
+                },
+                license: {
+                    name: ""
+                }
+            }
+        }
+    } ) );
 } );
 
 server.setErrorConfig( ( app: any ) => {

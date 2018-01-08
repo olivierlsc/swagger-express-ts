@@ -1,11 +1,11 @@
 import { SwaggerService } from "./swagger.service";
-export interface IApiGetArgs {
+export interface IApiPostArgs {
     description: string;
     summary: string;
 }
 
-export function ApiGet( args: IApiGetArgs ): MethodDecorator {
+export function ApiPost( args: IApiPostArgs ): MethodDecorator {
     return function ( target: any, propertyKey: string | symbol, descriptor: PropertyDescriptor ) {
-        SwaggerService.addGetAction( args, target );
+        SwaggerService.addPostAction( args, target );
     };
 }
