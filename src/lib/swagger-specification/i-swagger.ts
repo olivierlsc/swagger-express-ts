@@ -53,12 +53,18 @@ export interface IOperation {
     parameters?: [IParameter];
 }
 
+export interface ITag {
+    name: string;
+    description: string;
+}
+
 export interface ISwagger {
     basePath?: string;
     openapi: string;
     info: IInfo;
     servers?: [IServer];
-    paths: any;
+    paths?: any;
     host?: string;
     swagger: string;
+    tags?: ITag[]
 }

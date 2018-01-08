@@ -1,6 +1,11 @@
 import { SwaggerService } from "./swagger.service";
-export function ApiPath( path: string ): ClassDecorator {
+export interface IApiPathArgs {
+    path: string;
+    name: string;
+    description: string;
+}
+export function ApiPath( args: IApiPathArgs ): ClassDecorator {
     return function ( target: any ) {
-        SwaggerService.addPath( path, target );
+        SwaggerService.addPath( args, target );
     }
 }

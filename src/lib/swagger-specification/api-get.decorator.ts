@@ -6,6 +6,6 @@ export interface IApiGetArgs {
 
 export function ApiGet( args: IApiGetArgs ): MethodDecorator {
     return function ( target: any, propertyKey: string | symbol, descriptor: PropertyDescriptor ) {
-        SwaggerService.addGetAction( args, target );
+        SwaggerService.addGetAction( args, target, propertyKey );
     };
 }
