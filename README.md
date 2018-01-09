@@ -39,6 +39,7 @@ const server = new InversifyExpressServer( container );
 
 server.setConfig( ( app: any ) => {
     app.use( swagger.express( {
+        path: "/api-docs/swagger.json", // Optional. Default is "/api-docs/swagger.json"
         definition : {
             basePath : "/", // Optional. Default is "/"
             info : {
@@ -103,6 +104,62 @@ export class VersionController implements interfaces.Controller {
     }
 }
 
+```
+
+### Step 3: Decorate your controllers
+
+Start your server and test on url : /api-docs/swagger.json
+
+```json
+{
+	"basePath": "/",
+	"openapi": "",
+	"info": {
+		"title": "Mon api",
+		"version": "1.0",
+		"contact": {},
+		"license": {
+			"name": ""
+		}
+	},
+	"paths": {
+		"/version": {
+			"get": {
+				"description": "Get version object",
+				"summary": "Get Version",
+				"operationId": "getVersions",
+				"produces": [
+					"application/json"
+				],
+				"consumes": [
+					"application/json"
+				],
+				"tags": [
+					"Version"
+				]
+			}
+		}
+	},
+	"tags": [
+		{
+			"name": "Version",
+			"description": "Everything about version"
+		}
+	],
+	"schemes": [
+		"http",
+        "https"
+	],
+	"produces": [
+		"application/json",
+		"application/xml"
+	],
+	"consumes": [
+		"application/json",
+		"application/xml"
+	],
+	"swagger": "2.0"
+}
 ```
 
 ## For any questions, suggestions, or feature requests
