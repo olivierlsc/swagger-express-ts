@@ -1,41 +1,41 @@
-export interface ILicense {
+export interface ISwaggerLicense {
     name: string;
     url?: string;
 }
 
-export interface IContact {
+export interface ISwaggerContact {
     name?: string;
     url?: string;
     email?: string;
 }
 
-export interface IInfo {
+export interface ISwaggerInfo {
     title: string;
     description?: string;
     termsOfService?: string;
-    contact: IContact;
-    license: ILicense;
+    contact: ISwaggerContact;
+    license: ISwaggerLicense;
     version: string;
 }
 
-export interface IVariableServer {
+export interface ISwaggerVariableServer {
     enum?: [string];
     default: string;
     description?: string;
 }
 
-export interface IServer {
+export interface ISwaggerServer {
     url: string;
     description?: string;
-    variables: [IVariableServer]; //TODO : Fix it
+    variables: [ISwaggerVariableServer]; //TODO : Fix it
 }
 
-export interface IExternalDocs {
+export interface ISwaggerExternalDocs {
     description?: string;
     url: string;
 }
 
-export interface IParameter {
+export interface ISwaggerParameter {
     name: string;
     in: string;
     description?: string;
@@ -44,27 +44,43 @@ export interface IParameter {
     allowEmptyValue?: boolean;
 }
 
-export interface IOperation {
+export interface ISwaggerOperation {
     tags?: [string];
     summary?: string;
     description?: string;
-    externalDocs: IExternalDocs;
+    externalDocs: ISwaggerExternalDocs;
     operationId?: string;
-    parameters?: [IParameter];
+    parameters?: [ISwaggerParameter];
 }
 
-export interface ITag {
+export interface ISwaggerTag {
     name: string;
     description: string;
+}
+
+export interface ISwaggerAction {
+    path?: string;
+    description: string;
+    summary: string;
+    tags: string[];
+    operationId: string | symbol;
+    produces: string[]
+}
+
+export interface ISwaggerPath {
+    get?: ISwaggerAction;
+    post?: ISwaggerAction;
+    put?: ISwaggerAction;
+    delete?: ISwaggerAction;
 }
 
 export interface ISwagger {
     basePath?: string;
     openapi: string;
-    info: IInfo;
-    servers?: [IServer];
-    paths?: any;
+    info: ISwaggerInfo;
+    servers?: [ISwaggerServer];
+    paths?: {[key: string]: ISwaggerPath};
     host?: string;
     swagger: string;
-    tags?: ITag[]
+    tags?: ISwaggerTag[]
 }
