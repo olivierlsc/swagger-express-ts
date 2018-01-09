@@ -1,2 +1,2 @@
-# swagger-specification-ts
+# swagger-express-ts
 Generate and serve swagger.json

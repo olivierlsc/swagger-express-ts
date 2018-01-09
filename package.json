@@ -1,5 +1,5 @@
 {
-  "name": "swagger-specification-ts",
+  "name": "swagger-express-ts",
   "version": "1.0.0",
   "description": "Generate and serve swagger.json",
   "main": "built/main.js",
