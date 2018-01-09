@@ -37,7 +37,7 @@ container.bind<interfaces.Controller>( TYPE.Controller )
 // create server
 const server = new InversifyExpressServer( container );
 
-// congigure server
+// configure server
 server.setConfig( ( app: any ) => {
     app.use( swagger.express( {
         path: "/api-docs/swagger.json", // Optional. Default is "/api-docs/swagger.json"
