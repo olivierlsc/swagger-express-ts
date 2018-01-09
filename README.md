@@ -106,7 +106,7 @@ export class VersionController implements interfaces.Controller {
 
 ```
 
-### Step 3: Decorate your controllers
+### Step 3: Test
 
 Start your server and test on url : /api-docs/swagger.json
 
