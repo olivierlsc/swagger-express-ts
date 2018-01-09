@@ -19,6 +19,9 @@ export function express( options?: ISwaggerExpressOptions ): Router {
             if ( definition.info ) {
                 SwaggerService.setInfo( definition.info );
             }
+            if(definition.schemes){
+                SwaggerService.setSchemes(definition.schemes);
+            }
         }
     }
     SwaggerService.buildSwagger();

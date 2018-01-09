@@ -82,5 +82,6 @@ export interface ISwagger {
     paths?: {[key: string]: ISwaggerPath};
     host?: string;
     swagger: string;
-    tags?: ISwaggerTag[]
+    tags?: ISwaggerTag[];
+    schemes: string[];
 }

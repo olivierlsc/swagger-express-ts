@@ -2,7 +2,7 @@ import { ISwagger, ISwaggerContact, ISwaggerLicense, ISwaggerInfo, ISwaggerTag, 
 import { IApiPathArgs } from "./api-path.decorator";
 import { IApiGetArgs } from "../../../dist/api-get.decorator";
 import { IApiPostArgs } from "./api-post.decorator";
-import { ApiProduceConstant } from "./api-produce.constant";
+import { SwaggerDefinition } from "./swagger.definition";
 import * as _ from "lodash";
 
 interface IAction {
@@ -44,6 +44,7 @@ export class SwaggerService {
         },
         paths : {},
         tags : [],
+        schemes : [ SwaggerDefinition.Scheme.HTTP ],
         swagger : "2.0"
     };
 
@@ -61,6 +62,10 @@ export class SwaggerService {
 
     public static setInfo( info: ISwaggerInfo ): void {
         SwaggerService.data.info = info;
+    }
+
+    public static setSchemes( schemes: string[] ): void {
+        SwaggerService.data.schemes = schemes;
     }
 
     public static addPath( args: IApiPathArgs, target: any ): void {
@@ -131,7 +136,7 @@ export class SwaggerService {
             description : args.description,
             summary : args.summary,
             operationId : propertyKey,
-            produces : [ ApiProduceConstant.JSON ],
+            produces : [ SwaggerDefinition.Produce.JSON ],
             tags : []
         };
         if ( args.produces && args.produces.length > 0 ) {
