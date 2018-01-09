@@ -148,7 +148,7 @@ Start your server and test on url : /api-docs/swagger.json
 	],
 	"schemes": [
 		"http",
-        "https"
+        	"https"
 	],
 	"produces": [
 		"application/json",
