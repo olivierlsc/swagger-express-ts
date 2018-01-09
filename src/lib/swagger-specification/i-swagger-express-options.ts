@@ -1,5 +1,5 @@
 import { ISwaggerInfo } from "./i-swagger";
-export interface ISwaggerExpressOptionsSpecification {
+export interface ISwaggerExpressOptionsDefinition {
     /**
      *  Base path. Default is "/".
      */
@@ -8,6 +8,12 @@ export interface ISwaggerExpressOptionsSpecification {
     openapi?: string;
 
     info?: ISwaggerInfo;
+
+    consumes?: string[];
+
+    produces?: string[];
+
+    schemes?: string[];
 }
 
 export interface ISwaggerExpressOptions {
@@ -19,5 +25,5 @@ export interface ISwaggerExpressOptions {
     /**
      * Swagger specification.
      */
-    specification?: ISwaggerExpressOptionsSpecification;
+    definition?: ISwaggerExpressOptionsDefinition;
 }

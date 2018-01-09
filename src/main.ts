@@ -7,6 +7,7 @@ import { VersionController } from "./version/version.controller";
 import * as compression from "compression";
 import * as helmet from "helmet";
 import * as swagger from "./lib/swagger-specification";
+import { BooksController } from "./books/books.controller";
 const config = require( "../config.json" );
 
 // set up container
@@ -15,14 +16,16 @@ const container = new Container();
 // note that you *must* bind your controllers to Controller
 container.bind<interfaces.Controller>( TYPE.Controller )
     .to( VersionController ).whenTargetNamed( VersionController.TARGET_NAME );
+container.bind<interfaces.Controller>( TYPE.Controller )
+    .to( BooksController ).whenTargetNamed( BooksController.TARGET_NAME );
 // container.bind<FooService>('FooService').to(FooService);
 
 // create server
 const server = new InversifyExpressServer( container );
 
 server.setConfig( ( app: any ) => {
-    app.use('/api-docs/swagger', express.static('swagger'));
-    app.use('/api-docs/swagger/assets', express.static('node_modules/swagger-ui-dist'));
+    app.use( '/api-docs/swagger', express.static( 'swagger' ) );
+    app.use( '/api-docs/swagger/assets', express.static( 'node_modules/swagger-ui-dist' ) );
     // add body parser
     app.use( bodyParser.urlencoded( {
         extended : true,
@@ -31,16 +34,14 @@ server.setConfig( ( app: any ) => {
     app.use( compression() );
     app.use( helmet() );
     app.use( swagger.express( {
-        specification : {
+        definition : {
             basePath : "/v2",
-            info: {
-                title: "Mon api",
-                version: "1.0",
-                contact: {
-
-                },
-                license: {
-                    name: ""
+            info : {
+                title : "Mon api",
+                version : "1.0",
+                contact : {},
+                license : {
+                    name : ""
                 }
             }
         }

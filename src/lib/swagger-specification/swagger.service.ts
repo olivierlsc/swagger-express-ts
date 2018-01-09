@@ -48,31 +48,7 @@ export class SwaggerService {
     };
 
     public static getData(): ISwagger {
-        let data: ISwagger = _.cloneDeep( SwaggerService.data );
-        for ( let controllerIndex in SwaggerService.controllerMap ) {
-            let controller: IController = SwaggerService.controllerMap[ controllerIndex ];
-            for ( let pathIndex in controller.paths ) {
-                let path: IPath = controller.paths[ pathIndex ];
-                let swaggerPath: ISwaggerPath = {};
-                if ( path.get ) {
-                    swaggerPath.get = path.get;
-                    swaggerPath.get.tags = [ controller.name ];
-                }
-                if ( path.post ) {
-                    swaggerPath.post = path.post;
-                    swaggerPath.post.tags = [ controller.name ];
-                }
-                if ( path.path && path.path.length > 0 ) {
-                    data.paths[ controller.path.concat( path.path ) ] = swaggerPath;
-                } else {
-                    data.paths[ controller.path ] = swaggerPath;
-                }
-            }
-            data.tags.push( <ISwaggerTag>{
-                name : controller.name, description : controller.description
-            } );
-        }
-        return data;
+        return _.cloneDeep( SwaggerService.data );
     }
 
     public static setBasePath( basePath: string ): void {
@@ -166,6 +142,34 @@ export class SwaggerService {
             }
         }
         return action;
+    }
+
+    public static buildSwagger(): void {
+        let data: ISwagger = _.cloneDeep( SwaggerService.data );
+        for ( let controllerIndex in SwaggerService.controllerMap ) {
+            let controller: IController = SwaggerService.controllerMap[ controllerIndex ];
+            for ( let pathIndex in controller.paths ) {
+                let path: IPath = controller.paths[ pathIndex ];
+                let swaggerPath: ISwaggerPath = {};
+                if ( path.get ) {
+                    swaggerPath.get = path.get;
+                    swaggerPath.get.tags = [ controller.name ];
+                }
+                if ( path.post ) {
+                    swaggerPath.post = path.post;
+                    swaggerPath.post.tags = [ controller.name ];
+                }
+                if ( path.path && path.path.length > 0 ) {
+                    data.paths[ controller.path.concat( path.path ) ] = swaggerPath;
+                } else {
+                    data.paths[ controller.path ] = swaggerPath;
+                }
+            }
+            data.tags.push( <ISwaggerTag>{
+                name : controller.name, description : controller.description
+            } );
+        }
+        SwaggerService.data = data;
     }
 
 }

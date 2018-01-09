@@ -29,7 +29,7 @@ export class VersionController implements interfaces.Controller {
     }
 
     @ApiPost( {
-        path: "/toto",
+        path: "/{idVersion}",
         description : "Post Version object that need to be  2222",
         summary : "Post Add a new Version"
     } )
