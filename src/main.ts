@@ -46,7 +46,8 @@ server.setConfig( ( app: any ) => {
                 }
             },
             schemes : [ SwaggerDefinition.Scheme.HTTPS, SwaggerDefinition.Scheme.HTTP ],
-            produces : [ SwaggerDefinition.Produce.JSON, SwaggerDefinition.Produce.XML ]
+            produces : [ SwaggerDefinition.Produce.JSON, SwaggerDefinition.Produce.XML ],
+            consumes : [ SwaggerDefinition.Consume.JSON, SwaggerDefinition.Consume.XML ]
         }
     } ) );
 } );

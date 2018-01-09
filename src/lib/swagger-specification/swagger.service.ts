@@ -11,7 +11,8 @@ interface IAction {
     summary: string;
     tags: string[];
     operationId: string | symbol;
-    produces: string[]
+    produces: string[];
+    consumes: string[];
 }
 
 interface IPath {
@@ -46,6 +47,7 @@ export class SwaggerService {
         tags : [],
         schemes : [ SwaggerDefinition.Scheme.HTTP ],
         produces : [ SwaggerDefinition.Produce.JSON ],
+        consumes : [ SwaggerDefinition.Produce.JSON ],
         swagger : "2.0"
     };
 
@@ -71,6 +73,10 @@ export class SwaggerService {
 
     public static setProduces( produces: string[] ): void {
         SwaggerService.data.produces = produces;
+    }
+
+    public static setConsumes( consumes: string[] ): void {
+        SwaggerService.data.consumes = consumes;
     }
 
     public static addPath( args: IApiPathArgs, target: any ): void {
@@ -142,14 +148,15 @@ export class SwaggerService {
             summary : args.summary,
             operationId : propertyKey,
             produces : [ SwaggerDefinition.Produce.JSON ],
+            consumes : [ SwaggerDefinition.Consume.JSON ],
             tags : []
         };
         if ( args.produces && args.produces.length > 0 ) {
-            action.produces = [];
-            for ( let produceIndex in args.produces ) {
-                let produce: string = args.produces[ produceIndex ];
-                action.produces.push( produce );
-            }
+            action.produces = args.produces;
+        }
+
+        if ( args.consumes && args.consumes.length > 0 ) {
+            action.consumes = args.consumes;
         }
         return action;
     }

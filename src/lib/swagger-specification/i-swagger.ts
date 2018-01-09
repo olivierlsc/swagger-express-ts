@@ -85,4 +85,5 @@ export interface ISwagger {
     tags?: ISwaggerTag[];
     schemes: string[];
     produces: string[];
+    consumes: string[];
 }

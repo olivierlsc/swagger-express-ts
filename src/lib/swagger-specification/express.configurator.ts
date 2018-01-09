@@ -25,6 +25,9 @@ export function express( options?: ISwaggerExpressOptions ): Router {
             if ( definition.produces ) {
                 SwaggerService.setProduces( definition.produces );
             }
+            if ( definition.consumes) {
+                SwaggerService.setConsumes( definition.consumes );
+            }
         }
     }
     SwaggerService.buildSwagger();
