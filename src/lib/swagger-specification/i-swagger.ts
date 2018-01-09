@@ -84,4 +84,5 @@ export interface ISwagger {
     swagger: string;
     tags?: ISwaggerTag[];
     schemes: string[];
+    produces: string[];
 }

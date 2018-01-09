@@ -7,8 +7,8 @@ import { VersionController } from "./version/version.controller";
 import * as compression from "compression";
 import * as helmet from "helmet";
 import * as swagger from "./lib/swagger-specification";
-import { BooksController } from "./books/books.controller";
 import { SwaggerDefinition } from "./lib/swagger-specification";
+import { BooksController } from "./books/books.controller";
 const config = require( "../config.json" );
 
 // set up container
@@ -44,9 +44,9 @@ server.setConfig( ( app: any ) => {
                 license : {
                     name : ""
                 }
-            }
-            // ,
-            // schemes: [SwaggerDefinition.Scheme.HTTPS, SwaggerDefinition.Scheme.HTTP]
+            },
+            schemes : [ SwaggerDefinition.Scheme.HTTPS, SwaggerDefinition.Scheme.HTTP ],
+            produces : [ SwaggerDefinition.Produce.JSON, SwaggerDefinition.Produce.XML ]
         }
     } ) );
 } );

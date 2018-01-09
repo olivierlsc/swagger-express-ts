@@ -45,6 +45,7 @@ export class SwaggerService {
         paths : {},
         tags : [],
         schemes : [ SwaggerDefinition.Scheme.HTTP ],
+        produces : [ SwaggerDefinition.Produce.JSON ],
         swagger : "2.0"
     };
 
@@ -66,6 +67,10 @@ export class SwaggerService {
 
     public static setSchemes( schemes: string[] ): void {
         SwaggerService.data.schemes = schemes;
+    }
+
+    public static setProduces( produces: string[] ): void {
+        SwaggerService.data.produces = produces;
     }
 
     public static addPath( args: IApiPathArgs, target: any ): void {
