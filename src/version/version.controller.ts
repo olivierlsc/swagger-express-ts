@@ -20,7 +20,7 @@ export class VersionController implements interfaces.Controller {
         summary : "Add a new Version"
     } )
     @httpGet( "/" )
-    public get( request: express.Request, response: express.Response, next: express.NextFunction ): void {
+    public getVersions( request: express.Request, response: express.Response, next: express.NextFunction ): void {
         response.json( {
             description : pkg.description,
             name : pkg.name,
@@ -34,7 +34,17 @@ export class VersionController implements interfaces.Controller {
         summary : "Post Add a new Version"
     } )
     @httpPost( "/" )
-    public post( request: express.Request, response: express.Response, next: express.NextFunction ): void {
+    public postVersion( request: express.Request, response: express.Response, next: express.NextFunction ): void {
+
+    }
+
+    @ApiGet( {
+        path: "/{idVersion}",
+        description : "Get Version object that need to be  2222",
+        summary : "Get Add a new Version"
+    } )
+    @httpPost( "/" )
+    public getVersion( request: express.Request, response: express.Response, next: express.NextFunction ): void {
 
     }
 }

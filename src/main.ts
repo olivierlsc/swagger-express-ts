@@ -36,7 +36,7 @@ server.setConfig( ( app: any ) => {
     app.use( helmet() );
     app.use( swagger.express( {
         definition : {
-            basePath : "/v2",
+            //basePath : "/v2",
             info : {
                 title : "Mon api",
                 version : "1.0",
@@ -45,7 +45,7 @@ server.setConfig( ( app: any ) => {
                     name : ""
                 }
             },
-            schemes : [ SwaggerDefinition.Scheme.HTTPS, SwaggerDefinition.Scheme.HTTP ],
+            //schemes : [ SwaggerDefinition.Scheme.HTTPS, SwaggerDefinition.Scheme.HTTP ],
             produces : [ SwaggerDefinition.Produce.JSON, SwaggerDefinition.Produce.XML ],
             consumes : [ SwaggerDefinition.Consume.JSON, SwaggerDefinition.Consume.XML ]
         }
