@@ -37,6 +37,7 @@ container.bind<interfaces.Controller>( TYPE.Controller )
 // create server
 const server = new InversifyExpressServer( container );
 
+// congigure server
 server.setConfig( ( app: any ) => {
     app.use( swagger.express( {
         path: "/api-docs/swagger.json", // Optional. Default is "/api-docs/swagger.json"
@@ -57,6 +58,7 @@ server.setConfig( ( app: any ) => {
     } ) );
 } );
 
+// configure error
 server.setErrorConfig( ( app: any ) => {
     app.use( ( err: Error, request: express.Request, response: express.Response, next: express.NextFunction ) => {
         console.error( err.stack );
@@ -64,6 +66,7 @@ server.setErrorConfig( ( app: any ) => {
     } );
 } );
 
+// start server
 const app = server.build();
 app.listen( 3000 );
 console.info( "Server is listening on port : 3000 );
