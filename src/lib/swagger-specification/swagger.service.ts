@@ -47,7 +47,7 @@ export class SwaggerService {
         tags : [],
         schemes : [ SwaggerDefinition.Scheme.HTTP ],
         produces : [ SwaggerDefinition.Produce.JSON ],
-        consumes : [ SwaggerDefinition.Produce.JSON ],
+        consumes : [ SwaggerDefinition.Consume.JSON ],
         swagger : "2.0"
     };
 
