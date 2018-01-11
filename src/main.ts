@@ -37,6 +37,7 @@ server.setConfig( ( app: any ) => {
     app.use( swagger.express(
         {
             definition : {
+                //host: "localhost:3000",
                 //basePath : "/v2",
                 info : {
                     title : "Mon api",

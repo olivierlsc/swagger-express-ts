@@ -38,6 +38,12 @@ export interface ISwaggerExpressOptionsDefinition {
      * Optional. Default is SwaggerDefinition.Scheme.HTTP = "http".
      */
     schemes?: string[];
+
+    /**
+     * Define host.
+     * Optional.
+     */
+    host?: string;
 }
 
 export interface ISwaggerExpressOptions {
@@ -55,9 +61,9 @@ export interface ISwaggerExpressOptions {
 
 export function express( options?: ISwaggerExpressOptions ): Router {
     let path: string = "/api-docs/swagger.json";
-    assert.ok(options, "Options are required.");
-    assert.ok(options.definition, "Definition is required.");
-    assert.ok(options.definition.info, "Informations are required. Base is { title: \"Title of my API\", version: \"1.0.0\"}");
+    assert.ok( options, "Options are required." );
+    assert.ok( options.definition, "Definition is required." );
+    assert.ok( options.definition.info, "Informations are required. Base is { title: \"Title of my API\", version: \"1.0.0\"}" );
     if ( options ) {
         if ( options.path ) {
             path = options.path;
@@ -81,6 +87,9 @@ export function express( options?: ISwaggerExpressOptions ): Router {
             }
             if ( definition.consumes ) {
                 SwaggerService.setConsumes( definition.consumes );
+            }
+            if ( definition.host ) {
+                SwaggerService.setHost( definition.host );
             }
         }
     }

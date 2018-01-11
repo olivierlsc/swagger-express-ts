@@ -79,6 +79,10 @@ export class SwaggerService {
         SwaggerService.data.consumes = consumes;
     }
 
+    public static setHost( host: string ): void {
+        SwaggerService.data.host = host;
+    }
+
     public static addPath( args: IApiPathArgs, target: any ): void {
         let currentController: IController = {
             path : args.path,
