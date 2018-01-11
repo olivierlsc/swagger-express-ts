@@ -13,8 +13,8 @@ export interface ISwaggerInfo {
     title: string;
     description?: string;
     termsOfService?: string;
-    contact: ISwaggerContact;
-    license: ISwaggerLicense;
+    contact?: ISwaggerContact;
+    license?: ISwaggerLicense;
     version: string;
 }
 

@@ -34,22 +34,25 @@ server.setConfig( ( app: any ) => {
     app.use( bodyParser.json() );
     app.use( compression() );
     app.use( helmet() );
-    app.use( swagger.express( {
-        definition : {
-            //basePath : "/v2",
-            info : {
-                title : "Mon api",
-                version : "1.0",
-                contact : {},
-                license : {
-                    name : ""
-                }
-            },
-            //schemes : [ SwaggerDefinition.Scheme.HTTPS, SwaggerDefinition.Scheme.HTTP ],
-            produces : [ SwaggerDefinition.Produce.JSON, SwaggerDefinition.Produce.XML ],
-            consumes : [ SwaggerDefinition.Consume.JSON, SwaggerDefinition.Consume.XML ]
+    app.use( swagger.express(
+        {
+            definition : {
+                //basePath : "/v2",
+                info : {
+                    title : "Mon api",
+                    version : "1.0",
+                    description : "Description de mon API"
+                    // contact : {},
+                    // license : {
+                    //     name : ""
+                    // }
+                },
+                //schemes : [ SwaggerDefinition.Scheme.HTTPS, SwaggerDefinition.Scheme.HTTP ],
+                produces : [ SwaggerDefinition.Produce.JSON, SwaggerDefinition.Produce.XML ],
+                consumes : [ SwaggerDefinition.Consume.JSON, SwaggerDefinition.Consume.XML ]
+            }
         }
-    } ) );
+    ) );
 } );
 
 server.setErrorConfig( ( app: any ) => {

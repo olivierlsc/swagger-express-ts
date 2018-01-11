@@ -1,6 +1,7 @@
 import { Router, Request, Response, NextFunction } from "express";
 import { SwaggerService } from "./swagger.service";
 import { ISwaggerInfo } from "./i-swagger";
+import * as assert from "assert";
 
 export interface ISwaggerExpressOptionsDefinition {
     /**
@@ -16,7 +17,7 @@ export interface ISwaggerExpressOptionsDefinition {
     openapi?: string;
 
     /**
-     * Metadata
+     * Metadata.
      */
     info: ISwaggerInfo;
 
@@ -54,6 +55,9 @@ export interface ISwaggerExpressOptions {
 
 export function express( options?: ISwaggerExpressOptions ): Router {
     let path: string = "/api-docs/swagger.json";
+    assert.ok(options, "Options are required.");
+    assert.ok(options.definition, "Definition is required.");
+    assert.ok(options.definition.info, "Informations are required. Base is { title: \"Title of my API\", version: \"1.0.0\"}");
     if ( options ) {
         if ( options.path ) {
             path = options.path;
@@ -81,6 +85,11 @@ export function express( options?: ISwaggerExpressOptions ): Router {
         }
     }
     SwaggerService.buildSwagger();
+    const router = buildRouter( path );
+    return router;
+}
+
+function buildRouter( path: string ): Router {
     const router: Router = Router();
     router.get( path, ( request: Request, response: Response, next: NextFunction ) => {
         response.json( SwaggerService.getData() );
