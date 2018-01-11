@@ -22,7 +22,7 @@ var VersionController = (function () {
     };
     VersionController.TARGET_NAME = "VersionController";
     __decorate([
-        swagger_specification_1.ApiGet({
+        swagger_specification_1.ApiOperationGet({
             description: "Version object that need to be added",
             summary: "Add a new Version"
         }),

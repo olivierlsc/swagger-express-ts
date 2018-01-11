@@ -7,12 +7,27 @@ export class SwaggerDefinition {
     };
 
     public static Scheme = {
-        HTTP: "http",
-        HTTPS: "https"
+        HTTP : "http",
+        HTTPS : "https"
     };
 
-    public  static Consume = {
+    public static Consume = {
         XML : SwaggerDefinition.XML,
         JSON : SwaggerDefinition.JSON
+    }
+
+    public static Definition = {
+        Type : {
+            OBJECT : "object"
+        },
+        Property : {
+            Type : {
+                INTEGER : "integer",
+                STRING : "string"
+            },
+            Format: {
+                INT_64: "int64"
+            }
+        }
     }
 }

@@ -1,7 +1,7 @@
 import {injectable} from "inversify";
 import {controller, httpGet} from "inversify-express-utils";
 import * as express from "express";
-import { ApiPath, ApiGet } from "../lib/swagger-specification";
+import { ApiPath, ApiOperationGet } from "../lib/swagger-specification";
 
 @ApiPath({
     path: "/books",
@@ -17,7 +17,7 @@ export class BooksController {
 
     }
 
-    @ApiGet({
+    @ApiOperationGet({
         description : "Book object that need to be",
         summary : "Add a new Book"
     })

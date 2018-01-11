@@ -1,9 +1,18 @@
-import { ISwagger, ISwaggerContact, ISwaggerLicense, ISwaggerInfo, ISwaggerTag, ISwaggerPath } from "./i-swagger";
+import {
+    ISwagger,
+    ISwaggerContact,
+    ISwaggerLicense,
+    ISwaggerInfo,
+    ISwaggerTag,
+    ISwaggerPath,
+    ISwaggerDefinition
+} from "./i-swagger";
 import { IApiPathArgs } from "./api-path.decorator";
 import { IApiGetArgs } from "../../../dist/api-get.decorator";
-import { IApiPostArgs } from "./api-post.decorator";
-import { SwaggerDefinition } from "./swagger.definition";
+import { IApiOperationPostArgs } from "./api-operation-post.decorator";
+import { SwaggerDefinitionConstant } from "./swagger.definition";
 import * as _ from "lodash";
+import { IApiModelArgs } from "./api-model.decorator";
 
 interface IAction {
     path?: string;
@@ -32,6 +41,7 @@ interface IController {
 
 export class SwaggerService {
     private static controllerMap: any = [];
+    private static definitionsMap: {[key: string]: ISwaggerDefinition} = {};
     private static data: ISwagger = {
         basePath : "/",
         openapi : "",
@@ -45,9 +55,10 @@ export class SwaggerService {
         },
         paths : {},
         tags : [],
-        schemes : [ SwaggerDefinition.Scheme.HTTP ],
-        produces : [ SwaggerDefinition.Produce.JSON ],
-        consumes : [ SwaggerDefinition.Consume.JSON ],
+        schemes : [ SwaggerDefinitionConstant.Scheme.HTTP ],
+        produces : [ SwaggerDefinitionConstant.Produce.JSON ],
+        consumes : [ SwaggerDefinitionConstant.Consume.JSON ],
+        definitions : {},
         swagger : "2.0"
     };
 
@@ -90,9 +101,9 @@ export class SwaggerService {
             description : args.description,
             paths : {}
         };
-        for ( let index in SwaggerService.controllerMap ) {
-            let controller: IController = SwaggerService.controllerMap[ index ];
-            if ( index === target.name ) {
+        for ( let controllerIndex in SwaggerService.controllerMap ) {
+            let controller: IController = SwaggerService.controllerMap[ controllerIndex ];
+            if ( controllerIndex === target.name ) {
                 currentController = controller;
                 currentController.path = args.path;
                 currentController.name = args.name;
@@ -106,8 +117,22 @@ export class SwaggerService {
         SwaggerService.addAction( "get", args, target, propertyKey );
     }
 
-    public static addPostAction( args: IApiPostArgs, target: any, propertyKey: string | symbol ): void {
+    public static addPostAction( args: IApiOperationPostArgs, target: any, propertyKey: string | symbol ): void {
         SwaggerService.addAction( "post", args, target, propertyKey );
+    }
+
+    public static addDefinition( args: IApiModelArgs, target: any ): void {
+        let currentDefinition: ISwaggerDefinition = {
+            type : SwaggerDefinitionConstant.Definition.Type.OBJECT,
+            properties : {}
+        };
+        for ( let definitionIndex in SwaggerService.definitionsMap ) {
+            let definition: ISwaggerDefinition = SwaggerService.definitionsMap[ definitionIndex ];
+            if ( definitionIndex === target.name ) {
+                currentDefinition = definition;
+            }
+        }
+        SwaggerService.definitionsMap[ target.name ] = currentDefinition;
     }
 
     private static addAction( action: string, args: any = {}, target: any, propertyKey: string | symbol ): void {
@@ -151,8 +176,8 @@ export class SwaggerService {
             description : args.description,
             summary : args.summary,
             operationId : propertyKey,
-            produces : [ SwaggerDefinition.Produce.JSON ],
-            consumes : [ SwaggerDefinition.Consume.JSON ],
+            produces : [ SwaggerDefinitionConstant.Produce.JSON ],
+            consumes : [ SwaggerDefinitionConstant.Consume.JSON ],
             tags : []
         };
         if ( args.produces && args.produces.length > 0 ) {

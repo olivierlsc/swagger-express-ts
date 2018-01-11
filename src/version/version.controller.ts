@@ -1,7 +1,7 @@
 import * as express from "express";
 import { injectable } from "inversify";
 import { controller, httpGet, interfaces, httpPost } from "inversify-express-utils";
-import { ApiPath, ApiGet, ApiPost } from "../lib/swagger-specification/index";
+import { ApiPath, ApiOperationGet, ApiOperationPost } from "../lib/swagger-specification/index";
 import "reflect-metadata";
 const pkg = require( "../../package.json" );
 
@@ -15,7 +15,7 @@ const pkg = require( "../../package.json" );
 export class VersionController implements interfaces.Controller {
     public static TARGET_NAME: string = "VersionController";
 
-    @ApiGet( {
+    @ApiOperationGet( {
         description : "Version object that need to be  2222",
         summary : "Add a new Version"
     } )
@@ -28,7 +28,7 @@ export class VersionController implements interfaces.Controller {
         } );
     }
 
-    @ApiPost( {
+    @ApiOperationPost( {
         path: "/{idVersion}",
         description : "Post Version object that need to be  2222",
         summary : "Post Add a new Version"
@@ -38,7 +38,7 @@ export class VersionController implements interfaces.Controller {
 
     }
 
-    @ApiGet( {
+    @ApiOperationGet( {
         path: "/{idVersion}",
         description : "Get Version object that need to be  2222",
         summary : "Get Add a new Version"

@@ -79,7 +79,7 @@ console.info( "Server is listening on port : 3000 );
 import * as express from "express";
 import { injectable } from "inversify";
 import { controller, httpGet, interfaces, httpPost } from "inversify-express-utils";
-import { ApiPath, ApiGet, ApiPost } from "swagger-express-ts";
+import { ApiPath, ApiOperationGet, ApiOperationPost } from "swagger-express-ts";
 import "reflect-metadata";
 const pkg = require( "../../package.json" );
 
@@ -93,7 +93,7 @@ const pkg = require( "../../package.json" );
 export class VersionController implements interfaces.Controller {
     public static TARGET_NAME: string = "VersionController";
 
-    @ApiGet( {
+    @ApiOperationGet( {
         description : "Version object",
         summary : "Get version"
     } )
