@@ -10,9 +10,8 @@ import {
 import { IApiPathArgs } from "./api-path.decorator";
 import { IApiGetArgs } from "../../../dist/api-get.decorator";
 import { IApiOperationPostArgs } from "./api-operation-post.decorator";
-import { SwaggerDefinitionConstant } from "./swagger.definition";
+import { SwaggerDefinitionConstant } from "./swagger-definition.constant";
 import * as _ from "lodash";
-import { IApiModelArgs } from "./api-model.decorator";
 
 interface IAction {
     path?: string;
@@ -94,6 +93,10 @@ export class SwaggerService {
         SwaggerService.data.host = host;
     }
 
+    public static setDefinitions( definitions: {[key: string]: ISwaggerDefinition} ): void {
+        SwaggerService.data.definitions = definitions;
+    }
+
     public static addPath( args: IApiPathArgs, target: any ): void {
         let currentController: IController = {
             path : args.path,
@@ -119,20 +122,6 @@ export class SwaggerService {
 
     public static addPostAction( args: IApiOperationPostArgs, target: any, propertyKey: string | symbol ): void {
         SwaggerService.addAction( "post", args, target, propertyKey );
-    }
-
-    public static addDefinition( args: IApiModelArgs, target: any ): void {
-        let currentDefinition: ISwaggerDefinition = {
-            type : SwaggerDefinitionConstant.Definition.Type.OBJECT,
-            properties : {}
-        };
-        for ( let definitionIndex in SwaggerService.definitionsMap ) {
-            let definition: ISwaggerDefinition = SwaggerService.definitionsMap[ definitionIndex ];
-            if ( definitionIndex === target.name ) {
-                currentDefinition = definition;
-            }
-        }
-        SwaggerService.definitionsMap[ target.name ] = currentDefinition;
     }
 
     private static addAction( action: string, args: any = {}, target: any, propertyKey: string | symbol ): void {

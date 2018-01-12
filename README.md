@@ -25,7 +25,7 @@ import { Container } from "inversify";
 import { interfaces, InversifyExpressServer, TYPE } from "inversify-express-utils";
 import { VersionController } from "./version/version.controller";
 import * as swagger from "./lib/swagger-specification";
-import { SwaggerDefinition } from "swagger-express-ts";
+import { SwaggerDefinitionConstant } from "swagger-express-ts";
 
 // set up container
 const container = new Container();
@@ -51,9 +51,9 @@ server.setConfig( ( app: any ) => {
                     name : ""
                 }
             },
-            schemes : [ SwaggerDefinition.Scheme.HTTPS, SwaggerDefinition.Scheme.HTTP ], // Optional. Default is SwaggerDefinition.Scheme.HTTP
-            produces : [ SwaggerDefinition.Produce.JSON, SwaggerDefinition.Produce.XML ], // Optional. Default is SwaggerDefinition.Produce.JSON
-            consumes : [ SwaggerDefinition.Consume.JSON, SwaggerDefinition.Consume.XML ] // Optional. Default is SwaggerDefinition.Produce.JSON
+            schemes : [ SwaggerDefinitionConstant.Scheme.HTTPS, SwaggerDefinitionConstant.Scheme.HTTP ], // Optional. Default is SwaggerDefinitionConstant.Scheme.HTTP
+            produces : [ SwaggerDefinitionConstant.Produce.JSON, SwaggerDefinitionConstant.Produce.XML ], // Optional. Default is SwaggerDefinitionConstant.Produce.JSON
+            consumes : [ SwaggerDefinitionConstant.Consume.JSON, SwaggerDefinitionConstant.Consume.XML ] // Optional. Default is SwaggerDefinitionConstant.Produce.JSON
         }
     } ) );
 } );

@@ -1,9 +1,9 @@
-export class SwaggerDefinition {
+export class SwaggerDefinitionConstant {
     private static JSON: string = "application/json";
     private static XML: string = "application/xml";
     public static Produce = {
-        XML : SwaggerDefinition.XML,
-        JSON : SwaggerDefinition.JSON
+        XML : SwaggerDefinitionConstant.XML,
+        JSON : SwaggerDefinitionConstant.JSON
     };
 
     public static Scheme = {
@@ -12,8 +12,8 @@ export class SwaggerDefinition {
     };
 
     public static Consume = {
-        XML : SwaggerDefinition.XML,
-        JSON : SwaggerDefinition.JSON
+        XML : SwaggerDefinitionConstant.XML,
+        JSON : SwaggerDefinitionConstant.JSON
     }
 
     public static Definition = {

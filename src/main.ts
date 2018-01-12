@@ -7,7 +7,7 @@ import { VersionController } from "./version/version.controller";
 import * as compression from "compression";
 import * as helmet from "helmet";
 import * as swagger from "./lib/swagger-specification";
-import { SwaggerDefinition } from "./lib/swagger-specification";
+import { SwaggerDefinitionConstant } from "./lib/swagger-specification";
 import { BooksController } from "./books/books.controller";
 const config = require( "../config.json" );
 
@@ -49,8 +49,23 @@ server.setConfig( ( app: any ) => {
                     // }
                 },
                 //schemes : [ SwaggerDefinition.Scheme.HTTPS, SwaggerDefinition.Scheme.HTTP ],
-                produces : [ SwaggerDefinition.Produce.JSON, SwaggerDefinition.Produce.XML ],
-                consumes : [ SwaggerDefinition.Consume.JSON, SwaggerDefinition.Consume.XML ]
+                produces : [ SwaggerDefinitionConstant.Produce.JSON, SwaggerDefinitionConstant.Produce.XML ],
+                consumes : [ SwaggerDefinitionConstant.Consume.JSON, SwaggerDefinitionConstant.Consume.XML ],
+                models : {
+                    Version : {
+                        properties : {
+                            name : {
+                                type : SwaggerDefinitionConstant.Definition.Property.Type.STRING,
+                                required : true
+                            },
+                            description : { type : SwaggerDefinitionConstant.Definition.Property.Type.STRING },
+                            version : {
+                                type : SwaggerDefinitionConstant.Definition.Property.Type.STRING,
+                                required : true
+                            }
+                        }
+                    }
+                }
             }
         }
     ) );
