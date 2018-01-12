@@ -20,13 +20,17 @@ export class VersionController implements interfaces.Controller {
         description : "Version object that need to be  2222",
         summary : "Add a new Version",
         parameters : {
-            query: {
+            query : {
                 fields : {
                     description : "Define fields you want to affich",
                     required : true,
                     type : SwaggerDefinitionConstant.Parameter.Type.ARRAY,
                 }
             }
+        },
+        responses : {
+            200 : { description : "Success" , definition: "Version"},
+            400 : { description : "Parameters fail"}
         }
     } )
     @httpGet( "/" )
@@ -41,29 +45,13 @@ export class VersionController implements interfaces.Controller {
     @ApiOperationPost( {
         path : "/{idVersion}",
         description : "Post Version object that need to be  2222",
-        summary : "Post Add a new Version"
-    } )
-    @httpPost( "/" )
-    public postVersion( request: express.Request, response: express.Response, next: express.NextFunction ): void {
-
-    }
-
-    @ApiOperationGet( {
-        path : "/{idVersion}",
-        description : "Get Version object that need to be  2222",
-        summary : "Get Add a new Version",
-        parameters : {
-            path: {
-                idVersion : {
-                    description : "Define id version",
-                    required : true,
-                    type : SwaggerDefinitionConstant.Parameter.Type.STRING,
-                }
-            }
+        summary : "Post Add a new Version",
+        responses : {
+            200 : { description : "Success" , definition: "Version"}
         }
     } )
     @httpPost( "/" )
-    public getVersion( request: express.Request, response: express.Response, next: express.NextFunction ): void {
+    public postVersion( request: express.Request, response: express.Response, next: express.NextFunction ): void {
 
     }
 }

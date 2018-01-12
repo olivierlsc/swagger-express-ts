@@ -7,6 +7,12 @@ export interface IApiOperationArgsBaseParameter {
     allowEmptyValue?: boolean;
 }
 
+export interface IApiOperationArgsBaseResponse {
+    description?: string;
+    isArray?: boolean; // Default is "false"
+    definition?: string; // Default is @ApiPath.name
+}
+
 export interface IApiOperationArgsBase {
     description: string;
     summary: string;
@@ -16,5 +22,6 @@ export interface IApiOperationArgsBase {
     parameters?: {
         path?: {[key: string]: IApiOperationArgsBaseParameter},
         query?: {[key: string]: IApiOperationArgsBaseParameter}
-    }
+    };
+    responses: {[key: string]: IApiOperationArgsBaseResponse};
 }

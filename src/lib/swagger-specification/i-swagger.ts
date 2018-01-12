@@ -46,6 +46,17 @@ export interface ISwaggerOperationParameter {
     allowEmptyValue?: boolean;
 }
 
+export interface ISwaggerOperationResponseSchema {
+    type?: string;
+    items?: {$ref: string};
+    $ref?: string;
+}
+
+export interface ISwaggerOperationResponse {
+    description?: string;
+    schema?: ISwaggerOperationResponseSchema;
+}
+
 export interface ISwaggerOperation {
     tags?: string[];
     summary?: string;
@@ -54,6 +65,7 @@ export interface ISwaggerOperation {
     parameters?: ISwaggerOperationParameter[];
     produces: string[];
     consumes: string[];
+    responses: {[key: string]: ISwaggerOperationResponse};
 }
 
 export interface ISwaggerTag {

@@ -42,4 +42,12 @@ export class SwaggerDefinitionConstant {
             QUERY : "query"
         }
     };
+
+    public static Response = {
+        Type: {
+            INTEGER : "integer",
+            STRING : "string",
+            ARRAY : "array"
+        }
+    };
 }

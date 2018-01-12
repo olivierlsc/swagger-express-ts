@@ -7,13 +7,19 @@ import {
     ISwaggerPath,
     ISwaggerDefinition,
     ISwaggerOperation,
-    ISwaggerOperationParameter
+    ISwaggerOperationParameter,
+    ISwaggerOperationResponse,
+    ISwaggerOperationResponseSchema
 } from "./i-swagger";
 import { IApiPathArgs } from "./api-path.decorator";
 import { IApiOperationPostArgs } from "./api-operation-post.decorator";
 import { SwaggerDefinitionConstant } from "./swagger-definition.constant";
 import * as _ from "lodash";
-import { IApiOperationArgsBaseParameter, IApiOperationArgsBase } from "./i-api-operation-args.base";
+import {
+    IApiOperationArgsBaseParameter,
+    IApiOperationArgsBase,
+    IApiOperationArgsBaseResponse
+} from "./i-api-operation-args.base";
 import { IApiOperationGetArgs } from "./api-operation-get.decorator";
 
 interface IPath {
@@ -161,7 +167,8 @@ export class SwaggerService {
             produces : [ SwaggerDefinitionConstant.Produce.JSON ],
             consumes : [ SwaggerDefinitionConstant.Consume.JSON ],
             tags : [],
-            parameters : []
+            parameters : [],
+            responses : {}
         };
         if ( args.produces && args.produces.length > 0 ) {
             operation.produces = args.produces;
@@ -178,6 +185,30 @@ export class SwaggerService {
             if ( args.parameters.query ) {
                 operation.parameters = _.concat( operation.parameters, SwaggerService.buildParameters( "query", args.parameters.query ) );
             }
+        }
+
+        for ( let responseIndex in args.responses ) {
+            let response: IApiOperationArgsBaseResponse = args.responses[ responseIndex ];
+            let newSwaggerOperationResponse: ISwaggerOperationResponse = {};
+            if ( response.description ) {
+                newSwaggerOperationResponse.description = response.description;
+            }
+            if ( response.definition ) {
+                let ref = "#/definitions/".concat( response.definition );
+                let newSwaggerOperationResponseSchema: ISwaggerOperationResponseSchema = {
+                    $ref : ref
+                };
+                if ( response.isArray ) {
+                    newSwaggerOperationResponseSchema = {
+                        items : {
+                            $ref : ref
+                        },
+                        type : SwaggerDefinitionConstant.Response.Type.ARRAY
+                    }
+                }
+                newSwaggerOperationResponse.schema = newSwaggerOperationResponseSchema;
+            }
+            operation.responses[ responseIndex ] = newSwaggerOperationResponse;
         }
 
         return operation;
