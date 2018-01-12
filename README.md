@@ -53,7 +53,22 @@ server.setConfig( ( app: any ) => {
             },
             schemes : [ SwaggerDefinitionConstant.Scheme.HTTPS, SwaggerDefinitionConstant.Scheme.HTTP ], // Optional. Default is SwaggerDefinitionConstant.Scheme.HTTP
             produces : [ SwaggerDefinitionConstant.Produce.JSON, SwaggerDefinitionConstant.Produce.XML ], // Optional. Default is SwaggerDefinitionConstant.Produce.JSON
-            consumes : [ SwaggerDefinitionConstant.Consume.JSON, SwaggerDefinitionConstant.Consume.XML ] // Optional. Default is SwaggerDefinitionConstant.Produce.JSON
+            consumes : [ SwaggerDefinitionConstant.Consume.JSON, SwaggerDefinitionConstant.Consume.XML ] // Optional. Default is SwaggerDefinitionConstant.Produce.JSON,
+	    models : { // Optional.
+		    Version : {
+			properties : {
+			    name : {
+				type : SwaggerDefinitionConstant.Definition.Property.Type.STRING,
+				required : true
+			    },
+			    description : { type : SwaggerDefinitionConstant.Definition.Property.Type.STRING },
+			    version : {
+				type : SwaggerDefinitionConstant.Definition.Property.Type.STRING,
+				required : true
+			    }
+			}
+		    }
+	    }
         }
     } ) );
 } );
