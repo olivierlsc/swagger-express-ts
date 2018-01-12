@@ -176,6 +176,19 @@ Start your server and test on url : /api-docs/swagger.json
 		"application/json",
 		"application/xml"
 	],
+	"definitions": {
+		"Version": {
+			"type": "object",
+			"properties": {
+				"name": {
+					"type": "string"
+				}
+			},
+			"required": [
+				"name"
+			]
+		}
+	},
 	"swagger": "2.0"
 }
 ```
