@@ -3,6 +3,7 @@ import { injectable } from "inversify";
 import { controller, httpGet, interfaces, httpPost } from "inversify-express-utils";
 import { ApiPath, ApiOperationGet, ApiOperationPost } from "../lib/swagger-specification/index";
 import "reflect-metadata";
+import { SwaggerDefinitionConstant } from "../lib/swagger-specification/swagger-definition.constant";
 const pkg = require( "../../package.json" );
 
 @ApiPath( {
@@ -17,7 +18,16 @@ export class VersionController implements interfaces.Controller {
 
     @ApiOperationGet( {
         description : "Version object that need to be  2222",
-        summary : "Add a new Version"
+        summary : "Add a new Version",
+        parameters : {
+            query: {
+                fields : {
+                    description : "Define fields you want to affich",
+                    required : true,
+                    type : SwaggerDefinitionConstant.Parameter.Type.ARRAY,
+                }
+            }
+        }
     } )
     @httpGet( "/" )
     public getVersions( request: express.Request, response: express.Response, next: express.NextFunction ): void {
@@ -29,7 +39,7 @@ export class VersionController implements interfaces.Controller {
     }
 
     @ApiOperationPost( {
-        path: "/{idVersion}",
+        path : "/{idVersion}",
         description : "Post Version object that need to be  2222",
         summary : "Post Add a new Version"
     } )
@@ -39,9 +49,18 @@ export class VersionController implements interfaces.Controller {
     }
 
     @ApiOperationGet( {
-        path: "/{idVersion}",
+        path : "/{idVersion}",
         description : "Get Version object that need to be  2222",
-        summary : "Get Add a new Version"
+        summary : "Get Add a new Version",
+        parameters : {
+            path: {
+                idVersion : {
+                    description : "Define id version",
+                    required : true,
+                    type : SwaggerDefinitionConstant.Parameter.Type.STRING,
+                }
+            }
+        }
     } )
     @httpPost( "/" )
     public getVersion( request: express.Request, response: express.Response, next: express.NextFunction ): void {

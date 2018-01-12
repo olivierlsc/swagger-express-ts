@@ -1,11 +1,11 @@
 import { SwaggerService } from "./swagger.service";
-import { IApiActionArgsBase } from "./i-api-action-args.base";
-export interface IApiOperationGetArgs extends IApiActionArgsBase{
+import { IApiOperationArgsBase } from "./i-api-operation-args.base";
+export interface IApiOperationGetArgs extends IApiOperationArgsBase{
 
 }
 
 export function ApiOperationGet( args: IApiOperationGetArgs ): MethodDecorator {
     return function ( target: any, propertyKey: string | symbol, descriptor: PropertyDescriptor ) {
-        SwaggerService.addGetAction( args, target, propertyKey );
+        SwaggerService.addOperationGet( args, target, propertyKey );
     };
 }

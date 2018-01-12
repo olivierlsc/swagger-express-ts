@@ -8,7 +8,6 @@ import * as compression from "compression";
 import * as helmet from "helmet";
 import * as swagger from "./lib/swagger-specification";
 import { SwaggerDefinitionConstant } from "./lib/swagger-specification";
-import { BooksController } from "./books/books.controller";
 const config = require( "../config.json" );
 
 // set up container
@@ -17,9 +16,6 @@ const container = new Container();
 // note that you *must* bind your controllers to Controller
 container.bind<interfaces.Controller>( TYPE.Controller )
     .to( VersionController ).whenTargetNamed( VersionController.TARGET_NAME );
-container.bind<interfaces.Controller>( TYPE.Controller )
-    .to( BooksController ).whenTargetNamed( BooksController.TARGET_NAME );
-// container.bind<FooService>('FooService').to(FooService);
 
 // create server
 const server = new InversifyExpressServer( container );

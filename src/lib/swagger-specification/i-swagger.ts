@@ -35,22 +35,25 @@ export interface ISwaggerExternalDocs {
     url: string;
 }
 
-export interface ISwaggerParameter {
+export interface ISwaggerOperationParameter {
     name: string;
     in: string;
+    type: string;
+    format?: string;
     description?: string;
-    required: boolean;
+    required?: boolean;
     deprecated?: boolean;
     allowEmptyValue?: boolean;
 }
 
 export interface ISwaggerOperation {
-    tags?: [string];
+    tags?: string[];
     summary?: string;
     description?: string;
-    externalDocs: ISwaggerExternalDocs;
-    operationId?: string;
-    parameters?: [ISwaggerParameter];
+    operationId?: string | symbol;
+    parameters?: ISwaggerOperationParameter[];
+    produces: string[];
+    consumes: string[];
 }
 
 export interface ISwaggerTag {
@@ -58,20 +61,11 @@ export interface ISwaggerTag {
     description: string;
 }
 
-export interface ISwaggerAction {
-    path?: string;
-    description: string;
-    summary: string;
-    tags: string[];
-    operationId: string | symbol;
-    produces: string[]
-}
-
 export interface ISwaggerPath {
-    get?: ISwaggerAction;
-    post?: ISwaggerAction;
-    put?: ISwaggerAction;
-    delete?: ISwaggerAction;
+    get?: ISwaggerOperation;
+    post?: ISwaggerOperation;
+    put?: ISwaggerOperation;
+    delete?: ISwaggerOperation;
 }
 
 export interface ISwaggerDefinitionProperty {

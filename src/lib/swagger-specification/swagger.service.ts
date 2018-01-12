@@ -5,30 +5,23 @@ import {
     ISwaggerInfo,
     ISwaggerTag,
     ISwaggerPath,
-    ISwaggerDefinition
+    ISwaggerDefinition,
+    ISwaggerOperation,
+    ISwaggerOperationParameter
 } from "./i-swagger";
 import { IApiPathArgs } from "./api-path.decorator";
-import { IApiGetArgs } from "../../../dist/api-get.decorator";
 import { IApiOperationPostArgs } from "./api-operation-post.decorator";
 import { SwaggerDefinitionConstant } from "./swagger-definition.constant";
 import * as _ from "lodash";
-
-interface IAction {
-    path?: string;
-    description: string;
-    summary: string;
-    tags: string[];
-    operationId: string | symbol;
-    produces: string[];
-    consumes: string[];
-}
+import { IApiOperationArgsBaseParameter, IApiOperationArgsBase } from "./i-api-operation-args.base";
+import { IApiOperationGetArgs } from "./api-operation-get.decorator";
 
 interface IPath {
     path: string;
-    get?: IAction;
-    post?: IAction;
-    put?: IAction;
-    delete?: IAction;
+    get?: ISwaggerOperation;
+    post?: ISwaggerOperation;
+    put?: ISwaggerOperation;
+    delete?: ISwaggerOperation;
 }
 
 interface IController {
@@ -116,15 +109,15 @@ export class SwaggerService {
         SwaggerService.controllerMap[ target.name ] = currentController;
     }
 
-    public static addGetAction( args: IApiGetArgs, target: any, propertyKey: string | symbol ): void {
-        SwaggerService.addAction( "get", args, target, propertyKey );
+    public static addOperationGet( args: IApiOperationGetArgs, target: any, propertyKey: string | symbol ): void {
+        SwaggerService.addOperation( "get", args, target, propertyKey );
     }
 
-    public static addPostAction( args: IApiOperationPostArgs, target: any, propertyKey: string | symbol ): void {
-        SwaggerService.addAction( "post", args, target, propertyKey );
+    public static addOperationPost( args: IApiOperationPostArgs, target: any, propertyKey: string | symbol ): void {
+        SwaggerService.addOperation( "post", args, target, propertyKey );
     }
 
-    private static addAction( action: string, args: any = {}, target: any, propertyKey: string | symbol ): void {
+    private static addOperation( operation: string, args: IApiOperationArgsBase, target: any, propertyKey: string | symbol ): void {
         let currentController: IController = {
             paths : {}
         };
@@ -149,34 +142,74 @@ export class SwaggerService {
             currentPath = currentController.paths[ "/" ];
         }
 
-        if ( "get" === action ) {
-            currentPath.get = SwaggerService.buildAction( args, target, propertyKey );
+        if ( "get" === operation ) {
+            currentPath.get = SwaggerService.buildOperation( args, target, propertyKey );
         }
 
-        if ( "post" === action ) {
-            currentPath.post = SwaggerService.buildAction( args, target, propertyKey );
+        if ( "post" === operation ) {
+            currentPath.post = SwaggerService.buildOperation( args, target, propertyKey );
         }
 
         SwaggerService.controllerMap[ target.constructor.name ] = currentController;
     }
 
-    private static buildAction( args: any = {}, target: any, propertyKey: string | symbol ): IAction {
-        let action: IAction = {
+    private static buildOperation( args: IApiOperationArgsBase, target: any, propertyKey: string | symbol ): ISwaggerOperation {
+        let operation: ISwaggerOperation = {
             description : args.description,
             summary : args.summary,
             operationId : propertyKey,
             produces : [ SwaggerDefinitionConstant.Produce.JSON ],
             consumes : [ SwaggerDefinitionConstant.Consume.JSON ],
-            tags : []
+            tags : [],
+            parameters : []
         };
         if ( args.produces && args.produces.length > 0 ) {
-            action.produces = args.produces;
+            operation.produces = args.produces;
         }
 
         if ( args.consumes && args.consumes.length > 0 ) {
-            action.consumes = args.consumes;
+            operation.consumes = args.consumes;
         }
-        return action;
+
+        if ( args.parameters ) {
+            if ( args.parameters.path ) {
+                operation.parameters = _.concat( operation.parameters, SwaggerService.buildParameters( "path", args.parameters.path ) );
+            }
+            if ( args.parameters.query ) {
+                operation.parameters = _.concat( operation.parameters, SwaggerService.buildParameters( "query", args.parameters.query ) );
+            }
+        }
+
+        return operation;
+    }
+
+    private static buildParameters( type: string, parameters: {[key: string]: IApiOperationArgsBaseParameter} ): ISwaggerOperationParameter[] {
+        let swaggerOperationParameter: ISwaggerOperationParameter[] = [];
+        for ( let parameterIndex in parameters ) {
+            let parameter: IApiOperationArgsBaseParameter = parameters[ parameterIndex ];
+            let newSwaggerOperationParameter: ISwaggerOperationParameter = {
+                name : parameterIndex,
+                in : type,
+                type : parameter.type
+            };
+            if ( parameter.description ) {
+                newSwaggerOperationParameter.description = parameter.description;
+            }
+            if ( parameter.required ) {
+                newSwaggerOperationParameter.required = true;
+            }
+            if ( parameter.format ) {
+                newSwaggerOperationParameter.format = parameter.format;
+            }
+            if ( parameter.deprecated ) {
+                newSwaggerOperationParameter.deprecated = true;
+            }
+            if ( parameter.allowEmptyValue ) {
+                newSwaggerOperationParameter.allowEmptyValue = true;
+            }
+            swaggerOperationParameter.push( newSwaggerOperationParameter );
+        }
+        return swaggerOperationParameter;
     }
 
     public static buildSwagger(): void {

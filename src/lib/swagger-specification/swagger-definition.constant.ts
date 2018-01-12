@@ -14,7 +14,7 @@ export class SwaggerDefinitionConstant {
     public static Consume = {
         XML : SwaggerDefinitionConstant.XML,
         JSON : SwaggerDefinitionConstant.JSON
-    }
+    };
 
     public static Definition = {
         Type : {
@@ -25,9 +25,21 @@ export class SwaggerDefinitionConstant {
                 INTEGER : "integer",
                 STRING : "string"
             },
-            Format: {
-                INT_64: "int64"
+            Format : {
+                INT_64 : "int64"
             }
         }
-    }
+    };
+
+    public static Parameter = {
+        Type : {
+            INTEGER : "integer",
+            STRING : "string",
+            ARRAY : "array"
+        },
+        In : {
+            PATH : "path",
+            QUERY : "query"
+        }
+    };
 }
