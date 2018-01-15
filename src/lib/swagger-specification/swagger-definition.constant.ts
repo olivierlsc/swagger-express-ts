@@ -39,7 +39,9 @@ export class SwaggerDefinitionConstant {
         },
         In : {
             PATH : "path",
-            QUERY : "query"
+            QUERY : "query",
+            BODY: "body",
+            FORM_DATA: "formData"
         }
     };
 

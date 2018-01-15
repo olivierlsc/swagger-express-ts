@@ -3,7 +3,6 @@ import { injectable } from "inversify";
 import { controller, httpGet, interfaces, httpPost } from "inversify-express-utils";
 import { ApiPath, ApiOperationGet, ApiOperationPost } from "../lib/swagger-specification/index";
 import "reflect-metadata";
-import { SwaggerDefinitionConstant } from "../lib/swagger-specification/swagger-definition.constant";
 const pkg = require( "../../package.json" );
 
 @ApiPath( {
@@ -19,18 +18,8 @@ export class VersionController implements interfaces.Controller {
     @ApiOperationGet( {
         description : "Version object that need to be  2222",
         summary : "Add a new Version",
-        parameters : {
-            query : {
-                fields : {
-                    description : "Define fields you want to affich",
-                    required : true,
-                    type : SwaggerDefinitionConstant.Parameter.Type.ARRAY,
-                }
-            }
-        },
         responses : {
-            200 : { description : "Success" , definition: "Version"},
-            400 : { description : "Parameters fail"}
+            200 : { description : "Success", definition : "Version" }
         }
     } )
     @httpGet( "/" )
@@ -43,15 +32,21 @@ export class VersionController implements interfaces.Controller {
     }
 
     @ApiOperationPost( {
-        path : "/{idVersion}",
         description : "Post Version object that need to be  2222",
         summary : "Post Add a new Version",
+        parameters : {
+            body : { description : "New version", required : true, definition: "version" }
+        },
         responses : {
-            200 : { description : "Success" , definition: "Version"}
+            200 : { description : "Success" },
+            400 : { description : "Parameters fail" }
         }
     } )
     @httpPost( "/" )
     public postVersion( request: express.Request, response: express.Response, next: express.NextFunction ): void {
-
+        if ( ! request.body ) {
+            return response.status( 400 ).end();
+        }
+        response.json( request.body );
     }
 }

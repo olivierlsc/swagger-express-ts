@@ -9,7 +9,7 @@ import {
     ISwaggerOperation,
     ISwaggerOperationParameter,
     ISwaggerOperationResponse,
-    ISwaggerOperationResponseSchema
+    ISwaggerOperationSchema
 } from "./i-swagger";
 import { IApiPathArgs } from "./api-path.decorator";
 import { IApiOperationPostArgs } from "./api-operation-post.decorator";
@@ -21,6 +21,7 @@ import {
     IApiOperationArgsBaseResponse
 } from "./i-api-operation-args.base";
 import { IApiOperationGetArgs } from "./api-operation-get.decorator";
+import * as assert from "assert";
 
 interface IPath {
     path: string;
@@ -180,10 +181,28 @@ export class SwaggerService {
 
         if ( args.parameters ) {
             if ( args.parameters.path ) {
-                operation.parameters = _.concat( operation.parameters, SwaggerService.buildParameters( "path", args.parameters.path ) );
+                operation.parameters = _.concat( operation.parameters, SwaggerService.buildParameters( SwaggerDefinitionConstant.Parameter.In.PATH, args.parameters.path ) );
             }
             if ( args.parameters.query ) {
-                operation.parameters = _.concat( operation.parameters, SwaggerService.buildParameters( "query", args.parameters.query ) );
+                operation.parameters = _.concat( operation.parameters, SwaggerService.buildParameters( SwaggerDefinitionConstant.Parameter.In.QUERY, args.parameters.query ) );
+            }
+            if ( args.parameters.body ) {
+                assert.ok( args.parameters.body.definition, "Definition are required." );
+                let newParameterBody: ISwaggerOperationParameter = {
+                    name : SwaggerDefinitionConstant.Parameter.In.BODY,
+                    in : SwaggerDefinitionConstant.Parameter.In.BODY
+                };
+                if ( args.parameters.body.required ) {
+                    newParameterBody.required = true;
+                }
+                let swaggerOperationSchema: ISwaggerOperationSchema = {
+                    $ref : SwaggerService.buildRef( args.parameters.body.definition )
+                };
+                newParameterBody.schema = swaggerOperationSchema;
+                operation.parameters.push( newParameterBody );
+            }
+            if ( args.parameters.formData ) {
+                operation.parameters = _.concat( operation.parameters, SwaggerService.buildParameters( SwaggerDefinitionConstant.Parameter.In.FORM_DATA, args.parameters.formData ) );
             }
         }
 
@@ -194,8 +213,8 @@ export class SwaggerService {
                 newSwaggerOperationResponse.description = response.description;
             }
             if ( response.definition ) {
-                let ref = "#/definitions/".concat( response.definition );
-                let newSwaggerOperationResponseSchema: ISwaggerOperationResponseSchema = {
+                let ref = SwaggerService.buildRef( response.definition );
+                let newSwaggerOperationResponseSchema: ISwaggerOperationSchema = {
                     $ref : ref
                 };
                 if ( response.isArray ) {
@@ -252,11 +271,11 @@ export class SwaggerService {
                 let swaggerPath: ISwaggerPath = {};
                 if ( path.get ) {
                     swaggerPath.get = path.get;
-                    swaggerPath.get.tags = [ controller.name ];
+                    swaggerPath.get.tags = [ _.capitalize( controller.name ) ];
                 }
                 if ( path.post ) {
                     swaggerPath.post = path.post;
-                    swaggerPath.post.tags = [ controller.name ];
+                    swaggerPath.post.tags = [ _.capitalize( controller.name ) ];
                 }
                 if ( path.path && path.path.length > 0 ) {
                     data.paths[ controller.path.concat( path.path ) ] = swaggerPath;
@@ -265,10 +284,14 @@ export class SwaggerService {
                 }
             }
             data.tags.push( <ISwaggerTag>{
-                name : controller.name, description : controller.description
+                name : _.capitalize( controller.name ), description : controller.description
             } );
         }
         SwaggerService.data = data;
+    }
+
+    private static buildRef( definition: string ): string {
+        return "#/definitions/".concat( _.capitalize( definition ) );
     }
 
 }

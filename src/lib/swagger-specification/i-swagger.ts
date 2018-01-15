@@ -38,15 +38,16 @@ export interface ISwaggerExternalDocs {
 export interface ISwaggerOperationParameter {
     name: string;
     in: string;
-    type: string;
+    type?: string;
     format?: string;
     description?: string;
     required?: boolean;
     deprecated?: boolean;
     allowEmptyValue?: boolean;
+    schema?: ISwaggerOperationSchema;
 }
 
-export interface ISwaggerOperationResponseSchema {
+export interface ISwaggerOperationSchema {
     type?: string;
     items?: {$ref: string};
     $ref?: string;
@@ -54,7 +55,7 @@ export interface ISwaggerOperationResponseSchema {
 
 export interface ISwaggerOperationResponse {
     description?: string;
-    schema?: ISwaggerOperationResponseSchema;
+    schema?: ISwaggerOperationSchema;
 }
 
 export interface ISwaggerOperation {
