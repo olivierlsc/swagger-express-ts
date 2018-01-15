@@ -35,7 +35,7 @@ export class VersionController implements interfaces.Controller {
         description : "Post Version object that need to be  2222",
         summary : "Post Add a new Version",
         parameters : {
-            body : { description : "New version", required : true, definition: "version" }
+            body : { description : "New version", required : true, definition: "Version" }
         },
         responses : {
             200 : { description : "Success" },

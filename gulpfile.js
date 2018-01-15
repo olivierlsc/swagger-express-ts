@@ -59,7 +59,7 @@ gulp.task('pre-test', ['build:ts'], function () {
 });
 
 gulp.task('test:coverage', ['pre-test'], function () {
-    return gulp.src([path.built + '/**/*.spec.js'])
+    return gulp.src([path.built])
         .pipe(mocha ({
             reporter: "mocha-jenkins-reporter",
             reporterOptions: {
