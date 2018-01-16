@@ -110,7 +110,13 @@ export class VersionController implements interfaces.Controller {
 
     @ApiOperationGet( {
         description : "Version object",
-        summary : "Get version"
+        summary : "Get version",
+	responses : {
+            200 : { 
+	    description : "Success",
+	    definition : "Version"
+	    }
+        }
     } )
     @httpGet( "/" )
     public getVersions( request: express.Request, response: express.Response, next: express.NextFunction ): void {
@@ -119,6 +125,29 @@ export class VersionController implements interfaces.Controller {
             name : pkg.name,
             version : pkg.version,
         } );
+    }
+    
+    @ApiOperationPost( {
+        description : "Post Version object that need to be",
+        summary : "Post Add a new Version",
+        parameters : {
+            body : { 
+	    	description : "New version",
+	    	required : true,
+	    	definition: "Version"
+	    }
+        },
+        responses : {
+            200 : { description : "Success" },
+            400 : { description : "Parameters fail" }
+        }
+    } )
+    @httpPost( "/" )
+    public postVersion( request: express.Request, response: express.Response, next: express.NextFunction ): void {
+        if ( ! request.body ) {
+            return response.status( 400 ).end();
+        }
+        response.json( request.body );
     }
 }
 
@@ -135,16 +164,13 @@ Start your server and test on url : /api-docs/swagger.json
 	"info": {
 		"title": "Mon api",
 		"version": "1.0",
-		"contact": {},
-		"license": {
-			"name": ""
-		}
+		"description": "Description de mon API"
 	},
 	"paths": {
 		"/version": {
 			"get": {
-				"description": "Get version object",
-				"summary": "Get Version",
+				"description": "Version object that need to be  2222",
+				"summary": "Add a new Version",
 				"operationId": "getVersions",
 				"produces": [
 					"application/json"
@@ -154,7 +180,48 @@ Start your server and test on url : /api-docs/swagger.json
 				],
 				"tags": [
 					"Version"
-				]
+				],
+				"parameters": [],
+				"responses": {
+					"200": {
+						"description": "Success",
+						"schema": {
+							"$ref": "#/definitions/Version"
+						}
+					}
+				}
+			},
+			"post": {
+				"description": "Post Version object that need to be  2222",
+				"summary": "Post Add a new Version",
+				"operationId": "postVersion",
+				"produces": [
+					"application/json"
+				],
+				"consumes": [
+					"application/json"
+				],
+				"tags": [
+					"Version"
+				],
+				"parameters": [
+					{
+						"name": "body",
+						"in": "body",
+						"required": true,
+						"schema": {
+							"$ref": "#/definitions/Version"
+						}
+					}
+				],
+				"responses": {
+					"200": {
+						"description": "Success"
+					},
+					"400": {
+						"description": "Parameters fail"
+					}
+				}
 			}
 		}
 	},
@@ -165,8 +232,7 @@ Start your server and test on url : /api-docs/swagger.json
 		}
 	],
 	"schemes": [
-		"http",
-        	"https"
+		"http"
 	],
 	"produces": [
 		"application/json",
@@ -182,10 +248,17 @@ Start your server and test on url : /api-docs/swagger.json
 			"properties": {
 				"name": {
 					"type": "string"
+				},
+				"description": {
+					"type": "string"
+				},
+				"version": {
+					"type": "string"
 				}
 			},
 			"required": [
-				"name"
+				"name",
+				"version"
 			]
 		}
 	},
