@@ -28,6 +28,7 @@ interface IPath {
     get?: ISwaggerOperation;
     post?: ISwaggerOperation;
     put?: ISwaggerOperation;
+    patch?: ISwaggerOperation;
     delete?: ISwaggerOperation;
 }
 
@@ -117,12 +118,38 @@ export class SwaggerService {
     }
 
     public static addOperationGet( args: IApiOperationGetArgs, target: any, propertyKey: string | symbol ): void {
+        assert.ok(args, "Args are required.");
+        if(args.parameters){
+            assert.ok(!args.parameters.body, "Parameter body is not required.");
+        }
         SwaggerService.addOperation( "get", args, target, propertyKey );
     }
 
     public static addOperationPost( args: IApiOperationPostArgs, target: any, propertyKey: string | symbol ): void {
+        assert.ok(args, "Args are required.");
+        assert.ok(args.parameters, "Parameters are required.");
         SwaggerService.addOperation( "post", args, target, propertyKey );
     }
+
+    public static addOperationPut( args: IApiOperationPostArgs, target: any, propertyKey: string | symbol ): void {
+        assert.ok(args, "Args are required.");
+        assert.ok(args.parameters, "Parameters are required.");
+        SwaggerService.addOperation( "put", args, target, propertyKey );
+    }
+
+    public static addOperationPatch( args: IApiOperationPostArgs, target: any, propertyKey: string | symbol ): void {
+        assert.ok(args, "Args are required.");
+        assert.ok(args.parameters, "Parameters are required.");
+        SwaggerService.addOperation( "patch", args, target, propertyKey );
+    }
+
+    public static addOperationDelete( args: IApiOperationPostArgs, target: any, propertyKey: string | symbol ): void {
+        assert.ok(args, "Args are required.");
+        assert.ok(args.parameters, "Parameters are required.");
+        assert.ok(!args.parameters.body, "Parameter body is not required.");
+        SwaggerService.addOperation( "delete", args, target, propertyKey );
+    }
+
 
     private static addOperation( operation: string, args: IApiOperationArgsBase, target: any, propertyKey: string | symbol ): void {
         let currentController: IController = {
@@ -157,7 +184,20 @@ export class SwaggerService {
             currentPath.post = SwaggerService.buildOperation( args, target, propertyKey );
         }
 
+        if ( "put" === operation ) {
+            currentPath.put = SwaggerService.buildOperation( args, target, propertyKey );
+        }
+
+        if ( "patch" === operation ) {
+            currentPath.patch = SwaggerService.buildOperation( args, target, propertyKey );
+        }
+
+        if ( "delete" === operation ) {
+            currentPath.delete = SwaggerService.buildOperation( args, target, propertyKey );
+        }
+
         SwaggerService.controllerMap[ target.constructor.name ] = currentController;
+        console.log(currentController);
     }
 
     private static buildOperation( args: IApiOperationArgsBase, target: any, propertyKey: string | symbol ): ISwaggerOperation {
@@ -277,6 +317,19 @@ export class SwaggerService {
                     swaggerPath.post = path.post;
                     swaggerPath.post.tags = [ _.capitalize( controller.name ) ];
                 }
+                if ( path.put ) {
+                    swaggerPath.put = path.put;
+                    swaggerPath.put.tags = [ _.capitalize( controller.name ) ];
+                }
+                if ( path.patch ) {
+                    swaggerPath.patch = path.patch;
+                    swaggerPath.patch.tags = [ _.capitalize( controller.name ) ];
+                }
+                if ( path.delete ) {
+                    swaggerPath.delete = path.delete;
+                    swaggerPath.delete.tags = [ _.capitalize( controller.name ) ];
+                }
+
                 if ( path.path && path.path.length > 0 ) {
                     data.paths[ controller.path.concat( path.path ) ] = swaggerPath;
                 } else {

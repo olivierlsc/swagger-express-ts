@@ -78,6 +78,7 @@ export interface ISwaggerPath {
     get?: ISwaggerOperation;
     post?: ISwaggerOperation;
     put?: ISwaggerOperation;
+    patch?: ISwaggerOperation;
     delete?: ISwaggerOperation;
 }
 

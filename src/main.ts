@@ -50,14 +50,19 @@ server.setConfig( ( app: any ) => {
                 models : {
                     Version : {
                         properties : {
+                            id: {
+                                type: SwaggerDefinitionConstant.Definition.Property.Type.STRING,
+                                required: true
+                            },
                             name : {
                                 type : SwaggerDefinitionConstant.Definition.Property.Type.STRING,
                                 required : true
                             },
-                            description : { type : SwaggerDefinitionConstant.Definition.Property.Type.STRING },
+                            description : {
+                                type : SwaggerDefinitionConstant.Definition.Property.Type.STRING
+                            },
                             version : {
-                                type : SwaggerDefinitionConstant.Definition.Property.Type.STRING,
-                                required : true
+                                type : SwaggerDefinitionConstant.Definition.Property.Type.STRING
                             }
                         }
                     }

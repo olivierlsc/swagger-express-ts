@@ -23,7 +23,7 @@ export interface IApiOperationArgsBase {
     parameters?: {
         path?: {[key: string]: IApiOperationArgsBaseParameter},
         query?: {[key: string]: IApiOperationArgsBaseParameter},
-        body?: IApiOperationArgsBaseParameter,
+        body?: IApiOperationArgsBaseParameter, // use only for POST, PUT and PATCH
         formData?: {[key: string]: IApiOperationArgsBaseParameter}
     };
     responses: {[key: string]: IApiOperationArgsBaseResponse};
