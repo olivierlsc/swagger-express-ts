@@ -32,8 +32,8 @@ export class VersionController implements interfaces.Controller {
     ];
 
     @ApiOperationGet( {
-        description : "Version object that need to be  2222",
-        summary : "Add a new Version",
+        description : "Get version object",
+        summary : "Get version",
         responses : {
             200 : { description : "Success", isArray : true, model : "Version" }
         }
@@ -44,8 +44,8 @@ export class VersionController implements interfaces.Controller {
     }
 
     @ApiOperationPost( {
-        description : "Post Version object that need to be  2222",
-        summary : "Post Add a new Version",
+        description : "Post version object",
+        summary : "Post new version",
         parameters : {
             body : { description : "New version", required : true, model : "Version" }
         },
