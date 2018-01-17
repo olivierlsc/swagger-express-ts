@@ -276,6 +276,7 @@ Start your server and test on url : /api-docs/swagger.json
 - [@ApiOperationPut](https://github.com/olivierlsc/swagger-express-ts/blob/master/wiki/api-operation-put.decorator.md)
 - [@ApiOperationPatch](https://github.com/olivierlsc/swagger-express-ts/blob/master/wiki/api-operation-patch.decorator.md)
 - [@ApiOperationDelete](https://github.com/olivierlsc/swagger-express-ts/blob/master/wiki/api-operation-delete.decorator.md)
+- [Test](https://github.com/olivierlsc/swagger-express-ts/blob/master/wiki/test.md)
 
 ## For any questions, suggestions, or feature requests
 
