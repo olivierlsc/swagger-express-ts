@@ -4,8 +4,6 @@ import "reflect-metadata";
 import { Container } from "inversify";
 import { interfaces, InversifyExpressServer, TYPE } from "inversify-express-utils";
 import { VersionController } from "./version/version.controller";
-import * as compression from "compression";
-import * as helmet from "helmet";
 import * as swagger from "./lib/swagger-specification";
 import { SwaggerDefinitionConstant } from "./lib/swagger-specification";
 const config = require( "../config.json" );
@@ -23,13 +21,7 @@ const server = new InversifyExpressServer( container );
 server.setConfig( ( app: any ) => {
     app.use( '/api-docs/swagger', express.static( 'swagger' ) );
     app.use( '/api-docs/swagger/assets', express.static( 'node_modules/swagger-ui-dist' ) );
-    // add body parser
-    app.use( bodyParser.urlencoded( {
-        extended : true,
-    } ) );
     app.use( bodyParser.json() );
-    app.use( compression() );
-    app.use( helmet() );
     app.use( swagger.express(
         {
             definition : {
@@ -47,9 +39,9 @@ server.setConfig( ( app: any ) => {
                 models : {
                     Version : {
                         properties : {
-                            id: {
-                                type: SwaggerDefinitionConstant.Definition.Property.Type.STRING,
-                                required: true
+                            id : {
+                                type : SwaggerDefinitionConstant.Definition.Property.Type.STRING,
+                                required : true
                             },
                             name : {
                                 type : SwaggerDefinitionConstant.Definition.Property.Type.STRING,
