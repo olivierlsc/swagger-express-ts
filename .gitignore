@@ -62,3 +62,4 @@ dist/
 reports/
 config.json
 src/**/*.js
+.idea

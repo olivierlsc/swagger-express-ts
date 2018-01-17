@@ -15,7 +15,7 @@ const container = new Container();
 
 // note that you *must* bind your controllers to Controller
 container.bind<interfaces.Controller>( TYPE.Controller )
-    .to( VersionController ).whenTargetNamed( VersionController.TARGET_NAME );
+    .to( VersionController ).inSingletonScope().whenTargetNamed( VersionController.TARGET_NAME );
 
 // create server
 const server = new InversifyExpressServer( container );

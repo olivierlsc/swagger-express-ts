@@ -197,7 +197,6 @@ export class SwaggerService {
         }
 
         SwaggerService.controllerMap[ target.constructor.name ] = currentController;
-        console.log(currentController);
     }
 
     private static buildOperation( args: IApiOperationArgsBase, target: any, propertyKey: string | symbol ): ISwaggerOperation {

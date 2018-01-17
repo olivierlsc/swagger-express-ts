@@ -119,16 +119,17 @@ export class VersionController implements interfaces.Controller {
     } )
     @httpPut( "/:id" )
     public putVersion( @requestParam( "id" ) id: string, request: express.Request, response: express.Response, next: express.NextFunction ): void {
-        if ( request.body ) {
+        if ( ! request.body ) {
             return response.status( 400 ).end();
         }
-        this.data.forEach( ( version: any )=> {
+        this.data.forEach( ( version: any, index: number )=> {
             if ( version.id === id ) {
                 let newVersion = request.body;
                 version.id = newVersion.id;
                 version.name = newVersion.name;
                 version.description = newVersion.description;
                 version.version = newVersion.version;
+                this.data[ index ] = version;
                 return response.json( version );
             }
         } );
