@@ -81,7 +81,5 @@ server.setErrorConfig( ( app: any ) => {
 
 const app = server.build();
 
-if("test" != process.env.NODE_ENV){
-    app.listen( config.port );
-    console.info( "Server is listening on port : " + config.port );
-}
+app.listen( config.port );
+console.info( "Server is listening on port : " + config.port );
