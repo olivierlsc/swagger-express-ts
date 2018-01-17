@@ -22,6 +22,7 @@ import {
 } from "./i-api-operation-args.base";
 import { IApiOperationGetArgs } from "./api-operation-get.decorator";
 import * as assert from "assert";
+import {SyntaxWalker} from "../../../node_modules/tslint/lib/language/walker/syntaxWalker";
 
 interface IPath {
     path: string;
@@ -118,35 +119,35 @@ export class SwaggerService {
     }
 
     public static addOperationGet( args: IApiOperationGetArgs, target: any, propertyKey: string | symbol ): void {
-        assert.ok(args, "Args are required.");
-        if(args.parameters){
-            assert.ok(!args.parameters.body, "Parameter body is not required.");
+        assert.ok( args, "Args are required." );
+        if ( args.parameters ) {
+            assert.ok( ! args.parameters.body, "Parameter body is not required." );
         }
         SwaggerService.addOperation( "get", args, target, propertyKey );
     }
 
     public static addOperationPost( args: IApiOperationPostArgs, target: any, propertyKey: string | symbol ): void {
-        assert.ok(args, "Args are required.");
-        assert.ok(args.parameters, "Parameters are required.");
+        assert.ok( args, "Args are required." );
+        assert.ok( args.parameters, "Parameters are required." );
         SwaggerService.addOperation( "post", args, target, propertyKey );
     }
 
     public static addOperationPut( args: IApiOperationPostArgs, target: any, propertyKey: string | symbol ): void {
-        assert.ok(args, "Args are required.");
-        assert.ok(args.parameters, "Parameters are required.");
+        assert.ok( args, "Args are required." );
+        assert.ok( args.parameters, "Parameters are required." );
         SwaggerService.addOperation( "put", args, target, propertyKey );
     }
 
     public static addOperationPatch( args: IApiOperationPostArgs, target: any, propertyKey: string | symbol ): void {
-        assert.ok(args, "Args are required.");
-        assert.ok(args.parameters, "Parameters are required.");
+        assert.ok( args, "Args are required." );
+        assert.ok( args.parameters, "Parameters are required." );
         SwaggerService.addOperation( "patch", args, target, propertyKey );
     }
 
     public static addOperationDelete( args: IApiOperationPostArgs, target: any, propertyKey: string | symbol ): void {
-        assert.ok(args, "Args are required.");
-        assert.ok(args.parameters, "Parameters are required.");
-        assert.ok(!args.parameters.body, "Parameter body is not required.");
+        assert.ok( args, "Args are required." );
+        assert.ok( args.parameters, "Parameters are required." );
+        assert.ok( ! args.parameters.body, "Parameter body is not required." );
         SwaggerService.addOperation( "delete", args, target, propertyKey );
     }
 
@@ -204,9 +205,9 @@ export class SwaggerService {
             description : args.description,
             summary : args.summary,
             operationId : propertyKey,
-            produces : [ SwaggerDefinitionConstant.Produce.JSON ],
-            consumes : [ SwaggerDefinitionConstant.Consume.JSON ],
             tags : [],
+            produces: [],
+            consumes: [],
             parameters : [],
             responses : {}
         };
@@ -226,7 +227,7 @@ export class SwaggerService {
                 operation.parameters = _.concat( operation.parameters, SwaggerService.buildParameters( SwaggerDefinitionConstant.Parameter.In.QUERY, args.parameters.query ) );
             }
             if ( args.parameters.body ) {
-                assert.ok( args.parameters.body.definition, "Definition are required." );
+                assert.ok( args.parameters.body.model, "Definition are required." );
                 let newParameterBody: ISwaggerOperationParameter = {
                     name : SwaggerDefinitionConstant.Parameter.In.BODY,
                     in : SwaggerDefinitionConstant.Parameter.In.BODY
@@ -235,7 +236,7 @@ export class SwaggerService {
                     newParameterBody.required = true;
                 }
                 let swaggerOperationSchema: ISwaggerOperationSchema = {
-                    $ref : SwaggerService.buildRef( args.parameters.body.definition )
+                    $ref : SwaggerService.buildRef( args.parameters.body.model )
                 };
                 newParameterBody.schema = swaggerOperationSchema;
                 operation.parameters.push( newParameterBody );
@@ -251,8 +252,8 @@ export class SwaggerService {
             if ( response.description ) {
                 newSwaggerOperationResponse.description = response.description;
             }
-            if ( response.definition ) {
-                let ref = SwaggerService.buildRef( response.definition );
+            if ( response.model ) {
+                let ref = SwaggerService.buildRef( response.model );
                 let newSwaggerOperationResponseSchema: ISwaggerOperationSchema = {
                     $ref : ref
                 };
@@ -310,22 +311,52 @@ export class SwaggerService {
                 let swaggerPath: ISwaggerPath = {};
                 if ( path.get ) {
                     swaggerPath.get = path.get;
+                    if(swaggerPath.get.produces.length == 0){
+                        swaggerPath.get.produces = SwaggerService.data.produces;
+                    }
+                    if(swaggerPath.get.consumes.length == 0){
+                        swaggerPath.get.consumes = SwaggerService.data.consumes;
+                    }
                     swaggerPath.get.tags = [ _.capitalize( controller.name ) ];
                 }
                 if ( path.post ) {
                     swaggerPath.post = path.post;
+                    if(swaggerPath.post.produces.length == 0){
+                        swaggerPath.post.produces = SwaggerService.data.produces;
+                    }
+                    if(swaggerPath.post.consumes.length == 0){
+                        swaggerPath.post.consumes = SwaggerService.data.consumes;
+                    }
                     swaggerPath.post.tags = [ _.capitalize( controller.name ) ];
                 }
                 if ( path.put ) {
                     swaggerPath.put = path.put;
+                    if(swaggerPath.put.produces.length == 0){
+                        swaggerPath.put.produces = SwaggerService.data.produces;
+                    }
+                    if(swaggerPath.put.consumes.length == 0){
+                        swaggerPath.put.consumes = SwaggerService.data.consumes;
+                    }
                     swaggerPath.put.tags = [ _.capitalize( controller.name ) ];
                 }
                 if ( path.patch ) {
                     swaggerPath.patch = path.patch;
+                    if(swaggerPath.patch.produces.length == 0){
+                        swaggerPath.patch.produces = SwaggerService.data.produces;
+                    }
+                    if(swaggerPath.patch.consumes.length == 0){
+                        swaggerPath.patch.consumes = SwaggerService.data.consumes;
+                    }
                     swaggerPath.patch.tags = [ _.capitalize( controller.name ) ];
                 }
                 if ( path.delete ) {
                     swaggerPath.delete = path.delete;
+                    if(swaggerPath.delete.produces.length == 0){
+                        swaggerPath.delete.produces = SwaggerService.data.produces;
+                    }
+                    if(swaggerPath.delete.consumes.length == 0){
+                        swaggerPath.delete.consumes = SwaggerService.data.consumes;
+                    }
                     swaggerPath.delete.tags = [ _.capitalize( controller.name ) ];
                 }
 

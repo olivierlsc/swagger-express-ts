@@ -35,7 +35,7 @@ export class VersionController implements interfaces.Controller {
         description : "Version object that need to be  2222",
         summary : "Add a new Version",
         responses : {
-            200 : { description : "Success", isArray : true, definition : "Version" }
+            200 : { description : "Success", isArray : true, model : "Version" }
         }
     } )
     @httpGet( "/" )
@@ -47,7 +47,7 @@ export class VersionController implements interfaces.Controller {
         description : "Post Version object that need to be  2222",
         summary : "Post Add a new Version",
         parameters : {
-            body : { description : "New version", required : true, definition : "Version" }
+            body : { description : "New version", required : true, model : "Version" }
         },
         responses : {
             200 : { description : "Success" },
@@ -77,7 +77,7 @@ export class VersionController implements interfaces.Controller {
             }
         },
         responses : {
-            200 : { description : "Success", definition : "Version" },
+            200 : { description : "Success", model : "Version" },
             404 : { description : "Version not exist" }
         },
         produces : [ SwaggerDefinitionConstant.Produce.JSON ]
@@ -106,12 +106,12 @@ export class VersionController implements interfaces.Controller {
             },
             body : {
                 description : "Updated version",
-                definition : "Version",
+                model : "Version",
                 required : true
             }
         },
         responses : {
-            200 : { description : "Success", definition : "Version" },
+            200 : { description : "Success", model : "Version" },
             400 : { description : "Parameters fail" },
             404 : { description : "Version not exist" }
         },

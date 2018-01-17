@@ -44,9 +44,6 @@ server.setConfig( ( app: any ) => {
                     //     name : ""
                     // }
                 },
-                //schemes : [ SwaggerDefinition.Scheme.HTTPS, SwaggerDefinition.Scheme.HTTP ],
-                produces : [ SwaggerDefinitionConstant.Produce.JSON, SwaggerDefinitionConstant.Produce.XML ],
-                consumes : [ SwaggerDefinitionConstant.Consume.JSON, SwaggerDefinitionConstant.Consume.XML ],
                 models : {
                     Version : {
                         properties : {

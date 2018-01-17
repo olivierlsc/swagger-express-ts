@@ -5,13 +5,13 @@ export interface IApiOperationArgsBaseParameter {
     format?: string;
     deprecated?: boolean;
     allowEmptyValue?: boolean;
-    definition?: string;
+    model?: string;
 }
 
 export interface IApiOperationArgsBaseResponse {
     description?: string;
     isArray?: boolean; // Default is "false"
-    definition?: string;
+    model?: string;
 }
 
 export interface IApiOperationArgsBase {
