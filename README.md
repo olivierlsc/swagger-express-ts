@@ -42,7 +42,7 @@ server.setConfig( ( app: any ) => {
     app.use( swagger.express( {
         definition : {
             info : {
-                title : "Mon api",
+                title : "My api",
                 version : "1.0"
             },
             models : {
