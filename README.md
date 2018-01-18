@@ -24,7 +24,7 @@ import "reflect-metadata";
 import { Container } from "inversify";
 import { interfaces, InversifyExpressServer, TYPE } from "inversify-express-utils";
 import { VersionController } from "./version/version.controller";
-import * as swagger from "./lib/swagger-specification";
+import * as swagger from "swagger-express-ts";
 import { SwaggerDefinitionConstant } from "swagger-express-ts";
 
 // set up container
