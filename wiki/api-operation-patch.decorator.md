@@ -6,7 +6,7 @@ Example:
 ```ts
 import * as express from "express";
 import { injectable } from "inversify";
-import { controller, interfaces, requestParam, httpPut } from "inversify-express-utils";
+import { controller, interfaces, requestParam, httpPatch } from "inversify-express-utils";
 import { ApiPath, ApiOperationPatch, SwaggerDefinitionConstant } from "swagger-express-ts";
 import "reflect-metadata";
 
