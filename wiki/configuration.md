@@ -43,7 +43,7 @@ Define path to serve swagger.json
 - Optional. 
 - Default is "/api-docs/swagger.json".
 
-## definition: ISwaggerBuildDefinition
+## definition: [ISwaggerBuildDefinition](./i-swagger-build-definition.md)
 Define swagger definition.
 - Required
 
