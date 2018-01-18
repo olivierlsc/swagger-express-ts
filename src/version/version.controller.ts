@@ -106,6 +106,9 @@ export class VersionController implements interfaces.Controller {
                 model : "Version",
                 required : true
             }
+        },
+        responses : {
+            200 : { model : "Version" }
         }
     } )
     @httpPut( "/:id" )

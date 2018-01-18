@@ -28,5 +28,5 @@ export interface IApiOperationArgsBase {
     consumes?: string[];
     path?: string;
     parameters?: IApiOperationArgsBaseParameters;
-    responses?: {[key: string]: IApiOperationArgsBaseResponse};
+    responses: {[key: string]: IApiOperationArgsBaseResponse};
 }

@@ -121,6 +121,7 @@ export class SwaggerService {
 
     public static addOperationGet( args: IApiOperationGetArgs, target: any, propertyKey: string | symbol ): void {
         assert.ok( args, "Args are required." );
+        assert.ok( args.responses, "Responses are required." );
         if ( args.parameters ) {
             assert.ok( ! args.parameters.body, "Parameter body is not required." );
         }
@@ -130,18 +131,21 @@ export class SwaggerService {
     public static addOperationPost( args: IApiOperationPostArgs, target: any, propertyKey: string | symbol ): void {
         assert.ok( args, "Args are required." );
         assert.ok( args.parameters, "Parameters are required." );
+        assert.ok( args.responses, "Responses are required." );
         SwaggerService.addOperation( "post", args, target, propertyKey );
     }
 
     public static addOperationPut( args: IApiOperationPostArgs, target: any, propertyKey: string | symbol ): void {
         assert.ok( args, "Args are required." );
         assert.ok( args.parameters, "Parameters are required." );
+        assert.ok( args.responses, "Responses are required." );
         SwaggerService.addOperation( "put", args, target, propertyKey );
     }
 
     public static addOperationPatch( args: IApiOperationPostArgs, target: any, propertyKey: string | symbol ): void {
         assert.ok( args, "Args are required." );
         assert.ok( args.parameters, "Parameters are required." );
+        assert.ok( args.responses, "Responses are required." );
         SwaggerService.addOperation( "patch", args, target, propertyKey );
     }
 
@@ -149,6 +153,7 @@ export class SwaggerService {
         assert.ok( args, "Args are required." );
         assert.ok( args.parameters, "Parameters are required." );
         assert.ok( ! args.parameters.body, "Parameter body is not required." );
+        assert.ok( args.responses, "Responses are required." );
         SwaggerService.addOperation( "delete", args, target, propertyKey );
     }
 
@@ -204,8 +209,7 @@ export class SwaggerService {
     private static buildOperation( args: IApiOperationArgsBase, target: any, propertyKey: string | symbol ): ISwaggerOperation {
         let operation: ISwaggerOperation = {
             operationId : propertyKey,
-            tags : [],
-            parameters : []
+            tags : []
         };
         if ( args.description ) {
             operation.description = args.description;
@@ -222,6 +226,7 @@ export class SwaggerService {
         }
 
         if ( args.parameters ) {
+            operation.parameters = [];
             if ( args.parameters.path ) {
                 operation.parameters = _.concat( operation.parameters, SwaggerService.buildParameters( SwaggerDefinitionConstant.Parameter.In.PATH, args.parameters.path ) );
             }
@@ -256,7 +261,7 @@ export class SwaggerService {
                 if ( response.description ) {
                     newSwaggerOperationResponse.description = response.description;
                 } else {
-                    switch(responseIndex){
+                    switch ( responseIndex ) {
                         case "200":
                             newSwaggerOperationResponse.description = "Success";
                             break;
