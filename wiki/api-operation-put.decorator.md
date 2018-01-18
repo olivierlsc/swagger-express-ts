@@ -89,11 +89,11 @@ Define description of operation.
 Define summary of operation.
 - Optional
 
-## parameters: IApiOperationArgsBaseParameters
+## parameters: [IApiOperationArgsBaseParameters](https://github.com/olivierlsc/swagger-express-ts/blob/master/wiki/i-api-operation-args-base-parameters.md)
 Define parameters in path, body, query and formData.
 - Required
 
-## responses: {[key: string]: IApiOperationArgsBaseResponse}
+## responses: {[key: string]: [IApiOperationArgsBaseResponse](https://github.com/olivierlsc/swagger-express-ts/blob/alpha/wiki/i-api-operation-args-base-response.md)}
 Define all responses.
 - Required
 
@@ -101,9 +101,3 @@ Define all responses.
 Define type list that resource produce.
 - Optional
 - Default is global type list defined in ISwaggerBuildDefinition when execute .express(options: ISwaggerExpressOptions)
-
-# Interfaces
-
-- [IApiOperationArgsBaseParameters](https://github.com/olivierlsc/swagger-express-ts/blob/master/wiki/i-api-operation-args-base-parameters.md)
-- [IApiOperationArgsBaseParameter](https://github.com/olivierlsc/swagger-express-ts/blob/master/wiki/i-api-operation-args-base-parameter.md)
-- [IApiOperationArgsBaseResponse](https://github.com/olivierlsc/swagger-express-ts/blob/alpha/wiki/i-api-operation-args-base-response.md)
