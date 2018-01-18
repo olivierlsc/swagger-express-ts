@@ -268,15 +268,15 @@ Start your server and test on url : /api-docs/swagger.json
 
 ## Features and API
 
-- [Installation](https://github.com/olivierlsc/swagger-express-ts/blob/master/wiki/installation.md)
-- [Configuration](https://github.com/olivierlsc/swagger-express-ts/blob/master/wiki/configuration.md)
-- [@ApiPath](https://github.com/olivierlsc/swagger-express-ts/blob/master/wiki/api-path.decorator.md)
-- [@ApiOperationGet](https://github.com/olivierlsc/swagger-express-ts/blob/master/wiki/api-operation-get.decorator.md)
-- [@ApiOperationPost](https://github.com/olivierlsc/swagger-express-ts/blob/master/wiki/api-operation-post.decorator.md)
-- [@ApiOperationPut](https://github.com/olivierlsc/swagger-express-ts/blob/master/wiki/api-operation-put.decorator.md)
-- [@ApiOperationPatch](https://github.com/olivierlsc/swagger-express-ts/blob/master/wiki/api-operation-patch.decorator.md)
-- [@ApiOperationDelete](https://github.com/olivierlsc/swagger-express-ts/blob/master/wiki/api-operation-delete.decorator.md)
-- [Test](https://github.com/olivierlsc/swagger-express-ts/blob/master/wiki/test.md)
+- [Installation](./wiki/installation.md)
+- [Configuration](./wiki/configuration.md)
+- [@ApiPath](./wiki/api-path.decorator.md)
+- [@ApiOperationGet](./wiki/api-operation-get.decorator.md)
+- [@ApiOperationPost](./wiki/api-operation-post.decorator.md)
+- [@ApiOperationPut](./wiki/api-operation-put.decorator.md)
+- [@ApiOperationPatch](./wiki/api-operation-patch.decorator.md)
+- [@ApiOperationDelete](./wiki/api-operation-delete.decorator.md)
+- [Test](./wiki/test.md)
 
 ## For any questions, suggestions, or feature requests
 
