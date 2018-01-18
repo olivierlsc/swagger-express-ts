@@ -22,7 +22,6 @@ import {
 } from "./i-api-operation-args.base";
 import { IApiOperationGetArgs } from "./api-operation-get.decorator";
 import * as assert from "assert";
-import {SyntaxWalker} from "../../../node_modules/tslint/lib/language/walker/syntaxWalker";
 
 interface IPath {
     path: string;
@@ -103,9 +102,11 @@ export class SwaggerService {
         let currentController: IController = {
             path : args.path,
             name : args.name,
-            description : args.description,
             paths : {}
         };
+        if ( args.description ) {
+            currentController.description = args.description;
+        }
         for ( let controllerIndex in SwaggerService.controllerMap ) {
             let controller: IController = SwaggerService.controllerMap[ controllerIndex ];
             if ( controllerIndex === target.name ) {
@@ -206,8 +207,8 @@ export class SwaggerService {
             summary : args.summary,
             operationId : propertyKey,
             tags : [],
-            produces: [],
-            consumes: [],
+            produces : [],
+            consumes : [],
             parameters : [],
             responses : {}
         };
@@ -311,50 +312,50 @@ export class SwaggerService {
                 let swaggerPath: ISwaggerPath = {};
                 if ( path.get ) {
                     swaggerPath.get = path.get;
-                    if(swaggerPath.get.produces.length == 0){
+                    if ( swaggerPath.get.produces.length == 0 ) {
                         swaggerPath.get.produces = SwaggerService.data.produces;
                     }
-                    if(swaggerPath.get.consumes.length == 0){
+                    if ( swaggerPath.get.consumes.length == 0 ) {
                         swaggerPath.get.consumes = SwaggerService.data.consumes;
                     }
                     swaggerPath.get.tags = [ _.capitalize( controller.name ) ];
                 }
                 if ( path.post ) {
                     swaggerPath.post = path.post;
-                    if(swaggerPath.post.produces.length == 0){
+                    if ( swaggerPath.post.produces.length == 0 ) {
                         swaggerPath.post.produces = SwaggerService.data.produces;
                     }
-                    if(swaggerPath.post.consumes.length == 0){
+                    if ( swaggerPath.post.consumes.length == 0 ) {
                         swaggerPath.post.consumes = SwaggerService.data.consumes;
                     }
                     swaggerPath.post.tags = [ _.capitalize( controller.name ) ];
                 }
                 if ( path.put ) {
                     swaggerPath.put = path.put;
-                    if(swaggerPath.put.produces.length == 0){
+                    if ( swaggerPath.put.produces.length == 0 ) {
                         swaggerPath.put.produces = SwaggerService.data.produces;
                     }
-                    if(swaggerPath.put.consumes.length == 0){
+                    if ( swaggerPath.put.consumes.length == 0 ) {
                         swaggerPath.put.consumes = SwaggerService.data.consumes;
                     }
                     swaggerPath.put.tags = [ _.capitalize( controller.name ) ];
                 }
                 if ( path.patch ) {
                     swaggerPath.patch = path.patch;
-                    if(swaggerPath.patch.produces.length == 0){
+                    if ( swaggerPath.patch.produces.length == 0 ) {
                         swaggerPath.patch.produces = SwaggerService.data.produces;
                     }
-                    if(swaggerPath.patch.consumes.length == 0){
+                    if ( swaggerPath.patch.consumes.length == 0 ) {
                         swaggerPath.patch.consumes = SwaggerService.data.consumes;
                     }
                     swaggerPath.patch.tags = [ _.capitalize( controller.name ) ];
                 }
                 if ( path.delete ) {
                     swaggerPath.delete = path.delete;
-                    if(swaggerPath.delete.produces.length == 0){
+                    if ( swaggerPath.delete.produces.length == 0 ) {
                         swaggerPath.delete.produces = SwaggerService.data.produces;
                     }
-                    if(swaggerPath.delete.consumes.length == 0){
+                    if ( swaggerPath.delete.consumes.length == 0 ) {
                         swaggerPath.delete.consumes = SwaggerService.data.consumes;
                     }
                     swaggerPath.delete.tags = [ _.capitalize( controller.name ) ];
