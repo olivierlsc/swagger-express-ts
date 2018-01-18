@@ -1,3 +1,8 @@
+<a name="1.0.0-alpha.2"></a>
+# [1.0.0-alpha.2] (2018-01-18)
+
+Complete informations.
+
 <a name="1.0.0-alpha.1"></a>
 # [1.0.0-alpha.1] (2018-01-18)
 
