@@ -11,3 +11,4 @@ gulpfile.js
 tsconfig.json
 tsconfig.package.json
 tslint.json
+.idea/
