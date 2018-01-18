@@ -78,7 +78,7 @@ export class VersionController implements interfaces.Controller {
 # IApiOperationPutArgs
 
 ## path: string
-Define particular path of operation. Default is path parameter in @ApiPath.
+Define particular path of operation. Default is path parameter in [@ApiPath](./api-path.decorator.md).
 - Optional
 
 ## description: string
@@ -89,15 +89,15 @@ Define description of operation.
 Define summary of operation.
 - Optional
 
-## parameters: [IApiOperationArgsBaseParameters](https://github.com/olivierlsc/swagger-express-ts/blob/master/wiki/i-api-operation-args-base-parameters.md)
+## parameters: [IApiOperationArgsBaseParameters](./i-api-operation-args-base-parameters.md)
 Define parameters in path, body, query and formData.
 - Required
 
-## responses: {[key: string]: [IApiOperationArgsBaseResponse](https://github.com/olivierlsc/swagger-express-ts/blob/alpha/wiki/i-api-operation-args-base-response.md)}
+## responses: {[key: string]: [IApiOperationArgsBaseResponse](./i-api-operation-args-base-response.md)}
 Define all responses.
 - Required
 
 ## produces: string[]
 Define type list that resource produce.
 - Optional
-- Default is global type list defined in ISwaggerBuildDefinition when execute .express(options: ISwaggerExpressOptions)
+- Default is global type list defined in ISwaggerBuildDefinition when execute [.express(options: ISwaggerExpressOptions)](./configuration.md)
