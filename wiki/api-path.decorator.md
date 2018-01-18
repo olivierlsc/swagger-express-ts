@@ -12,8 +12,7 @@ import { controller } from "inversify-express-utils";
 
 @ApiPath( {
     path : "/version",
-    name : "Version",
-    description : "Everything about version"
+    name : "Version"
 } )
 @controller( "/version" )
 @injectable()
