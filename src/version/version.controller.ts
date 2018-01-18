@@ -8,10 +8,10 @@ import { ApiOperationPut } from "../lib/swagger-specification/api-operation-put.
 const pkg = require( "../../package.json" );
 
 @ApiPath( {
-    path : "/version",
+    path : "/versions",
     name : "Version"
 } )
-@controller( "/version" )
+@controller( "/versions" )
 @injectable()
 export class VersionController implements interfaces.Controller {
     public static TARGET_NAME: string = "VersionController";
@@ -93,8 +93,6 @@ export class VersionController implements interfaces.Controller {
 
     @ApiOperationPut( {
         path : "/{id}",
-        description : "Put version by id",
-        summary : "Put version",
         parameters : {
             path : {
                 id : {
@@ -108,13 +106,7 @@ export class VersionController implements interfaces.Controller {
                 model : "Version",
                 required : true
             }
-        },
-        responses : {
-            200 : { description : "Success", model : "Version" },
-            400 : { description : "Parameters fail" },
-            404 : { description : "Version not exist" }
-        },
-        produces : [ SwaggerDefinitionConstant.Produce.JSON ]
+        }
     } )
     @httpPut( "/:id" )
     public putVersion( @requestParam( "id" ) id: string, request: express.Request, response: express.Response, next: express.NextFunction ): void {

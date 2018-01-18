@@ -62,11 +62,11 @@ export interface ISwaggerOperation {
     tags?: string[];
     summary?: string;
     description?: string;
-    operationId?: string | symbol;
+    operationId: string | symbol;
     parameters?: ISwaggerOperationParameter[];
-    produces: string[];
-    consumes: string[];
-    responses: {[key: string]: ISwaggerOperationResponse};
+    produces?: string[];
+    consumes?: string[];
+    responses?: {[key: string]: ISwaggerOperationResponse};
 }
 
 export interface ISwaggerTag {

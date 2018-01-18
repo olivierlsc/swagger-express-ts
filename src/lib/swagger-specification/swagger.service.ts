@@ -203,15 +203,16 @@ export class SwaggerService {
 
     private static buildOperation( args: IApiOperationArgsBase, target: any, propertyKey: string | symbol ): ISwaggerOperation {
         let operation: ISwaggerOperation = {
-            description : args.description,
-            summary : args.summary,
             operationId : propertyKey,
             tags : [],
-            produces : [],
-            consumes : [],
-            parameters : [],
-            responses : {}
+            parameters : []
         };
+        if ( args.description ) {
+            operation.description = args.description;
+        }
+        if ( args.summary ) {
+            operation.summary = args.summary;
+        }
         if ( args.produces && args.produces.length > 0 ) {
             operation.produces = args.produces;
         }
@@ -247,28 +248,58 @@ export class SwaggerService {
             }
         }
 
-        for ( let responseIndex in args.responses ) {
-            let response: IApiOperationArgsBaseResponse = args.responses[ responseIndex ];
-            let newSwaggerOperationResponse: ISwaggerOperationResponse = {};
-            if ( response.description ) {
-                newSwaggerOperationResponse.description = response.description;
-            }
-            if ( response.model ) {
-                let ref = SwaggerService.buildRef( response.model );
-                let newSwaggerOperationResponseSchema: ISwaggerOperationSchema = {
-                    $ref : ref
-                };
-                if ( response.isArray ) {
-                    newSwaggerOperationResponseSchema = {
-                        items : {
-                            $ref : ref
-                        },
-                        type : SwaggerDefinitionConstant.Response.Type.ARRAY
+        if ( args.responses ) {
+            operation.responses = {};
+            for ( let responseIndex in args.responses ) {
+                let response: IApiOperationArgsBaseResponse = args.responses[ responseIndex ];
+                let newSwaggerOperationResponse: ISwaggerOperationResponse = {};
+                if ( response.description ) {
+                    newSwaggerOperationResponse.description = response.description;
+                } else {
+                    switch(responseIndex){
+                        case "200":
+                            newSwaggerOperationResponse.description = "Success";
+                            break;
+                        case "201":
+                            newSwaggerOperationResponse.description = "Success and Created";
+                            break;
+                        case "204":
+                            newSwaggerOperationResponse.description = "Success and 	No Content";
+                            break;
+                        case "400":
+                            newSwaggerOperationResponse.description = "Client error and Bad Request";
+                            break;
+                        case "401":
+                            newSwaggerOperationResponse.description = "Client error and Unauthorized";
+                            break;
+                        case "404":
+                            newSwaggerOperationResponse.description = "Client error and Not Found";
+                            break;
+                        case "406":
+                            newSwaggerOperationResponse.description = "Client error and Not Acceptable";
+                            break;
+                        default:
+                            newSwaggerOperationResponse.description = null;
                     }
+
                 }
-                newSwaggerOperationResponse.schema = newSwaggerOperationResponseSchema;
+                if ( response.model ) {
+                    let ref = SwaggerService.buildRef( response.model );
+                    let newSwaggerOperationResponseSchema: ISwaggerOperationSchema = {
+                        $ref : ref
+                    };
+                    if ( response.isArray ) {
+                        newSwaggerOperationResponseSchema = {
+                            items : {
+                                $ref : ref
+                            },
+                            type : SwaggerDefinitionConstant.Response.Type.ARRAY
+                        }
+                    }
+                    newSwaggerOperationResponse.schema = newSwaggerOperationResponseSchema;
+                }
+                operation.responses[ responseIndex ] = newSwaggerOperationResponse;
             }
-            operation.responses[ responseIndex ] = newSwaggerOperationResponse;
         }
 
         return operation;
@@ -312,50 +343,50 @@ export class SwaggerService {
                 let swaggerPath: ISwaggerPath = {};
                 if ( path.get ) {
                     swaggerPath.get = path.get;
-                    if ( swaggerPath.get.produces.length == 0 ) {
+                    if ( ! swaggerPath.get.produces ) {
                         swaggerPath.get.produces = SwaggerService.data.produces;
                     }
-                    if ( swaggerPath.get.consumes.length == 0 ) {
+                    if ( ! swaggerPath.get.consumes ) {
                         swaggerPath.get.consumes = SwaggerService.data.consumes;
                     }
                     swaggerPath.get.tags = [ _.capitalize( controller.name ) ];
                 }
                 if ( path.post ) {
                     swaggerPath.post = path.post;
-                    if ( swaggerPath.post.produces.length == 0 ) {
+                    if ( ! swaggerPath.post.produces ) {
                         swaggerPath.post.produces = SwaggerService.data.produces;
                     }
-                    if ( swaggerPath.post.consumes.length == 0 ) {
+                    if ( ! swaggerPath.post.consumes ) {
                         swaggerPath.post.consumes = SwaggerService.data.consumes;
                     }
                     swaggerPath.post.tags = [ _.capitalize( controller.name ) ];
                 }
                 if ( path.put ) {
                     swaggerPath.put = path.put;
-                    if ( swaggerPath.put.produces.length == 0 ) {
+                    if ( ! swaggerPath.put.produces ) {
                         swaggerPath.put.produces = SwaggerService.data.produces;
                     }
-                    if ( swaggerPath.put.consumes.length == 0 ) {
+                    if ( ! swaggerPath.put.consumes ) {
                         swaggerPath.put.consumes = SwaggerService.data.consumes;
                     }
                     swaggerPath.put.tags = [ _.capitalize( controller.name ) ];
                 }
                 if ( path.patch ) {
                     swaggerPath.patch = path.patch;
-                    if ( swaggerPath.patch.produces.length == 0 ) {
+                    if ( ! swaggerPath.patch.produces ) {
                         swaggerPath.patch.produces = SwaggerService.data.produces;
                     }
-                    if ( swaggerPath.patch.consumes.length == 0 ) {
+                    if ( ! swaggerPath.patch.consumes ) {
                         swaggerPath.patch.consumes = SwaggerService.data.consumes;
                     }
                     swaggerPath.patch.tags = [ _.capitalize( controller.name ) ];
                 }
                 if ( path.delete ) {
                     swaggerPath.delete = path.delete;
-                    if ( swaggerPath.delete.produces.length == 0 ) {
+                    if ( ! swaggerPath.delete.produces ) {
                         swaggerPath.delete.produces = SwaggerService.data.produces;
                     }
-                    if ( swaggerPath.delete.consumes.length == 0 ) {
+                    if ( ! swaggerPath.delete.consumes ) {
                         swaggerPath.delete.consumes = SwaggerService.data.consumes;
                     }
                     swaggerPath.delete.tags = [ _.capitalize( controller.name ) ];

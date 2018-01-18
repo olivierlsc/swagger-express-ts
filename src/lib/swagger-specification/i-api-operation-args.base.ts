@@ -14,17 +14,19 @@ export interface IApiOperationArgsBaseResponse {
     model?: string;
 }
 
+export interface IApiOperationArgsBaseParameters {
+    path?: {[key: string]: IApiOperationArgsBaseParameter},
+    query?: {[key: string]: IApiOperationArgsBaseParameter},
+    body?: IApiOperationArgsBaseParameter, // use only for POST, PUT and PATCH
+    formData?: {[key: string]: IApiOperationArgsBaseParameter}
+}
+
 export interface IApiOperationArgsBase {
-    description: string;
-    summary: string;
+    description?: string;
+    summary?: string;
     produces?: string[];
     consumes?: string[];
     path?: string;
-    parameters?: {
-        path?: {[key: string]: IApiOperationArgsBaseParameter},
-        query?: {[key: string]: IApiOperationArgsBaseParameter},
-        body?: IApiOperationArgsBaseParameter, // use only for POST, PUT and PATCH
-        formData?: {[key: string]: IApiOperationArgsBaseParameter}
-    };
-    responses: {[key: string]: IApiOperationArgsBaseResponse};
+    parameters?: IApiOperationArgsBaseParameters;
+    responses?: {[key: string]: IApiOperationArgsBaseResponse};
 }
