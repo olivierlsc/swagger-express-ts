@@ -69,7 +69,6 @@ server.setErrorConfig( ( app: any ) => {
 // start server
 const app = server.build();
 app.listen( 3000 );
-console.info( "Server is listening on port : 3000 );
 
 ```
 
