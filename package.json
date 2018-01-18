@@ -1,8 +1,9 @@
 {
   "name": "swagger-express-ts",
-  "version": "1.0.0-alpha.0",
+  "version": "1.0.0-alpha.1",
   "description": "Generate and serve swagger.json",
-  "main": "built/main.js",
+  "main": "./dist/index.js",
+  "types": "./dist/index.d.ts",
   "scripts": {
     "package": "echo \"Packaging...\" && node node_modules/rimraf/bin.js dist && node node_modules/typescript/bin/tsc -p tsconfig.package.json",
     "build": "echo \"Building...\" && node node_modules/gulp/bin/gulp.js build",
@@ -16,7 +17,7 @@
     "type": "git",
     "url": "git+https://github.com/olivierlsc/swagger-specification-ts.git"
   },
-  "author": "",
+  "author": "Olivier LIN-SI-CHENG",
   "license": "MIT",
   "bugs": {
     "url": "https://github.com/olivierlsc/swagger-specification-ts/issues"

@@ -1,5 +1,5 @@
 # swagger-express-ts
-Automatically generate and serve swagger.json
+Automatically generate and serve swagger.json v2.0.
 
 ## Getting started
 First, install [inversify-express-utils](https://www.npmjs.com/package/inversify-express-utils).
