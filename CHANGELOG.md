@@ -1,3 +1,8 @@
+<a name="1.0.0-alpha.4"></a>
+# [1.0.0-alpha.4] (2018-01-19)
+
+Add keywords for npm.
+
 <a name="1.0.0-alpha.3"></a>
 # [1.0.0-alpha.3] (2018-01-18)
 

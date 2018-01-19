@@ -3,7 +3,6 @@ node_modules/
 reports/
 src/
 swagger/
-wiki/
 .gitignore
 config.json
 config.template.json

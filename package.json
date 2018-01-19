@@ -1,6 +1,6 @@
 {
   "name": "swagger-express-ts",
-  "version": "1.0.0-alpha.3",
+  "version": "1.0.0-alpha.4",
   "description": "Generate and serve swagger.json",
   "main": "./dist/index.js",
   "types": "./dist/index.d.ts",
@@ -19,25 +19,41 @@
   },
   "author": "Olivier LIN-SI-CHENG",
   "license": "MIT",
+  "keywords": [
+    "inversify",
+    "inversifyjs",
+    "swagger",
+    "swagger2",
+    "swagger-ui",
+    "typescript",
+    "expressjs",
+    "express",
+    "api rest",
+    "documentation",
+    "decorator",
+    "generator",
+    "swagger.json",
+    "json",
+    "rest"
+  ],
   "bugs": {
     "url": "https://github.com/olivierlsc/swagger-specification-ts/issues"
   },
   "homepage": "https://github.com/olivierlsc/swagger-specification-ts#readme",
   "dependencies": {
-    "@types/body-parser": "^1.16.8",
-    "@types/compression": "0.0.35",
-    "@types/helmet": "0.0.37",
     "@types/lodash": "^4.14.92",
+    "lodash": "^4.17.4",
+    "reflect-metadata": "^0.1.10"
+  },
+  "devDependencies": {
     "body-parser": "^1.18.2",
     "compression": "^1.7.1",
     "helmet": "^3.9.0",
     "inversify": "^4.5.1",
     "inversify-express-utils": "^4.2.2",
-    "lodash": "^4.17.4",
-    "reflect-metadata": "^0.1.10",
-    "swagger-ui-dist": "^3.6.1"
-  },
-  "devDependencies": {
+    "@types/body-parser": "^1.16.8",
+    "@types/compression": "0.0.35",
+    "@types/helmet": "0.0.37",
     "@types/chai": "^4.0.10",
     "@types/mocha": "^2.2.44",
     "@types/sinon": "^4.1.2",
@@ -57,6 +73,7 @@
     "rimraf": "^2.6.2",
     "sinon": "^4.1.2",
     "tslint": "^5.8.0",
-    "typescript": "^2.6.2"
+    "typescript": "^2.6.2",
+    "swagger-ui-dist": "^3.6.1"
   }
 }
