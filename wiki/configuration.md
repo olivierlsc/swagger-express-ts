@@ -7,7 +7,7 @@ Example with default configuration:
 app.use( swagger.express(
     {
         definition : {
-            info : {
+            setInfo : {
                 title : "My api",
                 version : "1.0"
             },

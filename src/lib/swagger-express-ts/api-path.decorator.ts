@@ -6,6 +6,6 @@ export interface IApiPathArgs {
 }
 export function ApiPath( args: IApiPathArgs ): ClassDecorator {
     return function ( target: any ) {
-        SwaggerService.addPath( args, target );
+        SwaggerService.getInstance().addPath( args, target );
     }
 }

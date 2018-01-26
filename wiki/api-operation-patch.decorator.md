@@ -92,7 +92,7 @@ Define parameters in path, body, query and formData.
 Define all responses.
 - Required
 
-## produces: string[]
+## setProduces: string[]
 Define type list that resource produce.
 - Optional
 - Default is global type list defined in ISwaggerBuildDefinition when execute [.express(options: ISwaggerExpressOptions)](./configuration.md)

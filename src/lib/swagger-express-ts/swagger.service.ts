@@ -9,7 +9,8 @@ import {
     ISwaggerOperation,
     ISwaggerOperationParameter,
     ISwaggerOperationResponse,
-    ISwaggerOperationSchema
+    ISwaggerOperationSchema,
+    ISwaggerExternalDocs
 } from "./i-swagger";
 import { IApiPathArgs } from "./api-path.decorator";
 import { IApiOperationPostArgs } from "./api-operation-post.decorator";
@@ -40,65 +41,90 @@ interface IController {
 }
 
 export class SwaggerService {
-    private static controllerMap: any = [];
-    private static definitionsMap: {[key: string]: ISwaggerDefinition} = {};
-    private static data: ISwagger = {
-        basePath : "/",
-        openapi : "",
-        info : <ISwaggerInfo>{
-            title : "",
-            contact : <ISwaggerContact>{},
-            license : <ISwaggerLicense>{
-                name : ""
+    private static instance: SwaggerService;
+    private controllerMap: any = [];
+    private definitionsMap: {[key: string]: ISwaggerDefinition} = {};
+    private data: ISwagger;
+
+    private constructeur() {
+    }
+
+    public static getInstance(): SwaggerService {
+        if ( ! SwaggerService.instance ) {
+            let newSwaggerService: SwaggerService = new SwaggerService();
+            newSwaggerService.initData();
+            SwaggerService.instance = newSwaggerService;
+        }
+        return SwaggerService.instance;
+    }
+
+    public resetData(): void {
+        this.initData();
+    }
+
+    private initData(): void {
+        this.data = {
+            basePath : "/",
+            openapi : "",
+            info : <ISwaggerInfo>{
+                title : "",
+                contact : <ISwaggerContact>{},
+                license : <ISwaggerLicense>{
+                    name : ""
+                },
+                version : ""
             },
-            version : ""
-        },
-        paths : {},
-        tags : [],
-        schemes : [ SwaggerDefinitionConstant.Scheme.HTTP ],
-        produces : [ SwaggerDefinitionConstant.Produce.JSON ],
-        consumes : [ SwaggerDefinitionConstant.Consume.JSON ],
-        definitions : {},
-        swagger : "2.0"
-    };
-
-    public static getData(): ISwagger {
-        return _.cloneDeep( SwaggerService.data );
+            paths : {},
+            tags : [],
+            schemes : [ SwaggerDefinitionConstant.Scheme.HTTP ],
+            produces : [ SwaggerDefinitionConstant.Produce.JSON ],
+            consumes : [ SwaggerDefinitionConstant.Consume.JSON ],
+            definitions : {},
+            swagger : "2.0"
+        };
     }
 
-    public static setBasePath( basePath: string ): void {
-        SwaggerService.data.basePath = basePath;
+    public getData(): ISwagger {
+        return _.cloneDeep( this.data );
     }
 
-    public static setOpenapi( openapi: string ): void {
-        SwaggerService.data.openapi = openapi;
+    public setBasePath( basePath: string ): void {
+        this.data.basePath = basePath;
     }
 
-    public static setInfo( info: ISwaggerInfo ): void {
-        SwaggerService.data.info = info;
+    public setOpenapi( openapi: string ): void {
+        this.data.openapi = openapi;
     }
 
-    public static setSchemes( schemes: string[] ): void {
-        SwaggerService.data.schemes = schemes;
+    public setInfo( info: ISwaggerInfo ): void {
+        this.data.info = info;
     }
 
-    public static setProduces( produces: string[] ): void {
-        SwaggerService.data.produces = produces;
+    public setSchemes( schemes: string[] ): void {
+        this.data.schemes = schemes;
     }
 
-    public static setConsumes( consumes: string[] ): void {
-        SwaggerService.data.consumes = consumes;
+    public setProduces( produces: string[] ): void {
+        this.data.produces = produces;
     }
 
-    public static setHost( host: string ): void {
-        SwaggerService.data.host = host;
+    public setConsumes( consumes: string[] ): void {
+        this.data.consumes = consumes;
     }
 
-    public static setDefinitions( definitions: {[key: string]: ISwaggerDefinition} ): void {
-        SwaggerService.data.definitions = definitions;
+    public setHost( host: string ): void {
+        this.data.host = host;
     }
 
-    public static addPath( args: IApiPathArgs, target: any ): void {
+    public setDefinitions( definitions: {[key: string]: ISwaggerDefinition} ): void {
+        this.data.definitions = definitions;
+    }
+
+    public setExternalDocs( externalDocs: ISwaggerExternalDocs ): void {
+        this.data.externalDocs = externalDocs;
+    }
+
+    public addPath( args: IApiPathArgs, target: any ): void {
         let currentController: IController = {
             path : args.path,
             name : args.name,
@@ -107,8 +133,8 @@ export class SwaggerService {
         if ( args.description ) {
             currentController.description = args.description;
         }
-        for ( let controllerIndex in SwaggerService.controllerMap ) {
-            let controller: IController = SwaggerService.controllerMap[ controllerIndex ];
+        for ( let controllerIndex in this.controllerMap ) {
+            let controller: IController = this.controllerMap[ controllerIndex ];
             if ( controllerIndex === target.name ) {
                 currentController = controller;
                 currentController.path = args.path;
@@ -116,54 +142,54 @@ export class SwaggerService {
                 currentController.description = args.description;
             }
         }
-        SwaggerService.controllerMap[ target.name ] = currentController;
+        this.controllerMap[ target.name ] = currentController;
     }
 
-    public static addOperationGet( args: IApiOperationGetArgs, target: any, propertyKey: string | symbol ): void {
+    public addOperationGet( args: IApiOperationGetArgs, target: any, propertyKey: string | symbol ): void {
         assert.ok( args, "Args are required." );
         assert.ok( args.responses, "Responses are required." );
         if ( args.parameters ) {
             assert.ok( ! args.parameters.body, "Parameter body is not required." );
         }
-        SwaggerService.addOperation( "get", args, target, propertyKey );
+        this.addOperation( "get", args, target, propertyKey );
     }
 
-    public static addOperationPost( args: IApiOperationPostArgs, target: any, propertyKey: string | symbol ): void {
+    public addOperationPost( args: IApiOperationPostArgs, target: any, propertyKey: string | symbol ): void {
         assert.ok( args, "Args are required." );
         assert.ok( args.parameters, "Parameters are required." );
         assert.ok( args.responses, "Responses are required." );
-        SwaggerService.addOperation( "post", args, target, propertyKey );
+        this.addOperation( "post", args, target, propertyKey );
     }
 
-    public static addOperationPut( args: IApiOperationPostArgs, target: any, propertyKey: string | symbol ): void {
+    public addOperationPut( args: IApiOperationPostArgs, target: any, propertyKey: string | symbol ): void {
         assert.ok( args, "Args are required." );
         assert.ok( args.parameters, "Parameters are required." );
         assert.ok( args.responses, "Responses are required." );
-        SwaggerService.addOperation( "put", args, target, propertyKey );
+        this.addOperation( "put", args, target, propertyKey );
     }
 
-    public static addOperationPatch( args: IApiOperationPostArgs, target: any, propertyKey: string | symbol ): void {
+    public addOperationPatch( args: IApiOperationPostArgs, target: any, propertyKey: string | symbol ): void {
         assert.ok( args, "Args are required." );
         assert.ok( args.parameters, "Parameters are required." );
         assert.ok( args.responses, "Responses are required." );
-        SwaggerService.addOperation( "patch", args, target, propertyKey );
+        this.addOperation( "patch", args, target, propertyKey );
     }
 
-    public static addOperationDelete( args: IApiOperationPostArgs, target: any, propertyKey: string | symbol ): void {
+    public addOperationDelete( args: IApiOperationPostArgs, target: any, propertyKey: string | symbol ): void {
         assert.ok( args, "Args are required." );
         assert.ok( args.parameters, "Parameters are required." );
         assert.ok( ! args.parameters.body, "Parameter body is not required." );
         assert.ok( args.responses, "Responses are required." );
-        SwaggerService.addOperation( "delete", args, target, propertyKey );
+        this.addOperation( "delete", args, target, propertyKey );
     }
 
 
-    private static addOperation( operation: string, args: IApiOperationArgsBase, target: any, propertyKey: string | symbol ): void {
+    private addOperation( operation: string, args: IApiOperationArgsBase, target: any, propertyKey: string | symbol ): void {
         let currentController: IController = {
             paths : {}
         };
-        for ( let index in SwaggerService.controllerMap ) {
-            let controller = SwaggerService.controllerMap[ index ];
+        for ( let index in this.controllerMap ) {
+            let controller = this.controllerMap[ index ];
             if ( index === target.constructor.name ) {
                 currentController = controller;
             }
@@ -184,29 +210,29 @@ export class SwaggerService {
         }
 
         if ( "get" === operation ) {
-            currentPath.get = SwaggerService.buildOperation( args, target, propertyKey );
+            currentPath.get = this.buildOperation( args, target, propertyKey );
         }
 
         if ( "post" === operation ) {
-            currentPath.post = SwaggerService.buildOperation( args, target, propertyKey );
+            currentPath.post = this.buildOperation( args, target, propertyKey );
         }
 
         if ( "put" === operation ) {
-            currentPath.put = SwaggerService.buildOperation( args, target, propertyKey );
+            currentPath.put = this.buildOperation( args, target, propertyKey );
         }
 
         if ( "patch" === operation ) {
-            currentPath.patch = SwaggerService.buildOperation( args, target, propertyKey );
+            currentPath.patch = this.buildOperation( args, target, propertyKey );
         }
 
         if ( "delete" === operation ) {
-            currentPath.delete = SwaggerService.buildOperation( args, target, propertyKey );
+            currentPath.delete = this.buildOperation( args, target, propertyKey );
         }
 
-        SwaggerService.controllerMap[ target.constructor.name ] = currentController;
+        this.controllerMap[ target.constructor.name ] = currentController;
     }
 
-    private static buildOperation( args: IApiOperationArgsBase, target: any, propertyKey: string | symbol ): ISwaggerOperation {
+    private buildOperation( args: IApiOperationArgsBase, target: any, propertyKey: string | symbol ): ISwaggerOperation {
         let operation: ISwaggerOperation = {
             operationId : propertyKey,
             tags : []
@@ -228,10 +254,10 @@ export class SwaggerService {
         if ( args.parameters ) {
             operation.parameters = [];
             if ( args.parameters.path ) {
-                operation.parameters = _.concat( operation.parameters, SwaggerService.buildParameters( SwaggerDefinitionConstant.Parameter.In.PATH, args.parameters.path ) );
+                operation.parameters = _.concat( operation.parameters, this.buildParameters( SwaggerDefinitionConstant.Parameter.In.PATH, args.parameters.path ) );
             }
             if ( args.parameters.query ) {
-                operation.parameters = _.concat( operation.parameters, SwaggerService.buildParameters( SwaggerDefinitionConstant.Parameter.In.QUERY, args.parameters.query ) );
+                operation.parameters = _.concat( operation.parameters, this.buildParameters( SwaggerDefinitionConstant.Parameter.In.QUERY, args.parameters.query ) );
             }
             if ( args.parameters.body ) {
                 assert.ok( args.parameters.body.model, "Definition are required." );
@@ -243,13 +269,13 @@ export class SwaggerService {
                     newParameterBody.required = true;
                 }
                 let swaggerOperationSchema: ISwaggerOperationSchema = {
-                    $ref : SwaggerService.buildRef( args.parameters.body.model )
+                    $ref : this.buildRef( args.parameters.body.model )
                 };
                 newParameterBody.schema = swaggerOperationSchema;
                 operation.parameters.push( newParameterBody );
             }
             if ( args.parameters.formData ) {
-                operation.parameters = _.concat( operation.parameters, SwaggerService.buildParameters( SwaggerDefinitionConstant.Parameter.In.FORM_DATA, args.parameters.formData ) );
+                operation.parameters = _.concat( operation.parameters, this.buildParameters( SwaggerDefinitionConstant.Parameter.In.FORM_DATA, args.parameters.formData ) );
             }
         }
 
@@ -289,7 +315,7 @@ export class SwaggerService {
 
                 }
                 if ( response.model ) {
-                    let ref = SwaggerService.buildRef( response.model );
+                    let ref = this.buildRef( response.model );
                     let newSwaggerOperationResponseSchema: ISwaggerOperationSchema = {
                         $ref : ref
                     };
@@ -310,7 +336,7 @@ export class SwaggerService {
         return operation;
     }
 
-    private static buildParameters( type: string, parameters: {[key: string]: IApiOperationArgsBaseParameter} ): ISwaggerOperationParameter[] {
+    private buildParameters( type: string, parameters: {[key: string]: IApiOperationArgsBaseParameter} ): ISwaggerOperationParameter[] {
         let swaggerOperationParameter: ISwaggerOperationParameter[] = [];
         for ( let parameterIndex in parameters ) {
             let parameter: IApiOperationArgsBaseParameter = parameters[ parameterIndex ];
@@ -339,60 +365,60 @@ export class SwaggerService {
         return swaggerOperationParameter;
     }
 
-    public static buildSwagger(): void {
-        let data: ISwagger = _.cloneDeep( SwaggerService.data );
-        for ( let controllerIndex in SwaggerService.controllerMap ) {
-            let controller: IController = SwaggerService.controllerMap[ controllerIndex ];
+    public buildSwagger(): void {
+        let data: ISwagger = _.cloneDeep( this.data );
+        for ( let controllerIndex in this.controllerMap ) {
+            let controller: IController = this.controllerMap[ controllerIndex ];
             for ( let pathIndex in controller.paths ) {
                 let path: IPath = controller.paths[ pathIndex ];
                 let swaggerPath: ISwaggerPath = {};
                 if ( path.get ) {
                     swaggerPath.get = path.get;
                     if ( ! swaggerPath.get.produces ) {
-                        swaggerPath.get.produces = SwaggerService.data.produces;
+                        swaggerPath.get.produces = this.data.produces;
                     }
                     if ( ! swaggerPath.get.consumes ) {
-                        swaggerPath.get.consumes = SwaggerService.data.consumes;
+                        swaggerPath.get.consumes = this.data.consumes;
                     }
                     swaggerPath.get.tags = [ _.capitalize( controller.name ) ];
                 }
                 if ( path.post ) {
                     swaggerPath.post = path.post;
                     if ( ! swaggerPath.post.produces ) {
-                        swaggerPath.post.produces = SwaggerService.data.produces;
+                        swaggerPath.post.produces = this.data.produces;
                     }
                     if ( ! swaggerPath.post.consumes ) {
-                        swaggerPath.post.consumes = SwaggerService.data.consumes;
+                        swaggerPath.post.consumes = this.data.consumes;
                     }
                     swaggerPath.post.tags = [ _.capitalize( controller.name ) ];
                 }
                 if ( path.put ) {
                     swaggerPath.put = path.put;
                     if ( ! swaggerPath.put.produces ) {
-                        swaggerPath.put.produces = SwaggerService.data.produces;
+                        swaggerPath.put.produces = this.data.produces;
                     }
                     if ( ! swaggerPath.put.consumes ) {
-                        swaggerPath.put.consumes = SwaggerService.data.consumes;
+                        swaggerPath.put.consumes = this.data.consumes;
                     }
                     swaggerPath.put.tags = [ _.capitalize( controller.name ) ];
                 }
                 if ( path.patch ) {
                     swaggerPath.patch = path.patch;
                     if ( ! swaggerPath.patch.produces ) {
-                        swaggerPath.patch.produces = SwaggerService.data.produces;
+                        swaggerPath.patch.produces = this.data.produces;
                     }
                     if ( ! swaggerPath.patch.consumes ) {
-                        swaggerPath.patch.consumes = SwaggerService.data.consumes;
+                        swaggerPath.patch.consumes = this.data.consumes;
                     }
                     swaggerPath.patch.tags = [ _.capitalize( controller.name ) ];
                 }
                 if ( path.delete ) {
                     swaggerPath.delete = path.delete;
                     if ( ! swaggerPath.delete.produces ) {
-                        swaggerPath.delete.produces = SwaggerService.data.produces;
+                        swaggerPath.delete.produces = this.data.produces;
                     }
                     if ( ! swaggerPath.delete.consumes ) {
-                        swaggerPath.delete.consumes = SwaggerService.data.consumes;
+                        swaggerPath.delete.consumes = this.data.consumes;
                     }
                     swaggerPath.delete.tags = [ _.capitalize( controller.name ) ];
                 }
@@ -407,10 +433,10 @@ export class SwaggerService {
                 name : _.capitalize( controller.name ), description : controller.description
             } );
         }
-        SwaggerService.data = data;
+        this.data = data;
     }
 
-    private static buildRef( definition: string ): string {
+    private buildRef( definition: string ): string {
         return "#/definitions/".concat( _.capitalize( definition ) );
     }
 

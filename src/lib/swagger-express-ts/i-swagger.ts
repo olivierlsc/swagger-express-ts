@@ -110,5 +110,6 @@ export interface ISwagger {
     schemes: string[]; // Example : SwaggerDefinition.Scheme.HTTP
     produces: string[]; // Example : SwaggerDefinition.Produce.JSON
     consumes: string[]; // Example : SwaggerDefinition.Consume.JSON
-    definitions: {[key: string]: ISwaggerDefinition}
+    definitions: {[key: string]: ISwaggerDefinition},
+    externalDocs?: ISwaggerExternalDocs;
 }

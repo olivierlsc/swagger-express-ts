@@ -41,7 +41,7 @@ const server = new InversifyExpressServer( container );
 server.setConfig( ( app: any ) => {
     app.use( swagger.express( {
         definition : {
-            info : {
+            setInfo : {
                 title : "My api",
                 version : "1.0"
             },

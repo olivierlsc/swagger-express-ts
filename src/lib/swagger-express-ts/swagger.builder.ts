@@ -1,4 +1,4 @@
-import { ISwaggerInfo, ISwaggerDefinition, ISwaggerDefinitionProperty } from "./i-swagger";
+import { ISwaggerInfo, ISwaggerDefinition, ISwaggerDefinitionProperty, ISwaggerExternalDocs } from "./i-swagger";
 import * as assert from "assert";
 import { SwaggerService } from "./swagger.service";
 import { SwaggerDefinitionConstant } from "./swagger-definition.constant";
@@ -76,31 +76,40 @@ export interface ISwaggerBuildDefinition {
      * Optional.
      */
     models?: {[key: string]: ISwaggerBuildDefinitionModel};
+
+    /**
+     * Define external doc
+     * Optional.
+     */
+    externalDocs?: ISwaggerExternalDocs;
 }
 
 export function build( buildDefinition: ISwaggerBuildDefinition ): void {
     assert.ok( buildDefinition, "Definition are required." );
     assert.ok( buildDefinition.info, "Informations are required. Base is { title: \"Title of my API\", version: \"1.0.0\"}" );
     if ( buildDefinition.basePath ) {
-        SwaggerService.setBasePath( buildDefinition.basePath );
+        SwaggerService.getInstance().setBasePath( buildDefinition.basePath );
     }
     if ( buildDefinition.openapi ) {
-        SwaggerService.setOpenapi( buildDefinition.openapi );
+        SwaggerService.getInstance().setOpenapi( buildDefinition.openapi );
     }
     if ( buildDefinition.info ) {
-        SwaggerService.setInfo( buildDefinition.info );
+        SwaggerService.getInstance().setInfo( buildDefinition.info );
     }
     if ( buildDefinition.schemes ) {
-        SwaggerService.setSchemes( buildDefinition.schemes );
+        SwaggerService.getInstance().setSchemes( buildDefinition.schemes );
     }
     if ( buildDefinition.produces ) {
-        SwaggerService.setProduces( buildDefinition.produces );
+        SwaggerService.getInstance().setProduces( buildDefinition.produces );
     }
     if ( buildDefinition.consumes ) {
-        SwaggerService.setConsumes( buildDefinition.consumes );
+        SwaggerService.getInstance().setConsumes( buildDefinition.consumes );
     }
     if ( buildDefinition.host ) {
-        SwaggerService.setHost( buildDefinition.host );
+        SwaggerService.getInstance().setHost( buildDefinition.host );
+    }
+    if ( buildDefinition.externalDocs ) {
+        SwaggerService.getInstance().setExternalDocs( buildDefinition.externalDocs );
     }
     if ( buildDefinition.models ) {
         let definitions: {[key: string]: ISwaggerDefinition} = {};
@@ -126,7 +135,7 @@ export function build( buildDefinition: ISwaggerBuildDefinition ): void {
             }
             definitions[ modelIndex ] = newDefinition;
         }
-        SwaggerService.setDefinitions( definitions );
+        SwaggerService.getInstance().setDefinitions( definitions );
     }
-    SwaggerService.buildSwagger();
+    SwaggerService.getInstance().buildSwagger();
 }

@@ -6,6 +6,6 @@ export interface IApiOperationPatchArgs extends IApiOperationArgsBase {
 
 export function ApiOperationPatch( args: IApiOperationPatchArgs ): MethodDecorator {
     return function ( target: any, propertyKey: string | symbol, descriptor: PropertyDescriptor ) {
-        SwaggerService.addOperationPatch( args, target, propertyKey );
+        SwaggerService.getInstance().addOperationPatch( args, target, propertyKey );
     };
 }

@@ -11,56 +11,62 @@ var tslintReporter = require ('gulp-tslint-jenkins-reporter');
 
 var path = {
     built: "built",
+    dist: "dist",
+    reports: "reports",
     app: {
         src: "src/**/*.ts"
     }
 };
 
 gulp.task ('clean', function () {
-    return gulp.src (path.built)
-        .pipe (clean ({force: true}));
+    return gulp.src ([
+        path.built,
+        path.dist,
+        path.reports,
+        "src/**/*.js"
+    ]).pipe (clean ({force: true}));
 });
 
-var tsProject = ts.createProject('tsconfig.json', {typescript: require ("typescript")});
-gulp.task('build:ts', ['clean'], function () {
-    console.info('Compiling files .ts...');
-    return gulp.src([
+var tsProject = ts.createProject ('tsconfig.json', {typescript: require ("typescript")});
+gulp.task ('build:ts', ['clean'], function () {
+    console.info ('Compiling files .ts...');
+    return gulp.src ([
             "src/**/*.ts"
         ])
-        .pipe(sourcemaps.init())
-        .pipe(tsProject ())
-        .on("error", function (err) {
-            process.exit(1);
+        .pipe (sourcemaps.init ({loadMaps: true}))
+        .pipe (tsProject ())
+        .on ("error", function (err) {
+            process.exit (1);
         })
         .js
-        .pipe(sourcemaps.write())
-        .pipe(gulp.dest("built/"));
+        .pipe (sourcemaps.write ("../".concat(path.built)))
+        .pipe (gulp.dest (path.built));
 });
 
-gulp.task("tslint", function () {
-    gulp.src(path.app.src)
-        .pipe(tslint ({
+gulp.task ("tslint", function () {
+    gulp.src (path.app.src)
+        .pipe (tslint ({
             formatter: "verbose"
         }))
-        .pipe(tslint.report())
-        .pipe(tslintReporter ({
+        .pipe (tslint.report ())
+        .pipe (tslintReporter ({
             sort: true,
             filename: 'reports/checkstyle/results.xml',
             severity: 'error'
         }));
 });
 
-gulp.task('pre-test', ['build:ts'], function () {
-    return gulp.src([path.built + '/**/*.spec.js'])
+gulp.task ('pre-test', ['build:ts'], function () {
+    return gulp.src ([path.built + '/**/*.spec.js'])
         // Covering files
-        .pipe(istanbul ())
+        .pipe (istanbul ())
         // Force `require` to return covered files
-        .pipe(istanbul.hookRequire());
+        .pipe (istanbul.hookRequire ());
 });
 
-gulp.task('test:coverage', ['pre-test'], function () {
-    return gulp.src([path.built])
-        .pipe(mocha ({
+gulp.task ('test:coverage', ['pre-test'], function () {
+    return gulp.src ([path.built])
+        .pipe (mocha ({
             reporter: "mocha-jenkins-reporter",
             reporterOptions: {
                 "junit_report_name": "Tests",
@@ -69,19 +75,19 @@ gulp.task('test:coverage', ['pre-test'], function () {
             }
         }))
         // Creating the reports after tests ran
-        .pipe(istanbul.writeReports({
+        .pipe (istanbul.writeReports ({
             dir: './coverage',
             reporters: ['text', 'text-summary', 'cobertura', 'html'],
             reportOpts: {dir: './reports/coverage'}
         }))
         // Enforce a coverage of at least 90%
-        .pipe(istanbul.enforceThresholds({thresholds: {global: {lines: 80}, each: {lines: 80}}}));
+        .pipe (istanbul.enforceThresholds ({thresholds: {global: {lines: 80}, each: {lines: 80}}}));
 });
 
-gulp.task('test', ['build:ts'], function () {
-    return gulp.src(path.built + '/**/*.spec.js', {read: false})
+gulp.task ('test', ['build:ts'], function () {
+    return gulp.src (path.built + '/**/*.spec.js', {read: false})
         // gulp-mocha needs filepaths so you can't have any plugins before it
-        .pipe(mocha ({
+        .pipe (mocha ({
             reporter: "mocha-jenkins-reporter",
             reporterOptions: {
                 "junit_report_name": "Tests",
@@ -91,12 +97,12 @@ gulp.task('test', ['build:ts'], function () {
         }));
 });
 
-gulp.task('watch', function () {
-    gulp.watch(path.app.src, ['build', 'test']);
+gulp.task ('watch', function () {
+    gulp.watch (path.app.src, ['build', 'test']);
 });
 
-gulp.task('build', ['clean', 'build:ts']);
-gulp.task('dev', ['build', 'watch'], function () {
+gulp.task ('build', ['clean', 'build:ts']);
+gulp.task ('dev', ['build', 'watch'], function () {
     return nodemon ({
         script: 'built/main.js',
         ext: 'js',
@@ -105,7 +111,7 @@ gulp.task('dev', ['build', 'watch'], function () {
             'config/',
             'src'
         ]
-    }).on('restart', function () {
-        console.log('restarted!')
+    }).on ('restart', function () {
+        console.log ('restarted!')
     });
 });

@@ -6,6 +6,6 @@ export interface IApiOperationPutArgs extends IApiOperationArgsBase {
 
 export function ApiOperationPut( args: IApiOperationPutArgs ): MethodDecorator {
     return function ( target: any, propertyKey: string | symbol, descriptor: PropertyDescriptor ) {
-        SwaggerService.addOperationPut( args, target, propertyKey );
+        SwaggerService.getInstance().addOperationPut( args, target, propertyKey );
     };
 }

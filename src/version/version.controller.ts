@@ -1,10 +1,10 @@
 import * as express from "express";
 import { injectable } from "inversify";
 import { controller, httpGet, interfaces, httpPost, requestParam, httpPut } from "inversify-express-utils";
-import { ApiPath, ApiOperationGet, ApiOperationPost } from "../lib/swagger-specification/index";
+import { ApiPath, ApiOperationGet, ApiOperationPost } from "../lib/swagger-express-ts/index";
 import "reflect-metadata";
-import { SwaggerDefinitionConstant } from "../lib/swagger-specification/swagger-definition.constant";
-import { ApiOperationPut } from "../lib/swagger-specification/api-operation-put.decorator";
+import { SwaggerDefinitionConstant } from "../lib/swagger-express-ts/swagger-definition.constant";
+import { ApiOperationPut } from "../lib/swagger-express-ts/api-operation-put.decorator";
 const pkg = require( "../../package.json" );
 
 @ApiPath( {

@@ -1,14 +1,15 @@
 {
   "name": "swagger-express-ts",
-  "version": "1.0.0-alpha.4",
+  "version": "1.0.0-alpha.5",
   "description": "Generate and serve swagger.json",
   "main": "./dist/index.js",
   "types": "./dist/index.d.ts",
   "scripts": {
-    "package": "echo \"Packaging...\" && node node_modules/rimraf/bin.js built dist && node node_modules/typescript/bin/tsc -p tsconfig.package.json",
+    "package": "echo \"Packaging...\" && npm run clean && node node_modules/typescript/bin/tsc -p tsconfig.package.json",
     "build": "echo \"Building...\" && node node_modules/gulp/bin/gulp.js build",
     "test": "echo \"Testing...\" && node node_modules/gulp/bin/gulp.js test",
     "test:coverage": "echo \"Testing coverage...\" && node node_modules/gulp/bin/gulp.js test:coverage",
+    "clean": "echo \"Cleaning...\" && node node_modules/gulp/bin/gulp.js clean",
     "tslint": "echo \"TsLint...\" && node node_modules/gulp/bin/gulp.js tslint",
     "dev": "echo \"Developing...\" && node node_modules/gulp/bin/gulp.js dev",
     "start": "echo \"Starting...\" && npm run build && node built/main.js"

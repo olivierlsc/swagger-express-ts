@@ -1,35 +1,35 @@
 
 # ISwaggerBuildDefinition
 
-## basePath: string
+## setBasePath: string
 Define base URL for all API.
 - Optional. 
 - Default is "/"
 
-## openapi: string
+## setOpenapi: string
 Define version of OpenAPI.
 - Optional.
 
-## info : [SwaggerInfo](./i-swagger-info.md)
-Define info.
+## setInfo : [SwaggerInfo](./i-swagger-setInfo.md)
+Define setInfo.
 
-## consumes: string[]
-Define the MIME types supported by the API for consumes. The root-level definition can be overridden in individual operations.
+## setConsumes: string[]
+Define the MIME types supported by the API for setConsumes. The root-level definition can be overridden in individual operations.
 - Optional
 - Default is [SwaggerDefinition](./swagger-definition-constant.md).Consume.JSON or "application/json".
 
-## produces: string[]
-Define the MIME types supported by the API for produces. The root-level definition can be overridden in individual operations.
+## setProduces: string[]
+Define the MIME types supported by the API for setProduces. The root-level definition can be overridden in individual operations.
 - Optional
 - Default is [SwaggerDefinition](./swagger-definition-constant.md).Consume.JSON or "application/json".
 
-## schemes: string[]
+## setSchemes: string[]
 Define Schemes.
 - Optional
 - Default is [SwaggerDefinition](./swagger-definition-constant.md).Scheme.HTTP = "http"
 
-## host: string
-Define host.
+## setHost: string
+Define setHost.
 - Optional
 
 ## models: {[key: string]: [ISwaggerBuildDefinitionModel](./i-swagger-build-definition-model.md)}

@@ -4,8 +4,8 @@ import "reflect-metadata";
 import { Container } from "inversify";
 import { interfaces, InversifyExpressServer, TYPE } from "inversify-express-utils";
 import { VersionController } from "./version/version.controller";
-import * as swagger from "./lib/swagger-specification";
-import { SwaggerDefinitionConstant } from "./lib/swagger-specification";
+import * as swagger from "./lib/swagger-express-ts";
+import { SwaggerDefinitionConstant } from "./lib/swagger-express-ts";
 const config = require( "../config.json" );
 
 // set up container
@@ -25,16 +25,9 @@ server.setConfig( ( app: any ) => {
     app.use( swagger.express(
         {
             definition : {
-                //host: "localhost:3000",
-                //basePath : "/v2",
                 info : {
                     title : "Mon api",
-                    version : "1.0",
-                    description : "Description de mon API"
-                    // contact : {},
-                    // license : {
-                    //     name : ""
-                    // }
+                    version : "1.0"
                 },
                 models : {
                     Version : {
@@ -55,6 +48,9 @@ server.setConfig( ( app: any ) => {
                             }
                         }
                     }
+                },
+                externalDocs: {
+                    url: "Mon url"
                 }
             }
         }
