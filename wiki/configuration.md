@@ -7,29 +7,32 @@ Example with default configuration:
 app.use( swagger.express(
     {
         definition : {
-            setInfo : {
-                title : "My api",
+            info : {
+                title : "My api" ,
                 version : "1.0"
-            },
+            } ,
             models : {
                 Version : {
                     properties : {
                         id : {
-                            type : SwaggerDefinitionConstant.Definition.Property.Type.STRING,
+                            type : SwaggerDefinitionConstant.Definition.Property.Type.STRING ,
                             required : true
-                        },
+                        } ,
                         name : {
-                            type : SwaggerDefinitionConstant.Definition.Property.Type.STRING,
+                            type : SwaggerDefinitionConstant.Definition.Property.Type.STRING ,
                             required : true
-                        },
+                        } ,
                         description : {
                             type : SwaggerDefinitionConstant.Definition.Property.Type.STRING
-                        },
+                        } ,
                         version : {
                             type : SwaggerDefinitionConstant.Definition.Property.Type.STRING
                         }
                     }
                 }
+            } ,
+            externalDocs : {
+                url : "My url"
             }
         }
     }

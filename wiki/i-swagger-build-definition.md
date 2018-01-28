@@ -35,3 +35,7 @@ Define setHost.
 ## models: {[key: string]: [ISwaggerBuildDefinitionModel](./i-swagger-build-definition-model.md)}
 Define all model.
 - Required
+
+## externalDocs: [ISwaggerExternalDocs](./i-swagger-external-docs.md)
+Define external docs
+- Optional

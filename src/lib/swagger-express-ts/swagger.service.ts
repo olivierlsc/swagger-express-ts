@@ -425,7 +425,8 @@ export class SwaggerService {
                 }
             }
             data.tags.push( <ISwaggerTag>{
-                name : _.capitalize( controller.name ) , description : controller.description
+                name : _.capitalize( controller.name ) ,
+                description : controller.description
             } );
         }
         this.data = data;

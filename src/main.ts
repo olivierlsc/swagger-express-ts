@@ -26,7 +26,7 @@ server.setConfig( ( app : any ) => {
         {
             definition : {
                 info : {
-                    title : "Mon api" ,
+                    title : "My api" ,
                     version : "1.0"
                 } ,
                 models : {
@@ -50,7 +50,7 @@ server.setConfig( ( app : any ) => {
                     }
                 } ,
                 externalDocs : {
-                    url : "Mon url"
+                    url : "My url"
                 }
             }
         }
