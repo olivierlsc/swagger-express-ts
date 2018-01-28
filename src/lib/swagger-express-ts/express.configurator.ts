@@ -17,25 +17,25 @@ export interface ISwaggerExpressOptions {
     definition?: ISwaggerBuildDefinition;
 }
 
-export function express( options?: ISwaggerExpressOptions ): Router {
-    let path: string = "/api-docs/swagger.json";
+export function express ( options? : ISwaggerExpressOptions ) : Router {
+    let path : string = "/api-docs/swagger.json";
     if ( options ) {
-        assert.ok( options.definition, "Definition is required." );
+        assert.ok( options.definition , "Definition is required." );
         if ( options.path ) {
             path = options.path;
         }
         if ( options.definition ) {
-            build( options.definition );
+            build ( options.definition );
         }
     }
-    const router = buildRouter( path );
+    const router = buildRouter ( path );
     return router;
 }
 
-function buildRouter( path: string ): Router {
-    const router: Router = Router();
-    router.get( path, ( request: Request, response: Response, next: NextFunction ) => {
-        let data: ISwagger = SwaggerService.getInstance().getData();
+function buildRouter ( path : string ) : Router {
+    const router : Router = Router ();
+    router.get( path , ( request : Request , response : Response , next : NextFunction ) => {
+        let data : ISwagger = SwaggerService.getInstance().getData();
         response.json( data );
     } );
     return router;

@@ -84,9 +84,9 @@ export interface ISwaggerBuildDefinition {
     externalDocs?: ISwaggerExternalDocs;
 }
 
-export function build( buildDefinition: ISwaggerBuildDefinition ): void {
-    assert.ok( buildDefinition, "Definition are required." );
-    assert.ok( buildDefinition.info, "Informations are required. Base is { title: \"Title of my API\", version: \"1.0.0\"}" );
+export function build ( buildDefinition : ISwaggerBuildDefinition ) : void {
+    assert.ok( buildDefinition , "Definition are required." );
+    assert.ok( buildDefinition.info , "Informations are required. Base is { title: \"Title of my API\", version: \"1.0.0\"}" );
     if ( buildDefinition.basePath ) {
         SwaggerService.getInstance().setBasePath( buildDefinition.basePath );
     }
@@ -112,17 +112,17 @@ export function build( buildDefinition: ISwaggerBuildDefinition ): void {
         SwaggerService.getInstance().setExternalDocs( buildDefinition.externalDocs );
     }
     if ( buildDefinition.models ) {
-        let definitions: {[key: string]: ISwaggerDefinition} = {};
+        let definitions : {[key: string]: ISwaggerDefinition} = {};
         for ( let modelIndex in buildDefinition.models ) {
-            let model: ISwaggerBuildDefinitionModel = buildDefinition.models[ modelIndex ];
-            let newDefinition: ISwaggerDefinition = {
-                type : SwaggerDefinitionConstant.Definition.Type.OBJECT,
-                properties : {},
+            let model : ISwaggerBuildDefinitionModel = buildDefinition.models[ modelIndex ];
+            let newDefinition : ISwaggerDefinition = {
+                type : SwaggerDefinitionConstant.Definition.Type.OBJECT ,
+                properties : {} ,
                 required : []
             };
             for ( let propertyIndex in model.properties ) {
-                let property: ISwaggerBuildDefinitionModelProperty = model.properties[ propertyIndex ];
-                let newProperty: ISwaggerDefinitionProperty = {
+                let property : ISwaggerBuildDefinitionModelProperty = model.properties[ propertyIndex ];
+                let newProperty : ISwaggerDefinitionProperty = {
                     type : property.type
                 };
                 if ( property.format ) {

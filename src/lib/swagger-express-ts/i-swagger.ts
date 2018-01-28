@@ -100,7 +100,7 @@ export interface ISwaggerDefinition {
 
 export interface ISwagger {
     basePath?: string;
-    openapi: string;
+    openapi?: string;
     info: ISwaggerInfo;
     servers?: [ISwaggerServer];
     paths?: {[key: string]: ISwaggerPath};
