@@ -93,6 +93,8 @@ export class VersionController implements interfaces.Controller {
 
     @ApiOperationPut( {
         path : "/{id}" ,
+        description: "Put version by id",
+        summary: "Put version",
         parameters : {
             path : {
                 id : {

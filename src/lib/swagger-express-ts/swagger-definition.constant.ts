@@ -1,6 +1,10 @@
 export class SwaggerDefinitionConstant {
     private static JSON : string = "application/json";
     private static XML : string = "application/xml";
+    private static OBJECT : string = "object";
+    private static INTEGER : string = "integer";
+    private static STRING : string = "string";
+    private static ARRAY : string = "array";
     public static Produce = {
         XML : SwaggerDefinitionConstant.XML ,
         JSON : SwaggerDefinitionConstant.JSON
@@ -16,14 +20,14 @@ export class SwaggerDefinitionConstant {
         JSON : SwaggerDefinitionConstant.JSON
     };
 
-    public static Definition = {
+    public static Model = {
         Type : {
-            OBJECT : "object"
+            OBJECT : SwaggerDefinitionConstant.OBJECT
         } ,
         Property : {
             Type : {
-                INTEGER : "integer" ,
-                STRING : "string"
+                INTEGER : SwaggerDefinitionConstant.INTEGER ,
+                STRING : SwaggerDefinitionConstant.STRING
             } ,
             Format : {
                 INT_64 : "int64"
@@ -33,9 +37,9 @@ export class SwaggerDefinitionConstant {
 
     public static Parameter = {
         Type : {
-            INTEGER : "integer" ,
-            STRING : "string" ,
-            ARRAY : "array"
+            INTEGER : SwaggerDefinitionConstant.INTEGER ,
+            STRING : SwaggerDefinitionConstant.STRING ,
+            ARRAY : SwaggerDefinitionConstant.ARRAY
         } ,
         In : {
             PATH : "path" ,
@@ -47,9 +51,9 @@ export class SwaggerDefinitionConstant {
 
     public static Response = {
         Type : {
-            INTEGER : "integer" ,
-            STRING : "string" ,
-            ARRAY : "array"
+            INTEGER : SwaggerDefinitionConstant.INTEGER ,
+            STRING : SwaggerDefinitionConstant.STRING ,
+            ARRAY : SwaggerDefinitionConstant.ARRAY
         }
     };
 }

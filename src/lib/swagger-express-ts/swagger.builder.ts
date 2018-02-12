@@ -116,7 +116,7 @@ export function build ( buildDefinition : ISwaggerBuildDefinition ) : void {
         for ( let modelIndex in buildDefinition.models ) {
             let model : ISwaggerBuildDefinitionModel = buildDefinition.models[ modelIndex ];
             let newDefinition : ISwaggerDefinition = {
-                type : SwaggerDefinitionConstant.Definition.Type.OBJECT ,
+                type : SwaggerDefinitionConstant.Model.Type.OBJECT ,
                 properties : {} ,
                 required : []
             };

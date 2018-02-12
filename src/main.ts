@@ -33,18 +33,18 @@ server.setConfig( ( app : any ) => {
                     Version : {
                         properties : {
                             id : {
-                                type : SwaggerDefinitionConstant.Definition.Property.Type.STRING ,
+                                type : SwaggerDefinitionConstant.Model.Property.Type.STRING ,
                                 required : true
                             } ,
                             name : {
-                                type : SwaggerDefinitionConstant.Definition.Property.Type.STRING ,
+                                type : SwaggerDefinitionConstant.Model.Property.Type.STRING ,
                                 required : true
                             } ,
                             description : {
-                                type : SwaggerDefinitionConstant.Definition.Property.Type.STRING
+                                type : SwaggerDefinitionConstant.Model.Property.Type.STRING
                             } ,
                             version : {
-                                type : SwaggerDefinitionConstant.Definition.Property.Type.STRING
+                                type : SwaggerDefinitionConstant.Model.Property.Type.STRING
                             }
                         }
                     }

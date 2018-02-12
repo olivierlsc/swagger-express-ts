@@ -146,9 +146,9 @@ describe ( "SwaggerService" , () => {
         it ( "expect definitions when they defined" , () => {
             let definitions : {[key: string]: ISwaggerDefinition} = {
                 "/" : {
-                    type : SwaggerDefinitionConstant.Definition.Type.OBJECT ,
+                    type : SwaggerDefinitionConstant.Model.Type.OBJECT ,
                     properties : {
-                        id : <ISwaggerDefinitionProperty>{ type : SwaggerDefinitionConstant.Definition.Property.Type.STRING }
+                        id : <ISwaggerDefinitionProperty>{ type : SwaggerDefinitionConstant.Model.Property.Type.STRING }
                     }
                 }
             };
