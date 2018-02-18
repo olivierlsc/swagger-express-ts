@@ -19,6 +19,7 @@ npm install swagger-express-ts --save
 ### Step 1: configure express
 
 ```ts
+import * as bodyParser from "body-parser";
 import * as express from "express";
 import "reflect-metadata";
 import { Container } from "inversify";
@@ -26,49 +27,68 @@ import { interfaces, InversifyExpressServer, TYPE } from "inversify-express-util
 import { VersionController } from "./version/version.controller";
 import * as swagger from "swagger-express-ts";
 import { SwaggerDefinitionConstant } from "swagger-express-ts";
+const config = require ( "../config.json" );
 
 // set up container
-const container = new Container();
+const container = new Container ();
 
-// bind your controllers to Controller
-container.bind<interfaces.Controller>( TYPE.Controller )
-    .to( VersionController ).whenTargetNamed( VersionController.TARGET_NAME );
+// note that you *must* bind your controllers to Controller
+container.bind<interfaces.Controller> ( TYPE.Controller )
+    .to( VersionController ).inSingletonScope().whenTargetNamed( VersionController.TARGET_NAME );
 
 // create server
-const server = new InversifyExpressServer( container );
+const server = new InversifyExpressServer ( container );
 
-// configure server
-server.setConfig( ( app: any ) => {
-    app.use( swagger.express( {
-        definition : {
-            setInfo : {
-                title : "My api",
-                version : "1.0"
-            },
-            models : {
-                Version : {
-                    properties : {
-                        name : { type : SwaggerDefinitionConstant.Definition.Property.Type.STRING, required : true },
-                        description : { type : SwaggerDefinitionConstant.Definition.Property.Type.STRING },
-                        version : { type : SwaggerDefinitionConstant.Definition.Property.Type.STRING, required : true }
+server.setConfig( ( app : any ) => {
+    app.use( '/api-docs/swagger' , express.static( 'swagger' ) );
+    app.use( '/api-docs/swagger/assets' , express.static( 'node_modules/swagger-ui-dist' ) );
+    app.use( bodyParser.json() );
+    app.use( swagger.express(
+        {
+            definition : {
+                info : {
+                    title : "My api" ,
+                    version : "1.0"
+                } ,
+                models : {
+                    Version : {
+                        properties : {
+                            id : {
+                                type : SwaggerDefinitionConstant.Model.Property.Type.STRING ,
+                                required : true
+                            } ,
+                            name : {
+                                type : SwaggerDefinitionConstant.Model.Property.Type.STRING ,
+                                required : true
+                            } ,
+                            description : {
+                                type : SwaggerDefinitionConstant.Model.Property.Type.STRING
+                            } ,
+                            version : {
+                                type : SwaggerDefinitionConstant.Model.Property.Type.STRING
+                            }
+                        }
                     }
+                } ,
+                externalDocs : {
+                    url : "My url"
                 }
             }
         }
-    } ) );
+    ) );
 } );
 
-// configure error
-server.setErrorConfig( ( app: any ) => {
-    app.use( ( err: Error, request: express.Request, response: express.Response, next: express.NextFunction ) => {
+server.setErrorConfig( ( app : any ) => {
+    app.use( ( err : Error , request : express.Request , response : express.Response , next : express.NextFunction ) => {
         console.error( err.stack );
         response.status( 500 ).send( "Something broke!" );
     } );
 } );
 
-// start server
 const app = server.build();
-app.listen( 3000 );
+
+app.listen( config.port );
+console.info( "Server is listening on port : " + config.port );
 
 ```
 
@@ -78,53 +98,58 @@ app.listen( 3000 );
 import * as express from "express";
 import { injectable } from "inversify";
 import { controller, httpGet, interfaces, httpPost, requestParam, httpPut } from "inversify-express-utils";
-import { ApiPath, ApiOperationGet, ApiOperationPost, ApiOperationPut, SwaggerDefinitionConstant } from "swagger-express-ts";
+import { SwaggerDefinitionConstant, ApiPath, ApiOperationGet, ApiOperationPost, ApiOperationPut } from "swagger-express-ts/index";
 import "reflect-metadata";
+const pkg = require ( "../../package.json" );
 
 @ApiPath( {
-    path : "/versions",
+    path : "/versions" ,
     name : "Version"
 } )
 @controller( "/versions" )
 @injectable()
 export class VersionController implements interfaces.Controller {
-    public static TARGET_NAME: string = "VersionController";
-    private data: [any] = [
+    public static TARGET_NAME : string = "VersionController";
+    private data : [any] = [
         {
-            id : "1",
-            name : "Version 1",
-            description : "Description Version 1",
+            id : "1" ,
+            name : "Version 1" ,
+            description : "Description Version 1" ,
             version : "1.0.0"
-        },
+        } ,
         {
-            id : "2",
-            name : "Version 2",
-            description : "Description Version 2",
+            id : "2" ,
+            name : "Version 2" ,
+            description : "Description Version 2" ,
             version : "2.0.0"
         }
     ];
 
     @ApiOperationGet( {
+        description : "Get version object" ,
+        summary : "Get version" ,
         responses : {
-            200 : { description : "Success", isArray : true, model : "Version" }
+            200 : { description : "Success" , isArray : true , model : "Version" }
         }
     } )
     @httpGet( "/" )
-    public getVersions( request: express.Request, response: express.Response, next: express.NextFunction ): void {
+    public getVersions ( request : express.Request , response : express.Response , next : express.NextFunction ) : void {
         response.json( this.data );
     }
 
     @ApiOperationPost( {
+        description : "Post version object" ,
+        summary : "Post new version" ,
         parameters : {
-            body : { description : "New version", required : true, model : "Version" }
-        },
+            body : { description : "New version" , required : true , model : "Version" }
+        } ,
         responses : {
-            200 : { description : "Success", model : "Version" },
+            200 : { description : "Success" } ,
             400 : { description : "Parameters fail" }
         }
     } )
     @httpPost( "/" )
-    public postVersion( request: express.Request, response: express.Response, next: express.NextFunction ): void {
+    public postVersion ( request : express.Request , response : express.Response , next : express.NextFunction ) : void {
         if ( ! request.body ) {
             return response.status( 400 ).end();
         }
@@ -133,21 +158,69 @@ export class VersionController implements interfaces.Controller {
     }
 
     @ApiOperationGet( {
-        path : "/{id}",
+        path : "/{id}" ,
+        description : "Get version by id" ,
+        summary : "Get version detail" ,
         parameters : {
             path : {
-                id : { description : "Id of version", type : SwaggerDefinitionConstant.Parameter.Type.STRING, required : true }
+                id : {
+                    description : "Id of version" ,
+                    type : SwaggerDefinitionConstant.Parameter.Type.STRING ,
+                    required : true
+                }
             }
-        },
+        } ,
         responses : {
-            200 : { description : "Success", model : "Version" },
+            200 : { description : "Success" , model : "Version" } ,
             404 : { description : "Version not exist" }
-        },
+        } ,
+        produces : [ SwaggerDefinitionConstant.Produce.JSON ]
     } )
     @httpGet( "/:id" )
-    public getVersion( @requestParam( "id" ) id: string, request: express.Request, response: express.Response, next: express.NextFunction ): void {
-        this.data.forEach( ( version: any )=> {
+    public getVersion ( @requestParam( "id" ) id : string , request : express.Request , response : express.Response , next : express.NextFunction ) : void {
+        this.data.forEach( ( version : any )=> {
             if ( version.id === id ) {
+                return response.json( version );
+            }
+        } );
+        response.status( 404 ).end();
+    }
+
+    @ApiOperationPut( {
+        path : "/{id}" ,
+        description: "Put version by id",
+        summary: "Put version",
+        parameters : {
+            path : {
+                id : {
+                    description : "Id of version" ,
+                    type : SwaggerDefinitionConstant.Parameter.Type.STRING ,
+                    required : true
+                }
+            } ,
+            body : {
+                description : "Updated version" ,
+                model : "Version" ,
+                required : true
+            }
+        } ,
+        responses : {
+            200 : { model : "Version" }
+        }
+    } )
+    @httpPut( "/:id" )
+    public putVersion ( @requestParam( "id" ) id : string , request : express.Request , response : express.Response , next : express.NextFunction ) : void {
+        if ( ! request.body ) {
+            return response.status( 400 ).end();
+        }
+        this.data.forEach( ( version : any , index : number )=> {
+            if ( version.id === id ) {
+                let newVersion = request.body;
+                version.id = newVersion.id;
+                version.name = newVersion.name;
+                version.description = newVersion.description;
+                version.version = newVersion.version;
+                this.data[ index ] = version;
                 return response.json( version );
             }
         } );

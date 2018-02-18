@@ -1,5 +1,5 @@
 <a name="1.0.0-alpha.5"></a>
-# [1.0.0-alpha.5] (2018-01-29)
+# [1.0.0-alpha.5] (2018-02-18)
 
 ## Features
 
@@ -9,38 +9,38 @@ Example:
 
 ```ts
 app.use( swagger.express(
-        {
-            definition : {
-                setInfo : {
-                    title : "Mon api",
-                    version : "1.0"
-                },
-                models : {
-                    Version : {
-                        properties : {
-                            id : {
-                                type : SwaggerDefinitionConstant.Definition.Property.Type.STRING,
-                                required : true
-                            },
-                            name : {
-                                type : SwaggerDefinitionConstant.Definition.Property.Type.STRING,
-                                required : true
-                            },
-                            description : {
-                                type : SwaggerDefinitionConstant.Definition.Property.Type.STRING
-                            },
-                            version : {
-                                type : SwaggerDefinitionConstant.Definition.Property.Type.STRING
-                            }
+    {
+        definition : {
+            info : {
+                title : "My api" ,
+                version : "1.0"
+            } ,
+            models : {
+                Version : {
+                    properties : {
+                        id : {
+                            type : SwaggerDefinitionConstant.Model.Property.Type.STRING ,
+                            required : true
+                        } ,
+                        name : {
+                            type : SwaggerDefinitionConstant.Model.Property.Type.STRING ,
+                            required : true
+                        } ,
+                        description : {
+                            type : SwaggerDefinitionConstant.Model.Property.Type.STRING
+                        } ,
+                        version : {
+                            type : SwaggerDefinitionConstant.Model.Property.Type.STRING
                         }
                     }
-                },
-                externalDocs: {
-                    url: "Mon url"
                 }
+            } ,
+            externalDocs : {
+                url : "My url"
             }
         }
-    ) );
+    }
+) );
 ```
 
 <a name="1.0.0-alpha.4"></a>

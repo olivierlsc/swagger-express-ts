@@ -18,7 +18,7 @@
 
 ### JSON: string = "application/json"
 
-## Definition
+## Model
 
 ### Type
 
