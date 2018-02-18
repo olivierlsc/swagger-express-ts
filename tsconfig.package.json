@@ -61,6 +61,6 @@
     "src/**/*.spec.ts"
   ],
   "include": [
-    "src/lib/swagger-specification/**/*.ts"
+    "src/lib/swagger-express-ts/**/*.ts"
   ]
 }
