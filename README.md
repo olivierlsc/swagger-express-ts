@@ -98,7 +98,7 @@ console.info( "Server is listening on port : " + config.port );
 import * as express from "express";
 import { injectable } from "inversify";
 import { controller, httpGet, interfaces, httpPost, requestParam, httpPut } from "inversify-express-utils";
-import { SwaggerDefinitionConstant, ApiPath, ApiOperationGet, ApiOperationPost, ApiOperationPut } from "swagger-express-ts/index";
+import { SwaggerDefinitionConstant, ApiPath, ApiOperationGet, ApiOperationPost, ApiOperationPut } from "swagger-express-ts";
 import "reflect-metadata";
 const pkg = require ( "../../package.json" );
 
