@@ -416,7 +416,12 @@ export class SwaggerService {
                         }
                         swaggerPath.delete.tags = [ _.capitalize( controller.name ) ];
                     }
-                    data.paths[ controller.path.concat( path.path ) ] = swaggerPath;
+
+                    if(path.path && path.path.length > 0){
+                        data.paths[ controller.path.concat( path.path ) ] = swaggerPath;
+                    } else {
+                        data.paths[ controller.path ] = swaggerPath;
+                    }
                 }
             } else {
                 let swaggerPath: ISwaggerPath = {};
