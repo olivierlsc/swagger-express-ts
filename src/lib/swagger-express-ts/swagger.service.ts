@@ -57,6 +57,8 @@ export class SwaggerService {
     }
 
     public resetData(): void {
+        this.controllerMap = [];
+        this.definitionsMap = {};
         this.initData();
     }
 
@@ -416,8 +418,7 @@ export class SwaggerService {
                         }
                         swaggerPath.delete.tags = [ _.capitalize( controller.name ) ];
                     }
-
-                    if(path.path && path.path.length > 0){
+                    if ( path.path && path.path.length > 0 ) {
                         data.paths[ controller.path.concat( path.path ) ] = swaggerPath;
                     } else {
                         data.paths[ controller.path ] = swaggerPath;
