@@ -47,3 +47,56 @@ Define path to serve swagger.json
 ## definition: [ISwaggerBuildDefinition](./i-swagger-build-definition.md)
 Define swagger definition.
 - Required
+
+# Authentication
+
+## Configuration
+
+Example:
+
+```ts
+    app.use( swagger.express(
+        {
+            definition : {
+                ...
+                securityDefinitions : {
+                    basicAuth : {
+                        type : SwaggerDefinitionConstant.Security.Type.BASIC_AUTHENTICATION
+                    },
+                    apiKeyHeader : {
+                        type: SwaggerDefinitionConstant.Security.Type.API_KEY,
+                        in: SwaggerDefinitionConstant.Security.In.HEADER,
+                        name: "apiHeader"
+                    }
+                }
+            }
+        }
+    ) );
+```
+
+## Secure controller
+
+Example:
+
+```ts
+    ...
+    @ApiPath( {
+        path : "/version",
+        name : "Version",
+        security : {
+            basicAuth : []
+        }
+    } )
+    ...
+    @ApiOperationGet( {
+        description : "Get version object",
+        summary : "Get version",
+        responses : {
+            200 : { description : "Success", isArray : true, model : "Version" }
+        },
+        security : {
+            basicAuth : []
+        }
+    } )
+    ...
+```

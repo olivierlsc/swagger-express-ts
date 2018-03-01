@@ -121,6 +121,7 @@ Example:
 ```
 
 ### Configuration
+
 Example:
 
 ```ts

@@ -54,6 +54,7 @@ Example:
 ```
 
 ### Configuration
+
 Example:
 
 ```ts
