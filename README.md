@@ -356,6 +356,8 @@ app.use( '/api-docs/swagger/assets', express.static( 'node_modules/swagger-ui-di
 
 Test it on url "/api-docs/swagger". It's cool!
 
+![](./wiki/img/swagger-ui.png)
+
 ## Features and API
 
 - [Installation](./wiki/installation.md)
