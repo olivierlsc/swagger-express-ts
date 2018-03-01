@@ -1,3 +1,4 @@
+import { ISwaggerSecurityDefinition } from "./swagger.builder";
 export interface ISwaggerLicense {
     name: string;
     url?: string;
@@ -67,6 +68,7 @@ export interface ISwaggerOperation {
     produces?: string[];
     consumes?: string[];
     responses?: {[key: string]: ISwaggerOperationResponse};
+    security?: {[key: string]: any[]}[];
 }
 
 export interface ISwaggerTag {
@@ -112,4 +114,5 @@ export interface ISwagger {
     consumes: string[]; // Example : SwaggerDefinition.Consume.JSON
     definitions: {[key: string]: ISwaggerDefinition},
     externalDocs?: ISwaggerExternalDocs;
+    securityDefinitions?: {[key: string]: ISwaggerSecurityDefinition};
 }

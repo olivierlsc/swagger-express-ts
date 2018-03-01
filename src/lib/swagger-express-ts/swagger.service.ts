@@ -21,6 +21,7 @@ import {
 } from "./i-api-operation-args.base";
 import { IApiOperationGetArgs } from "./api-operation-get.decorator";
 import * as assert from "assert";
+import { ISwaggerSecurityDefinition } from "./swagger.builder";
 
 interface IPath {
     path: string;
@@ -36,6 +37,7 @@ interface IController {
     paths?: {[key: string]: IPath};
     name?: string;
     description?: string;
+    security?: {[key: string]: any[]};
 }
 
 export class SwaggerService {
@@ -125,9 +127,6 @@ export class SwaggerService {
             name : args.name,
             paths : {}
         };
-        if ( args.description ) {
-            currentController.description = args.description;
-        }
         for ( let controllerIndex in this.controllerMap ) {
             let controller: IController = this.controllerMap[ controllerIndex ];
             if ( controllerIndex === target.name ) {
@@ -135,6 +134,7 @@ export class SwaggerService {
                 currentController.path = args.path;
                 currentController.name = args.name;
                 currentController.description = args.description;
+                currentController.security = args.security;
             }
         }
         this.controllerMap[ target.name ] = currentController;
@@ -178,6 +178,9 @@ export class SwaggerService {
         this.addOperation( "delete", args, target, propertyKey );
     }
 
+    public addSecurityDefinitions( securityDefinitions: {[key: string]: ISwaggerSecurityDefinition} ): void {
+        this.data.securityDefinitions = securityDefinitions;
+    }
 
     private addOperation( operation: string, args: IApiOperationArgsBase, target: any, propertyKey: string | symbol ): void {
         let currentController: IController = {
@@ -328,7 +331,22 @@ export class SwaggerService {
             }
         }
 
+        if ( args.security ) {
+            operation.security = this.buildOperationSecurity( args.security );
+        }
+
         return operation;
+    }
+
+    private buildOperationSecurity( argsSecurity: {[key: string]: any[]} ): {[key: string]: any[]}[] {
+        let securityToReturn = [];
+        for ( let securityIndex in argsSecurity ) {
+            let security: any[] = argsSecurity[ securityIndex ];
+            let result: {[key: string]: any[]} = {};
+            result[ securityIndex ] = security;
+            securityToReturn.push( result );
+        }
+        return securityToReturn;
     }
 
     private buildParameters( type: string, parameters: {[key: string]: IApiOperationArgsBaseParameter} ): ISwaggerOperationParameter[] {
@@ -369,54 +387,19 @@ export class SwaggerService {
                     let path: IPath = controller.paths[ pathIndex ];
                     let swaggerPath: ISwaggerPath = {};
                     if ( path.get ) {
-                        swaggerPath.get = path.get;
-                        if ( ! swaggerPath.get.produces ) {
-                            swaggerPath.get.produces = this.data.produces;
-                        }
-                        if ( ! swaggerPath.get.consumes ) {
-                            swaggerPath.get.consumes = this.data.consumes;
-                        }
-                        swaggerPath.get.tags = [ _.capitalize( controller.name ) ];
+                        swaggerPath.get = this.buildSwaggerOperation( path.get, controller );
                     }
                     if ( path.post ) {
-                        swaggerPath.post = path.post;
-                        if ( ! swaggerPath.post.produces ) {
-                            swaggerPath.post.produces = this.data.produces;
-                        }
-                        if ( ! swaggerPath.post.consumes ) {
-                            swaggerPath.post.consumes = this.data.consumes;
-                        }
-                        swaggerPath.post.tags = [ _.capitalize( controller.name ) ];
+                        swaggerPath.post = this.buildSwaggerOperation( path.post, controller );
                     }
                     if ( path.put ) {
-                        swaggerPath.put = path.put;
-                        if ( ! swaggerPath.put.produces ) {
-                            swaggerPath.put.produces = this.data.produces;
-                        }
-                        if ( ! swaggerPath.put.consumes ) {
-                            swaggerPath.put.consumes = this.data.consumes;
-                        }
-                        swaggerPath.put.tags = [ _.capitalize( controller.name ) ];
+                        swaggerPath.put = this.buildSwaggerOperation( path.put, controller );
                     }
                     if ( path.patch ) {
-                        swaggerPath.patch = path.patch;
-                        if ( ! swaggerPath.patch.produces ) {
-                            swaggerPath.patch.produces = this.data.produces;
-                        }
-                        if ( ! swaggerPath.patch.consumes ) {
-                            swaggerPath.patch.consumes = this.data.consumes;
-                        }
-                        swaggerPath.patch.tags = [ _.capitalize( controller.name ) ];
+                        swaggerPath.patch = this.buildSwaggerOperation( path.patch, controller );
                     }
                     if ( path.delete ) {
-                        swaggerPath.delete = path.delete;
-                        if ( ! swaggerPath.delete.produces ) {
-                            swaggerPath.delete.produces = this.data.produces;
-                        }
-                        if ( ! swaggerPath.delete.consumes ) {
-                            swaggerPath.delete.consumes = this.data.consumes;
-                        }
-                        swaggerPath.delete.tags = [ _.capitalize( controller.name ) ];
+                        swaggerPath.delete = this.buildSwaggerOperation( path.delete, controller );
                     }
                     if ( path.path && path.path.length > 0 ) {
                         data.paths[ controller.path.concat( path.path ) ] = swaggerPath;
@@ -434,6 +417,20 @@ export class SwaggerService {
             } );
         }
         this.data = data;
+    }
+
+    private buildSwaggerOperation( operation: ISwaggerOperation, controller: IController ): ISwaggerOperation {
+        if ( ! operation.produces ) {
+            operation.produces = this.data.produces;
+        }
+        if ( ! operation.consumes ) {
+            operation.consumes = this.data.consumes;
+        }
+        if ( ! operation.security && controller.security ) {
+            operation.security = this.buildOperationSecurity( controller.security );
+        }
+        operation.tags = [ _.capitalize( controller.name ) ];
+        return operation;
     }
 
     private buildRef( definition: string ): string {

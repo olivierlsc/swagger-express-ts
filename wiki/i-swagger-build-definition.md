@@ -39,3 +39,7 @@ Define all model.
 ## externalDocs: [ISwaggerExternalDocs](./i-swagger-external-docs.md)
 Define external docs
 - Optional
+
+## securityDefinitions: {[key: string]: [ISwaggerSecurityDefinition](./i-swagger-security-definition.md)}
+Define security definitions
+- Optional

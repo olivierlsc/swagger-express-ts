@@ -96,3 +96,39 @@ Define all responses.
 Define type list that resource produce.
 - Optional
 - Default is global type list defined in ISwaggerBuildDefinition when execute [.express(options: ISwaggerExpressOptions)](./configuration.md)
+
+## security: {[key: string]: any[]}
+Define security
+- Optional
+
+Example:
+
+```ts
+    ...
+    @ApiOperationPatch( {
+         path : "/{id}/description",
+        description : "Patch description in version object",
+        summary : "Patch description in version",
+        parameters : {
+            path: {
+                id: {
+                    description : "Id of version",
+                    type : SwaggerDefinitionConstant.Parameter.Type.STRING,
+                    required : true
+                }
+            },
+            body : { description : "New version", required : true, model : "Version" }
+        },
+        responses : {
+            200 : { description : "Success" },
+            400 : { description : "Parameters fail" },
+            404 : { description : "Version not found" }
+        },
+        security : {
+            basicAuth : []
+        }
+    } )
+    ...
+}
+
+```

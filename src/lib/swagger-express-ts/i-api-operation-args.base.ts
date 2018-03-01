@@ -29,4 +29,5 @@ export interface IApiOperationArgsBase {
     path?: string;
     parameters?: IApiOperationArgsBaseParameters;
     responses: {[key: string]: IApiOperationArgsBaseResponse};
+    security?: {[key: string]: any[]};
 }

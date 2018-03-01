@@ -74,3 +74,26 @@ Define all responses.
 Define type list that resource produce.
 - Optional
 - Default is global type list defined in ISwaggerBuildDefinition when execute [.express(options: ISwaggerExpressOptions)](./configuration.md)
+
+## security: {[key: string]: any[]}
+Define security
+- Optional
+
+Example:
+
+```ts
+    ...
+    @ApiOperationGet( {
+        description : "Get version object",
+        summary : "Get version",
+        responses : {
+            200 : { description : "Success", isArray : true, model : "Version" }
+        },
+        security : {
+            basicAuth : []
+        }
+    } )
+    ...
+}
+
+```

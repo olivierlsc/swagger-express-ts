@@ -34,3 +34,21 @@ Define name of resource.
 ## description: string
 Define description of resource.
 - Optional
+
+## security: {[key: string]: any[]}
+Define security to apply all operations from current path.
+- Optional
+
+Example:
+
+```ts
+    ...
+    @ApiPath( {
+        path : "/version",
+        name : "Version",
+        security : {
+            basicAuth : []
+        }
+    } )
+    ...
+```

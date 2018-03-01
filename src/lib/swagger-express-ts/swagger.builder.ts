@@ -29,6 +29,25 @@ export interface ISwaggerBuildDefinitionModel {
     properties: {[key: string]: ISwaggerBuildDefinitionModelProperty};
 }
 
+export interface ISwaggerSecurityDefinition {
+    /**
+     * Define type of security.
+     */
+    type: string;
+
+    /**
+     * Define where security set.
+     * Optional.
+     */
+    in?: string;
+
+    /**
+     * Define name of security.
+     * Optional.
+     */
+    name?: string;
+}
+
 export interface ISwaggerBuildDefinition {
     /**
      * Base URL for all API.
@@ -82,11 +101,17 @@ export interface ISwaggerBuildDefinition {
      * Optional.
      */
     externalDocs?: ISwaggerExternalDocs;
+
+    /**
+     * Define security definitions list.
+     * Optional.
+     */
+    securityDefinitions?: {[key: string]: ISwaggerSecurityDefinition};
 }
 
-export function build ( buildDefinition : ISwaggerBuildDefinition ) : void {
-    assert.ok( buildDefinition , "Definition are required." );
-    assert.ok( buildDefinition.info , "Informations are required. Base is { title: \"Title of my API\", version: \"1.0.0\"}" );
+export function build( buildDefinition: ISwaggerBuildDefinition ): void {
+    assert.ok( buildDefinition, "Definition are required." );
+    assert.ok( buildDefinition.info, "Informations are required. Base is { title: \"Title of my API\", version: \"1.0.0\"}" );
     if ( buildDefinition.basePath ) {
         SwaggerService.getInstance().setBasePath( buildDefinition.basePath );
     }
@@ -111,18 +136,21 @@ export function build ( buildDefinition : ISwaggerBuildDefinition ) : void {
     if ( buildDefinition.externalDocs ) {
         SwaggerService.getInstance().setExternalDocs( buildDefinition.externalDocs );
     }
+    if ( buildDefinition.securityDefinitions ) {
+        SwaggerService.getInstance().addSecurityDefinitions( buildDefinition.securityDefinitions );
+    }
     if ( buildDefinition.models ) {
-        let definitions : {[key: string]: ISwaggerDefinition} = {};
+        let definitions: {[key: string]: ISwaggerDefinition} = {};
         for ( let modelIndex in buildDefinition.models ) {
-            let model : ISwaggerBuildDefinitionModel = buildDefinition.models[ modelIndex ];
-            let newDefinition : ISwaggerDefinition = {
-                type : SwaggerDefinitionConstant.Model.Type.OBJECT ,
-                properties : {} ,
+            let model: ISwaggerBuildDefinitionModel = buildDefinition.models[ modelIndex ];
+            let newDefinition: ISwaggerDefinition = {
+                type : SwaggerDefinitionConstant.Model.Type.OBJECT,
+                properties : {},
                 required : []
             };
             for ( let propertyIndex in model.properties ) {
-                let property : ISwaggerBuildDefinitionModelProperty = model.properties[ propertyIndex ];
-                let newProperty : ISwaggerDefinitionProperty = {
+                let property: ISwaggerBuildDefinitionModelProperty = model.properties[ propertyIndex ];
+                let newProperty: ISwaggerDefinitionProperty = {
                     type : property.type
                 };
                 if ( property.format ) {

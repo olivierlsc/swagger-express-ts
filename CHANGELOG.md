@@ -3,6 +3,100 @@
 
 ## Features
 
+### Authentication
+
+#### Configuration
+
+example:
+
+```ts
+    app.use( swagger.express(
+        {
+            definition : {
+                info : {
+                    title : "My api",
+                    version : "1.0"
+                },
+                models : {
+                    Version : {
+                        properties : {
+                            id : {
+                                type : SwaggerDefinitionConstant.Model.Property.Type.STRING,
+                                required : true
+                            },
+                            name : {
+                                type : SwaggerDefinitionConstant.Model.Property.Type.STRING,
+                                required : true
+                            },
+                            description : {
+                                type : SwaggerDefinitionConstant.Model.Property.Type.STRING
+                            },
+                            version : {
+                                type : SwaggerDefinitionConstant.Model.Property.Type.STRING
+                            }
+                        }
+                    }
+                },
+                externalDocs : {
+                    url : "My url"
+                },
+                securityDefinitions : {
+                    basicAuth : {
+                        type : SwaggerDefinitionConstant.Security.Type.BASIC_AUTHENTICATION
+                    },
+                    apiKeyHeader : {
+                        type: SwaggerDefinitionConstant.Security.Type.API_KEY,
+                        in: SwaggerDefinitionConstant.Security.In.HEADER,
+                        name: "apiHeader"
+                    }
+                }
+            }
+        }
+    ) );
+```
+
+#### Basic Authentication
+
+Example:
+
+```ts
+    @ApiOperationGet( {
+        description : "Get versions objects list",
+        summary : "Get versions list",
+        responses : {
+            200 : { description : "Success", isArray : true, model : "Version" }
+        },
+        security : {
+            basicAuth : []
+        }
+    } )
+    @httpGet( "/" )
+    public getVersions( request: express.Request, response: express.Response, next: express.NextFunction ): void {
+        response.json( this.data );
+    }
+```
+
+#### API Keys
+
+Example:
+
+```ts
+    @ApiOperationGet( {
+        description : "Get versions objects list",
+        summary : "Get versions list",
+        responses : {
+            200 : { description : "Success", isArray : true, model : "Version" }
+        },
+        security : {
+            apiKeyHeader : []
+        }
+    } )
+    @httpGet( "/" )
+    public getVersions( request: express.Request, response: express.Response, next: express.NextFunction ): void {
+        response.json( this.data );
+    }
+```
+
 <a name="1.0.0-alpha.5"></a>
 # [1.0.0-alpha.5] (2018-02-18)
 
