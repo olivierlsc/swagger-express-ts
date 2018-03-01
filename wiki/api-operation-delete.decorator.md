@@ -119,3 +119,26 @@ Example:
 }
 
 ```
+
+### Configuration
+Example:
+
+```ts
+    app.use( swagger.express(
+        {
+            definition : {
+                ...
+                securityDefinitions : {
+                    basicAuth : {
+                        type : SwaggerDefinitionConstant.Security.Type.BASIC_AUTHENTICATION
+                    },
+                    apiKeyHeader : {
+                        type: SwaggerDefinitionConstant.Security.Type.API_KEY,
+                        in: SwaggerDefinitionConstant.Security.In.HEADER,
+                        name: "apiHeader"
+                    }
+                }
+            }
+        }
+    ) );
+```
