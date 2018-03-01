@@ -1,3 +1,5 @@
+![](wiki/img/logo.png)
+
 # swagger-express-ts
 Automatically generate and serve swagger.json v2.0.
 
