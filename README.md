@@ -356,7 +356,7 @@ app.use( '/api-docs/swagger', express.static( 'swagger' ) );
 app.use( '/api-docs/swagger/assets', express.static( 'node_modules/swagger-ui-dist' ) );
 ```
 
-Test it on url "/api-docs/swagger". It's cool!
+Test it on url "/api-docs/swagger".
 
 ![](./wiki/img/swagger-ui.png)
 
