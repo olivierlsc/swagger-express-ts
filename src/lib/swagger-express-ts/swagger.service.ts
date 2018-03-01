@@ -38,6 +38,7 @@ interface IController {
     name?: string;
     description?: string;
     security?: {[key: string]: any[]};
+    deprecated?: boolean;
 }
 
 export class SwaggerService {
@@ -135,6 +136,7 @@ export class SwaggerService {
                 currentController.name = args.name;
                 currentController.description = args.description;
                 currentController.security = args.security;
+                currentController.deprecated = args.deprecated;
             }
         }
         this.controllerMap[ target.name ] = currentController;
@@ -247,6 +249,10 @@ export class SwaggerService {
 
         if ( args.consumes && args.consumes.length > 0 ) {
             operation.consumes = args.consumes;
+        }
+
+        if ( args.deprecated ) {
+            operation.deprecated = args.deprecated;
         }
 
         if ( args.parameters ) {
@@ -420,14 +426,17 @@ export class SwaggerService {
     }
 
     private buildSwaggerOperation( operation: ISwaggerOperation, controller: IController ): ISwaggerOperation {
-        if ( ! operation.produces ) {
+        if ( _.isUndefined(operation.produces) ) {
             operation.produces = this.data.produces;
         }
-        if ( ! operation.consumes ) {
+        if ( _.isUndefined(operation.consumes) ) {
             operation.consumes = this.data.consumes;
         }
-        if ( ! operation.security && controller.security ) {
+        if ( _.isUndefined(operation.security) && controller.security ) {
             operation.security = this.buildOperationSecurity( controller.security );
+        }
+        if ( _.isUndefined(operation.deprecated) && controller.deprecated ) {
+            operation.deprecated = controller.deprecated;
         }
         operation.tags = [ _.capitalize( controller.name ) ];
         return operation;

@@ -5,7 +5,6 @@ import { ApiPath, ApiOperationGet, ApiOperationPost } from "../lib/swagger-expre
 import "reflect-metadata";
 import { SwaggerDefinitionConstant } from "../lib/swagger-express-ts/swagger-definition.constant";
 import { ApiOperationPut } from "../lib/swagger-express-ts/api-operation-put.decorator";
-const pkg = require( "../../package.json" );
 
 @ApiPath( {
     path : "/versions",
@@ -39,7 +38,8 @@ export class VersionController implements interfaces.Controller {
         },
         security : {
             apiKeyHeader : []
-        }
+        },
+        deprecated: true
     } )
     @httpGet( "/" )
     public getVersions( request: express.Request, response: express.Response, next: express.NextFunction ): void {

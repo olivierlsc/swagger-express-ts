@@ -22,12 +22,56 @@ export interface IApiOperationArgsBaseParameters {
 }
 
 export interface IApiOperationArgsBase {
+    /**
+     * Define description
+     * Optional.
+     */
     description?: string;
+
+    /**
+     * Define summary
+     * Optional.
+     */
     summary?: string;
+
+    /**
+     * Define produces
+     * Optional.
+     */
     produces?: string[];
+
+    /**
+     * Define consumes
+     * Optional.
+     */
     consumes?: string[];
+
+    /**
+     * Define path
+     * Optional.
+     */
     path?: string;
+
+    /**
+     * Define parameters
+     * Optional.
+     */
     parameters?: IApiOperationArgsBaseParameters;
+
+    /**
+     * Define responses
+     */
     responses: {[key: string]: IApiOperationArgsBaseResponse};
+
+    /**
+     * Define security
+     * Optional.
+     */
     security?: {[key: string]: any[]};
+
+    /**
+     * Define deprecated
+     * Optional.
+     */
+    deprecated?: boolean;
 }

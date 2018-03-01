@@ -69,6 +69,7 @@ export interface ISwaggerOperation {
     consumes?: string[];
     responses?: {[key: string]: ISwaggerOperationResponse};
     security?: {[key: string]: any[]}[];
+    deprecated?: boolean;
 }
 
 export interface ISwaggerTag {

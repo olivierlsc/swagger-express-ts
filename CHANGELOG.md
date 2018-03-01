@@ -13,33 +13,7 @@ example:
     app.use( swagger.express(
         {
             definition : {
-                info : {
-                    title : "My api",
-                    version : "1.0"
-                },
-                models : {
-                    Version : {
-                        properties : {
-                            id : {
-                                type : SwaggerDefinitionConstant.Model.Property.Type.STRING,
-                                required : true
-                            },
-                            name : {
-                                type : SwaggerDefinitionConstant.Model.Property.Type.STRING,
-                                required : true
-                            },
-                            description : {
-                                type : SwaggerDefinitionConstant.Model.Property.Type.STRING
-                            },
-                            version : {
-                                type : SwaggerDefinitionConstant.Model.Property.Type.STRING
-                            }
-                        }
-                    }
-                },
-                externalDocs : {
-                    url : "My url"
-                },
+                ...
                 securityDefinitions : {
                     basicAuth : {
                         type : SwaggerDefinitionConstant.Security.Type.BASIC_AUTHENTICATION
@@ -60,20 +34,14 @@ example:
 Example:
 
 ```ts
+    ...
     @ApiOperationGet( {
-        description : "Get versions objects list",
-        summary : "Get versions list",
-        responses : {
-            200 : { description : "Success", isArray : true, model : "Version" }
-        },
+        ...
         security : {
             basicAuth : []
         }
     } )
-    @httpGet( "/" )
-    public getVersions( request: express.Request, response: express.Response, next: express.NextFunction ): void {
-        response.json( this.data );
-    }
+    ...
 ```
 
 #### API Keys
@@ -81,20 +49,38 @@ Example:
 Example:
 
 ```ts
+    ...
     @ApiOperationGet( {
-        description : "Get versions objects list",
-        summary : "Get versions list",
-        responses : {
-            200 : { description : "Success", isArray : true, model : "Version" }
-        },
+        ...
         security : {
             apiKeyHeader : []
         }
     } )
-    @httpGet( "/" )
-    public getVersions( request: express.Request, response: express.Response, next: express.NextFunction ): void {
-        response.json( this.data );
-    }
+    ...
+```
+
+### Operations as deprecated
+
+Example in path:
+
+```ts
+    ...
+    @ApiPath( {
+        ...
+        deprecated: true
+    } )
+    ...
+```
+
+Example in operation:
+
+```ts
+    ...
+    @ApiOperationGet( {
+        ...
+        deprecated: true
+    } )
+    ...
 ```
 
 <a name="1.0.0-alpha.5"></a>

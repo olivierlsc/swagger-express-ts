@@ -4,6 +4,7 @@ export interface IApiPathArgs {
     name: string;
     description?: string;
     security?: {[key: string]: any[]};
+    deprecated?: boolean;
 }
 export function ApiPath( args: IApiPathArgs ): ClassDecorator {
     return function ( target: any ) {

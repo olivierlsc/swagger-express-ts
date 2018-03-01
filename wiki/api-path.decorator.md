@@ -76,3 +76,7 @@ Example:
         }
     ) );
 ```
+
+## deprecated: boolean
+Define deprecated
+- Optional
