@@ -360,6 +360,10 @@ Test it on url "/api-docs/swagger".
 
 ![](./wiki/img/swagger-ui.png)
 
+## Project example
+
+You can quickly test swagger-express-ts with the project example [example-swagger-express-ts](https://github.com/olivierlsc/example-swagger-express-ts).
+
 ## Features and API
 
 - [Installation](./wiki/installation.md)
