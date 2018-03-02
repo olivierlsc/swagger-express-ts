@@ -6,8 +6,7 @@ You can get the latest release and the type setDefinitions using npm:
 npm install swagger-express-ts reflect-metadata --save
 ```
 
-The InversifyJS type setDefinitions are included in the inversify npm package.
-InversifyJS requires the experimentalDecorators, emitDecoratorMetadataand lib compilation options in your tsconfig.json file.
+swagger-express-ts requires the experimentalDecorators, emitDecoratorMetadata and lib compilation options in your tsconfig.json file.
 
 ```json
 {
