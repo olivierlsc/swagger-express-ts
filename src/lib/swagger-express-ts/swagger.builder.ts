@@ -7,7 +7,7 @@ export interface ISwaggerBuildDefinitionModelProperty {
     /**
      * Define type of property. Example: SwaggerDefinitionConstant.Definition.Property.Type.STRING
      */
-        type: string;
+    type: string;
 
     /**
      * Define format of property. Example: SwaggerDefinitionConstant.Definition.Property.Format.INT_64
@@ -20,6 +20,13 @@ export interface ISwaggerBuildDefinitionModelProperty {
      * Optional. Default is false.
      */
     required?: boolean;
+
+    /**
+     * Define to reference another model.
+     * i.e. '#/definitions/User'
+     * Optional.
+     */
+    $ref?: boolean;
 }
 
 export interface ISwaggerBuildDefinitionModel {
