@@ -27,6 +27,22 @@ export interface ISwaggerBuildDefinitionModelProperty {
      * Optional.
      */
     $ref?: string;
+
+    /**
+     * Define to reference another model.
+     * i.e. '#/definitions/User'
+     * Optional.
+     */
+    items?: ISwaggerBuildDefinitionModelPropertyItems;
+
+}
+export interface ISwaggerBuildDefinitionModelPropertyItems {
+    /**
+     * Define to reference another model.
+     * i.e. '#/definitions/User'
+     * Optional.
+     */
+    $ref?: string;
 }
 
 export interface ISwaggerBuildDefinitionModel {
@@ -163,11 +179,14 @@ export function build( buildDefinition: ISwaggerBuildDefinition ): void {
                 if ( property.format ) {
                     newProperty.format = property.format;
                 }
+                if ( property.required ) {
+                    newDefinition.required.push( propertyIndex );
+                }
                 if ( property.$ref ) {
                     newProperty.$ref = property.$ref;
                 }
-                if ( property.required ) {
-                    newDefinition.required.push( propertyIndex );
+                if ( property.items ) {
+                    newProperty.items = property.items;
                 }
                 newDefinition.properties[ propertyIndex ] = newProperty;
             }
