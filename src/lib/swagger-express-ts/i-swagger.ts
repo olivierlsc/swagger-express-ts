@@ -88,6 +88,7 @@ export interface ISwaggerPath {
 export interface ISwaggerDefinitionProperty {
     type: string; // Example : SwaggerDefinition.Definition.Property.Type.INTEGER
     format?: string; // Example : SwaggerDefinition.Definition.Property.Format.INT_64
+    $ref?: string;
 }
 
 export interface ISwaggerDefinitionXML {

@@ -26,7 +26,7 @@ export interface ISwaggerBuildDefinitionModelProperty {
      * i.e. '#/definitions/User'
      * Optional.
      */
-    $ref?: boolean;
+    $ref?: string;
 }
 
 export interface ISwaggerBuildDefinitionModel {
@@ -162,6 +162,9 @@ export function build( buildDefinition: ISwaggerBuildDefinition ): void {
                 };
                 if ( property.format ) {
                     newProperty.format = property.format;
+                }
+                if ( property.$ref ) {
+                    newProperty.$ref = property.$ref;
                 }
                 if ( property.required ) {
                     newDefinition.required.push( propertyIndex );
