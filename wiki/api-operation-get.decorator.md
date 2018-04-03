@@ -37,7 +37,7 @@ export class VersionController implements interfaces.Controller {
         description : "Get version object",
         summary : "Get version",
         responses : {
-            200 : { description : "Success", isArray : true, model : "Version" }
+            200 : { description : "Success", type : SwaggerDefinitionConstant.Response.Type.ARRAY  , model : "Version" }
         }
     } )
     @httpGet( "/" )
@@ -84,11 +84,7 @@ Example:
 ```ts
     ...
     @ApiOperationGet( {
-        description : "Get version object",
-        summary : "Get version",
-        responses : {
-            200 : { description : "Success", isArray : true, model : "Version" }
-        },
+        ...
         security : {
             basicAuth : []
         }
