@@ -7,7 +7,7 @@ export interface ISwaggerBuildDefinitionModelProperty {
     /**
      * Define type of property. Example: SwaggerDefinitionConstant.Definition.Property.Type.STRING
      */
-        type: string;
+    type: string;
 
     /**
      * Define format of property. Example: SwaggerDefinitionConstant.Definition.Property.Format.INT_64
@@ -20,6 +20,29 @@ export interface ISwaggerBuildDefinitionModelProperty {
      * Optional. Default is false.
      */
     required?: boolean;
+
+    /**
+     * Define to reference another model.
+     * i.e. '#/definitions/User'
+     * Optional.
+     */
+    $ref?: string;
+
+    /**
+     * Define to reference another model.
+     * i.e. '#/definitions/User'
+     * Optional.
+     */
+    items?: ISwaggerBuildDefinitionModelPropertyItems;
+
+}
+export interface ISwaggerBuildDefinitionModelPropertyItems {
+    /**
+     * Define to reference another model.
+     * i.e. '#/definitions/User'
+     * Optional.
+     */
+    $ref?: string;
 }
 
 export interface ISwaggerBuildDefinitionModel {
@@ -158,6 +181,12 @@ export function build( buildDefinition: ISwaggerBuildDefinition ): void {
                 }
                 if ( property.required ) {
                     newDefinition.required.push( propertyIndex );
+                }
+                if ( property.$ref ) {
+                    newProperty.$ref = property.$ref;
+                }
+                if ( property.items ) {
+                    newProperty.items = property.items;
                 }
                 newDefinition.properties[ propertyIndex ] = newProperty;
             }

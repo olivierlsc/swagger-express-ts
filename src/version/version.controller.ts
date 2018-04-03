@@ -15,7 +15,7 @@ import { ApiOperationPut } from "../lib/swagger-express-ts/api-operation-put.dec
 @injectable()
 export class VersionController implements interfaces.Controller {
     public static TARGET_NAME: string = "VersionController";
-    private data: [any] = [
+    private data: any[] = [
         {
             id : "1",
             name : "Version 1",

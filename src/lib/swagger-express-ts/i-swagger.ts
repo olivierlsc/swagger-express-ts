@@ -1,4 +1,4 @@
-import { ISwaggerSecurityDefinition } from "./swagger.builder";
+import { ISwaggerSecurityDefinition, ISwaggerBuildDefinitionModelPropertyItems } from "./swagger.builder";
 export interface ISwaggerLicense {
     name: string;
     url?: string;
@@ -88,6 +88,8 @@ export interface ISwaggerPath {
 export interface ISwaggerDefinitionProperty {
     type: string; // Example : SwaggerDefinition.Definition.Property.Type.INTEGER
     format?: string; // Example : SwaggerDefinition.Definition.Property.Format.INT_64
+    items?: ISwaggerBuildDefinitionModelPropertyItems;
+    $ref?: string;
 }
 
 export interface ISwaggerDefinitionXML {
