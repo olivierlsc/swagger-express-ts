@@ -89,11 +89,7 @@ Example:
     } )
     ...
     @ApiOperationGet( {
-        description : "Get version object",
-        summary : "Get version",
-        responses : {
-            200 : { description : "Success", isArray : true, model : "Version" }
-        },
+        ...
         security : {
             basicAuth : []
         }
