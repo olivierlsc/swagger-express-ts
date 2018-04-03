@@ -21,5 +21,6 @@ Define if parameter is allow empty value.
 - Optional
 
 ## model: string
-Define model of parameter.
+Define model reference
 - Optional
+- If you want specify Array of model, you must set type with [SwaggerDefinitionConstant](./swagger-definition-constant.md).Definition.Property.Type.ARRAY

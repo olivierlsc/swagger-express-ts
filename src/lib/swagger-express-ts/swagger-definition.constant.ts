@@ -23,11 +23,13 @@ export class SwaggerDefinitionConstant {
 
     public static Model = {
         Type : {
-            OBJECT : SwaggerDefinitionConstant.OBJECT
+            OBJECT : SwaggerDefinitionConstant.OBJECT,
+            ARRAY : SwaggerDefinitionConstant.ARRAY
         },
         Property : {
             Type : {
                 INTEGER : SwaggerDefinitionConstant.INTEGER,
+                ARRAY : SwaggerDefinitionConstant.ARRAY,
                 STRING : SwaggerDefinitionConstant.STRING
             },
             Format : {

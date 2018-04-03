@@ -32,6 +32,8 @@
 
 ##### STRING: string = "string"
 
+##### ARRAY: string = "array"
+
 #### Format
 
 ##### INT_64: string = "int64"

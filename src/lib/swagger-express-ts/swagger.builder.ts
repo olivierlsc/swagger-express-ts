@@ -6,8 +6,9 @@ import { SwaggerDefinitionConstant } from "./swagger-definition.constant";
 export interface ISwaggerBuildDefinitionModelProperty {
     /**
      * Define type of property. Example: SwaggerDefinitionConstant.Definition.Property.Type.STRING
+     * Optional.
      */
-    type: string;
+    type?: string;
 
     /**
      * Define format of property. Example: SwaggerDefinitionConstant.Definition.Property.Format.INT_64
@@ -22,27 +23,9 @@ export interface ISwaggerBuildDefinitionModelProperty {
     required?: boolean;
 
     /**
-     * Define to reference another model.
-     * i.e. '#/definitions/User'
-     * Optional.
+     * Define model.
      */
-    $ref?: string;
-
-    /**
-     * Define to reference another model.
-     * i.e. '#/definitions/User'
-     * Optional.
-     */
-    items?: ISwaggerBuildDefinitionModelPropertyItems;
-
-}
-export interface ISwaggerBuildDefinitionModelPropertyItems {
-    /**
-     * Define to reference another model.
-     * i.e. '#/definitions/User'
-     * Optional.
-     */
-    $ref?: string;
+    model?: string;
 }
 
 export interface ISwaggerBuildDefinitionModel {
@@ -163,36 +146,7 @@ export function build( buildDefinition: ISwaggerBuildDefinition ): void {
         SwaggerService.getInstance().addSecurityDefinitions( buildDefinition.securityDefinitions );
     }
     if ( buildDefinition.models ) {
-        let definitions: {[key: string]: ISwaggerDefinition} = {};
-        for ( let modelIndex in buildDefinition.models ) {
-            let model: ISwaggerBuildDefinitionModel = buildDefinition.models[ modelIndex ];
-            let newDefinition: ISwaggerDefinition = {
-                type : SwaggerDefinitionConstant.Model.Type.OBJECT,
-                properties : {},
-                required : []
-            };
-            for ( let propertyIndex in model.properties ) {
-                let property: ISwaggerBuildDefinitionModelProperty = model.properties[ propertyIndex ];
-                let newProperty: ISwaggerDefinitionProperty = {
-                    type : property.type
-                };
-                if ( property.format ) {
-                    newProperty.format = property.format;
-                }
-                if ( property.required ) {
-                    newDefinition.required.push( propertyIndex );
-                }
-                if ( property.$ref ) {
-                    newProperty.$ref = property.$ref;
-                }
-                if ( property.items ) {
-                    newProperty.items = property.items;
-                }
-                newDefinition.properties[ propertyIndex ] = newProperty;
-            }
-            definitions[ modelIndex ] = newDefinition;
-        }
-        SwaggerService.getInstance().setDefinitions( definitions );
+        SwaggerService.getInstance().setDefinitions( buildDefinition.models );
     }
     SwaggerService.getInstance().buildSwagger();
 }

@@ -1,3 +1,70 @@
+<a name="1.0.0-beta.2"></a>
+# [1.0.0-beta.2] (2018-04-16)
+
+## Features
+
+### Model
+
+#### Configuration
+
+example:
+
+```ts
+    definition : {
+        ...
+        models : {
+            Version : {
+                properties : {
+                    id : {
+                        type : SwaggerDefinitionConstant.Model.Property.Type.STRING,
+                        required : true
+                    },
+                    name : {
+                        type : SwaggerDefinitionConstant.Model.Property.Type.STRING,
+                        required : true
+                    },
+                    description : {
+                        type : SwaggerDefinitionConstant.Model.Property.Type.STRING
+                    },
+                    version : {
+                        type : SwaggerDefinitionConstant.Model.Property.Type.STRING
+                    },
+                    author: {
+                        model: "Author"
+                    }
+                }
+            },
+            Author: {
+                properties: {
+                    id: {
+                        type: SwaggerDefinitionConstant.Model.Property.Type.STRING,
+                        required : true
+                    },
+                    name : {
+                        type : SwaggerDefinitionConstant.Model.Property.Type.STRING,
+                        required : true
+                    },
+                }
+            }
+        },
+        ...
+    }
+```
+
+#### Controller
+
+example:
+
+```ts
+    @ApiOperationGet( {
+        ...
+        responses : {
+            200 : { description : "Success" , type : SwaggerDefinitionConstant.Response.Type.ARRAY , model : "Version" }
+        } ,
+        ...
+    } )
+```
+
 <a name="1.0.0-beta.1"></a>
 # [1.0.0-beta.1] (2018-03-02)
 

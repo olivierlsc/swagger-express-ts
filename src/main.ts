@@ -45,7 +45,22 @@ server.setConfig( ( app: any ) => {
                             },
                             version : {
                                 type : SwaggerDefinitionConstant.Model.Property.Type.STRING
+                            },
+                            author: {
+                                model: "Author"
                             }
+                        }
+                    },
+                    Author: {
+                        properties: {
+                            id: {
+                                type: SwaggerDefinitionConstant.Model.Property.Type.STRING,
+                                required : true
+                            },
+                            name : {
+                                type : SwaggerDefinitionConstant.Model.Property.Type.STRING,
+                                required : true
+                            },
                         }
                     }
                 },
