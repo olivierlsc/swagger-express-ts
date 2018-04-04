@@ -33,7 +33,7 @@ export class VersionController implements interfaces.Controller {
         description: "Get versions objects list",
         summary: "Get versions list",
         responses: {
-            200: { description: "Success", isArray: true, model: "Version" }
+            200: { description: "Success", type: SwaggerDefinitionConstant.Response.Type.ARRAY, model: "Version" }
         },
         security: {
             apiKeyHeader: []

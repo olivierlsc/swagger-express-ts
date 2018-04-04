@@ -52,6 +52,12 @@ export interface ISwaggerOperationSchema {
     type?: string;
     items?: {$ref: string};
     $ref?: string;
+    format?: string;
+    exemple?: string;
+}
+
+export interface ISwaggerOperationSchemaItems {
+    $ref: string;
 }
 
 export interface ISwaggerOperationResponse {
@@ -85,12 +91,19 @@ export interface ISwaggerPath {
     delete?: ISwaggerOperation;
 }
 
+export interface ISwaggerDefinitionPropertyItems {
+    $ref: string;
+}
+
 export interface ISwaggerDefinitionProperty {
-    type: string; // Example : SwaggerDefinition.Definition.Property.Type.INTEGER
+    type?: string; // Example : SwaggerDefinition.Definition.Property.Type.INTEGER
     format?: string; // Example : SwaggerDefinition.Definition.Property.Format.INT_64
     required?: boolean;
     description?: string;
     enum?: string[];
+    items?: ISwaggerDefinitionPropertyItems;
+    $ref?: string;
+    exemple?: string;
 }
 
 export interface ISwaggerDefinitionXML {

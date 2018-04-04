@@ -6,8 +6,9 @@ import { SwaggerDefinitionConstant } from "./swagger-definition.constant";
 export interface ISwaggerBuildDefinitionModelProperty {
     /**
      * Define type of property. Example: SwaggerDefinitionConstant.Definition.Property.Type.STRING
+     * Optional.
      */
-        type: string;
+    type?: string;
 
     /**
      * Define format of property. Example: SwaggerDefinitionConstant.Definition.Property.Format.INT_64
@@ -20,6 +21,11 @@ export interface ISwaggerBuildDefinitionModelProperty {
      * Optional. Default is false.
      */
     required?: boolean;
+
+    /**
+     * Define model.
+     */
+    model?: string;
 }
 
 export interface ISwaggerBuildDefinitionModel {
@@ -140,30 +146,7 @@ export function build( buildDefinition: ISwaggerBuildDefinition ): void {
         SwaggerService.getInstance().addSecurityDefinitions( buildDefinition.securityDefinitions );
     }
     if ( buildDefinition.models ) {
-        let definitions: {[key: string]: ISwaggerDefinition} = {};
-        for ( let modelIndex in buildDefinition.models ) {
-            let model: ISwaggerBuildDefinitionModel = buildDefinition.models[ modelIndex ];
-            let newDefinition: ISwaggerDefinition = {
-                type : SwaggerDefinitionConstant.Model.Type.OBJECT,
-                properties : {},
-                required : []
-            };
-            for ( let propertyIndex in model.properties ) {
-                let property: ISwaggerBuildDefinitionModelProperty = model.properties[ propertyIndex ];
-                let newProperty: ISwaggerDefinitionProperty = {
-                    type : property.type
-                };
-                if ( property.format ) {
-                    newProperty.format = property.format;
-                }
-                if ( property.required ) {
-                    newDefinition.required.push( propertyIndex );
-                }
-                newDefinition.properties[ propertyIndex ] = newProperty;
-            }
-            definitions[ modelIndex ] = newDefinition;
-        }
-        SwaggerService.getInstance().setDefinitions( definitions );
+        SwaggerService.getInstance().setDefinitions( buildDefinition.models );
     }
     SwaggerService.getInstance().buildSwagger();
 }
