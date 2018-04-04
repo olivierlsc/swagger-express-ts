@@ -27,7 +27,6 @@ import * as assert from "assert";
 import { ISwaggerSecurityDefinition } from "./swagger.builder";
 import {ISwaggerOperationSchemaItems} from "./i-swagger";
 import {ISwaggerBuildDefinitionModel} from "./swagger.builder";
-import {ISwaggerDefinitionProperty} from "./i-swagger";
 import {ISwaggerDefinitionPropertyItems} from "./i-swagger";
 import {ISwaggerBuildDefinitionModelProperty} from "./swagger.builder";
 

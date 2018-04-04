@@ -53,7 +53,6 @@ export interface ISwaggerOperationSchema {
     items?: {$ref: string};
     $ref?: string;
     format?: string;
-    exemple?: string;
 }
 
 export interface ISwaggerOperationSchemaItems {
@@ -103,7 +102,6 @@ export interface ISwaggerDefinitionProperty {
     enum?: string[];
     items?: ISwaggerDefinitionPropertyItems;
     $ref?: string;
-    exemple?: string;
 }
 
 export interface ISwaggerDefinitionXML {

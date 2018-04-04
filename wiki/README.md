@@ -9,6 +9,8 @@ Welcome to the SwaggerExpressTS wiki!
 ## Features and API
 
 - [Configuration](./configuration.md)
+- [@ApiModel](./api-model.decorator.md)
+- [@ApiModelProperty](./api-model-property.decorator.md)
 - [@ApiPath](./api-path.decorator.md)
 - [@ApiOperationGet](./api-operation-get.decorator.md)
 - [@ApiOperationPost](./api-operation-post.decorator.md)

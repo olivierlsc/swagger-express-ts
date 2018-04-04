@@ -368,6 +368,8 @@ You can quickly test swagger-express-ts with the project example [example-swagge
 
 - [Installation](./wiki/installation.md)
 - [Configuration](./wiki/configuration.md)
+- [@ApiModel](./wiki/api-model.decorator.md)
+- [@ApiModelProperty](./wiki/api-model-property.decorator.md)
 - [@ApiPath](./wiki/api-path.decorator.md)
 - [@ApiOperationGet](./wiki/api-operation-get.decorator.md)
 - [@ApiOperationPost](./wiki/api-operation-post.decorator.md)
