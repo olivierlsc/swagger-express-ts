@@ -98,6 +98,9 @@ export interface ISwaggerDefinitionPropertyItems {
 export interface ISwaggerDefinitionProperty {
     type?: string; // Example : SwaggerDefinition.Definition.Property.Type.INTEGER
     format?: string; // Example : SwaggerDefinition.Definition.Property.Format.INT_64
+    required?: boolean;
+    description?: string;
+    enum?: string[];
     items?: ISwaggerDefinitionPropertyItems;
     $ref?: string;
     exemple?: string;
@@ -112,6 +115,7 @@ export interface ISwaggerDefinition {
     required?: string[];
     properties: {[key: string]: ISwaggerDefinitionProperty},
     xml?: ISwaggerDefinitionXML;
+    description?: string;
 }
 
 export interface ISwagger {

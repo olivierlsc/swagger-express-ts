@@ -6,7 +6,9 @@ import { interfaces, InversifyExpressServer, TYPE } from "inversify-express-util
 import { VersionController } from "./version/version.controller";
 import * as swagger from "./lib/swagger-express-ts";
 import { SwaggerDefinitionConstant } from "./lib/swagger-express-ts";
-const config = require( "../config.json" );
+const config = require("../config.json");
+
+import './version/version.model';
 
 // set up container
 const container = new Container();
