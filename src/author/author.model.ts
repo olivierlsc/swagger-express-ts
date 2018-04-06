@@ -1,0 +1,19 @@
+import { ApiModel, ApiModelProperty } from "../lib/swagger-express-ts";
+
+@ApiModel( {
+    description : "Description Author."
+} )
+export class Author {
+
+    @ApiModelProperty( {
+        description : "Description id" ,
+        required : true
+    } )
+    id : string;
+
+    @ApiModelProperty( {
+        description : "Description name" ,
+        required : true
+    } )
+    name : string;
+}

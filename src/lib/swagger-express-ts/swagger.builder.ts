@@ -8,7 +8,7 @@ export interface ISwaggerBuildDefinitionModelProperty {
      * Define type of property. Example: SwaggerDefinitionConstant.Definition.Property.Type.STRING
      * Optional.
      */
-    type?: string;
+        type?: string;
 
     /**
      * Define format of property. Example: SwaggerDefinitionConstant.Definition.Property.Format.INT_64
@@ -24,11 +24,28 @@ export interface ISwaggerBuildDefinitionModelProperty {
 
     /**
      * Define model.
+     * Optional.
      */
     model?: string;
+
+    /**
+     * Define enum;
+     * Optional.
+     */
+    enum?: string [];
+
+    /**
+     * Define description.
+     */
+    description?: string;
 }
 
 export interface ISwaggerBuildDefinitionModel {
+    /**
+     * Define description.
+     */
+    description?: string;
+
     /**
      * Define all properties of model.
      */
@@ -39,13 +56,13 @@ export interface ISwaggerSecurityDefinition {
     /**
      * Define type of security.
      */
-    type: string;
+        type: string;
 
     /**
      * Define where security set.
      * Optional.
      */
-    in?: string;
+        in?: string;
 
     /**
      * Define name of security.
@@ -115,9 +132,9 @@ export interface ISwaggerBuildDefinition {
     securityDefinitions?: {[key: string]: ISwaggerSecurityDefinition};
 }
 
-export function build( buildDefinition: ISwaggerBuildDefinition ): void {
-    assert.ok( buildDefinition, "Definition are required." );
-    assert.ok( buildDefinition.info, "Informations are required. Base is { title: \"Title of my API\", version: \"1.0.0\"}" );
+export function build ( buildDefinition : ISwaggerBuildDefinition ) : void {
+    assert.ok( buildDefinition , "Definition are required." );
+    assert.ok( buildDefinition.info , "Informations are required. Base is { title: \"Title of my API\", version: \"1.0.0\"}" );
     if ( buildDefinition.basePath ) {
         SwaggerService.getInstance().setBasePath( buildDefinition.basePath );
     }

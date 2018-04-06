@@ -51,10 +51,11 @@ interface IController {
 
 export class SwaggerService {
 
-    private static instance: SwaggerService;
-    private controllerMap: IController[] = [];
+    private static instance : SwaggerService;
+    private controllerMap : IController[] = [];
     private definitionsMap : {[key: string]: ISwaggerDefinition} = {};
-    private data: ISwagger;
+    private data : ISwagger;
+    private modelsMap : {[key: string]: ISwaggerBuildDefinitionModel} = {};
 
     private constructeur () {
     }
@@ -129,13 +130,17 @@ export class SwaggerService {
             let newDefinition : ISwaggerDefinition = {
                 type : SwaggerDefinitionConstant.Model.Type.OBJECT ,
                 properties : {} ,
-                required : []
+                required : [],
+                description: model.description
             };
             for ( let propertyIndex in model.properties ) {
                 let property : ISwaggerBuildDefinitionModelProperty = model.properties[ propertyIndex ];
                 let newProperty : ISwaggerDefinitionProperty = {
                     type : property.type
                 };
+                newProperty.format = property.format;
+                newProperty.description = property.description;
+                newProperty.enum = property.enum;
                 if ( property.model ) {
                     if ( _.isEqual( SwaggerDefinitionConstant.Model.Property.Type.ARRAY , property.type ) ) {
                         newProperty.items = <ISwaggerDefinitionPropertyItems>{
@@ -145,9 +150,6 @@ export class SwaggerService {
                         newProperty.$ref = this.buildRef( property.model );
                     }
                 }
-                if ( property.format ) {
-                    newProperty.format = property.format;
-                }
                 if ( property.required ) {
                     newDefinition.required.push( propertyIndex );
                 }
@@ -155,7 +157,7 @@ export class SwaggerService {
             }
             definitions[ modelIndex ] = newDefinition;
         }
-        this.data.definitions = _.merge(this.data.definitions, definitions);
+        this.data.definitions = _.merge( this.data.definitions , definitions );
     }
 
     public setExternalDocs ( externalDocs : ISwaggerExternalDocs ) : void {
@@ -486,43 +488,40 @@ export class SwaggerService {
         return "#/definitions/".concat( _.capitalize( definition ) );
     }
 
-    public addApiModelProperty(args: IApiModelPropertyArgs, target: any, propertyKey: string | symbol, propertyType: string) {
+    public addApiModelProperty ( args : IApiModelPropertyArgs , target : any , propertyKey : string | symbol , propertyType : string ) {
         const definitionKey = target.constructor.name;
-
-        let definition = this.data.definitions[definitionKey];
-        if (!definition) {
-            definition = {
-                type: '',
-                properties: {}
+        let swaggerBuildDefinitionModel : ISwaggerBuildDefinitionModel = this.modelsMap[ definitionKey ];
+        if ( ! swaggerBuildDefinitionModel ) {
+            swaggerBuildDefinitionModel = {
+                properties : {}
             };
-            this.data.definitions[definitionKey] = definition;
+            this.modelsMap[ definitionKey ] = swaggerBuildDefinitionModel;
         }
 
-        const property: ISwaggerDefinitionProperty = {
-            type: propertyType
+        const swaggerBuildDefinitionModelProperty : ISwaggerBuildDefinitionModelProperty = {
+            type : propertyType
         };
-        if (args) {
-            property.required = args.required;
-            property.description = args.description;
-            property.enum = args.enum;
+        if ( args ) {
+            swaggerBuildDefinitionModelProperty.required = args.required;
+            swaggerBuildDefinitionModelProperty.description = args.description;
+            swaggerBuildDefinitionModelProperty.enum = args.enum;
         }
-        definition.properties[propertyKey] = property;
+        swaggerBuildDefinitionModel.properties[ propertyKey ] = swaggerBuildDefinitionModelProperty;
+        this.setDefinitions(this.modelsMap);
     }
 
-    public addApiModel(args: IApiModelArgs, target: any): any {
+    public addApiModel ( args : IApiModelArgs , target : any ) : any {
         const definitionKey = target.name;
-
-        let definition : ISwaggerDefinition = this.data.definitions[definitionKey];
-        if (!definition) {
-            definition = {
-                type: SwaggerDefinitionConstant.Model.Type.OBJECT,
-                properties: {}
+        let swaggerBuildDefinitionModel : ISwaggerBuildDefinitionModel = this.modelsMap[ definitionKey ];
+        if ( ! swaggerBuildDefinitionModel ) {
+            swaggerBuildDefinitionModel = {
+                properties : {}
             };
-            this.data.definitions[definitionKey] = definition;
+            this.modelsMap[ definitionKey ] = swaggerBuildDefinitionModel;
         }
-
-        if (args) {
-            definition.description = args.description;
+        if ( args ) {
+            swaggerBuildDefinitionModel.description = args.description;
         }
+        this.setDefinitions( this.modelsMap );
     }
 }
