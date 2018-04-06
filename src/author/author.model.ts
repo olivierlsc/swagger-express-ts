@@ -1,9 +1,10 @@
 import { ApiModel, ApiModelProperty } from "../lib/swagger-express-ts";
 
 @ApiModel( {
-    description : "Description Author."
+    description : "Description Author.",
+    name: "Author"
 } )
-export class Author {
+export class AuthorModel {
 
     @ApiModelProperty( {
         description : "Description id" ,

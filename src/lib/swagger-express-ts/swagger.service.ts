@@ -53,7 +53,6 @@ export class SwaggerService {
 
     private static instance : SwaggerService;
     private controllerMap : IController[] = [];
-    private definitionsMap : {[key: string]: ISwaggerDefinition} = {};
     private data : ISwagger;
     private modelsMap : {[key: string]: ISwaggerBuildDefinitionModel} = {};
 
@@ -130,8 +129,8 @@ export class SwaggerService {
             let newDefinition : ISwaggerDefinition = {
                 type : SwaggerDefinitionConstant.Model.Type.OBJECT ,
                 properties : {} ,
-                required : [],
-                description: model.description
+                required : [] ,
+                description : model.description
             };
             for ( let propertyIndex in model.properties ) {
                 let property : ISwaggerBuildDefinitionModelProperty = model.properties[ propertyIndex ];
@@ -505,9 +504,10 @@ export class SwaggerService {
             swaggerBuildDefinitionModelProperty.required = args.required;
             swaggerBuildDefinitionModelProperty.description = args.description;
             swaggerBuildDefinitionModelProperty.enum = args.enum;
+            swaggerBuildDefinitionModelProperty.model = args.model;
         }
         swaggerBuildDefinitionModel.properties[ propertyKey ] = swaggerBuildDefinitionModelProperty;
-        this.setDefinitions(this.modelsMap);
+        this.setDefinitions( this.modelsMap );
     }
 
     public addApiModel ( args : IApiModelArgs , target : any ) : any {
@@ -521,6 +521,11 @@ export class SwaggerService {
         }
         if ( args ) {
             swaggerBuildDefinitionModel.description = args.description;
+            if ( args.name ) {
+                this.modelsMap[ _.capitalize( args.name ) ] = _.clone( this.modelsMap[ definitionKey ] );
+                delete this.modelsMap[ definitionKey ];
+                delete this.data.definitions[ definitionKey ];
+            }
         }
         this.setDefinitions( this.modelsMap );
     }
