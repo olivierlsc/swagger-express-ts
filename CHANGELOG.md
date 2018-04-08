@@ -1,5 +1,5 @@
-<a name="1.0.0-beta.2"></a>
-# [1.0.0-beta.2] (2018-04-16)
+<a name="1.0.0-rc.1"></a>
+# [1.0.0-rc.1] (2018-04-08)
 
 ## Features
 
@@ -51,6 +51,41 @@ example:
     }
 ```
 
+or
+
+```ts
+    @ApiModel( {
+        description : "Version description" ,
+        name : "Version"
+    } )
+    export class VersionModel {
+    
+        @ApiModelProperty( {
+            description : "Id of version" ,
+            required : true
+        } )
+        id : number;
+    
+        @ApiModelProperty( {
+            description : "" ,
+            required : true
+        } )
+        name : string;
+    
+        @ApiModelProperty( {
+            description : "Description of version" ,
+            required : true
+        } )
+        description : string;
+    
+        @ApiModelProperty( {
+            description : "Author of version" ,
+            model : "Author"
+        } )
+        author : AuthorModel;
+    }
+``` 
+
 #### Controller
 
 example:
@@ -64,6 +99,7 @@ example:
         ...
     } )
 ```
+
 
 <a name="1.0.0-beta.1"></a>
 # [1.0.0-beta.1] (2018-03-02)
