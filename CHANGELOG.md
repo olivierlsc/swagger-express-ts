@@ -10,80 +10,80 @@
 example:
 
 ```ts
-    definition : {
-        ...
-        models : {
-            Version : {
-                properties : {
-                    id : {
-                        type : SwaggerDefinitionConstant.Model.Property.Type.STRING,
-                        required : true
-                    },
-                    name : {
-                        type : SwaggerDefinitionConstant.Model.Property.Type.STRING,
-                        required : true
-                    },
-                    description : {
-                        type : SwaggerDefinitionConstant.Model.Property.Type.STRING
-                    },
-                    version : {
-                        type : SwaggerDefinitionConstant.Model.Property.Type.STRING
-                    },
-                    author: {
-                        model: "Author"
-                    }
-                }
-            },
-            Author: {
-                properties: {
-                    id: {
-                        type: SwaggerDefinitionConstant.Model.Property.Type.STRING,
-                        required : true
-                    },
-                    name : {
-                        type : SwaggerDefinitionConstant.Model.Property.Type.STRING,
-                        required : true
-                    },
+definition : {
+    ...
+    models : {
+        Version : {
+            properties : {
+                id : {
+                    type : SwaggerDefinitionConstant.Model.Property.Type.STRING,
+                    required : true
+                },
+                name : {
+                    type : SwaggerDefinitionConstant.Model.Property.Type.STRING,
+                    required : true
+                },
+                description : {
+                    type : SwaggerDefinitionConstant.Model.Property.Type.STRING
+                },
+                version : {
+                    type : SwaggerDefinitionConstant.Model.Property.Type.STRING
+                },
+                author: {
+                    model: "Author"
                 }
             }
         },
-        ...
-    }
+        Author: {
+            properties: {
+                id: {
+                    type: SwaggerDefinitionConstant.Model.Property.Type.STRING,
+                    required : true
+                },
+                name : {
+                    type : SwaggerDefinitionConstant.Model.Property.Type.STRING,
+                    required : true
+                },
+            }
+        }
+    },
+    ...
+}
 ```
 
 or
 
 ```ts
-    @ApiModel( {
-        description : "Version description" ,
-        name : "Version"
+@ApiModel( {
+    description : "Version description" ,
+    name : "Version"
+} )
+export class VersionModel {
+
+    @ApiModelProperty( {
+        description : "Id of version" ,
+        required : true
     } )
-    export class VersionModel {
-    
-        @ApiModelProperty( {
-            description : "Id of version" ,
-            required : true
-        } )
-        id : number;
-    
-        @ApiModelProperty( {
-            description : "" ,
-            required : true
-        } )
-        name : string;
-    
-        @ApiModelProperty( {
-            description : "Description of version" ,
-            required : true
-        } )
-        description : string;
-    
-        @ApiModelProperty( {
-            description : "Author of version" ,
-            model : "Author"
-        } )
-        author : AuthorModel;
-    }
+    id : number;
+
+    @ApiModelProperty( {
+        description : "" ,
+        required : true
+    } )
+    name : string;
+
+    @ApiModelProperty( {
+        description : "Description of version" ,
+        required : true
+    } )
+    description : string;
+
+    @ApiModelProperty( {
+        description : "Author of version" ,
+        model : "Author"
+    } )
+    author : AuthorModel;
+}
 ``` 
 
 #### Controller
@@ -91,13 +91,13 @@ or
 example:
 
 ```ts
-    @ApiOperationGet( {
-        ...
-        responses : {
-            200 : { description : "Success" , type : SwaggerDefinitionConstant.Response.Type.ARRAY , model : "Version" }
-        } ,
-        ...
-    } )
+@ApiOperationGet( {
+    ...
+    responses : {
+        200 : { description : "Success" , type : SwaggerDefinitionConstant.Response.Type.ARRAY , model : "Version" }
+    } ,
+    ...
+} )
 ```
 
 
@@ -113,23 +113,23 @@ example:
 example:
 
 ```ts
-    app.use( swagger.express(
-        {
-            definition : {
-                ...
-                securityDefinitions : {
-                    basicAuth : {
-                        type : SwaggerDefinitionConstant.Security.Type.BASIC_AUTHENTICATION
-                    },
-                    apiKeyHeader : {
-                        type: SwaggerDefinitionConstant.Security.Type.API_KEY,
-                        in: SwaggerDefinitionConstant.Security.In.HEADER,
-                        name: "apiHeader"
-                    }
+app.use( swagger.express(
+    {
+        definition : {
+            ...
+            securityDefinitions : {
+                basicAuth : {
+                    type : SwaggerDefinitionConstant.Security.Type.BASIC_AUTHENTICATION
+                },
+                apiKeyHeader : {
+                    type: SwaggerDefinitionConstant.Security.Type.API_KEY,
+                    in: SwaggerDefinitionConstant.Security.In.HEADER,
+                    name: "apiHeader"
                 }
             }
         }
-    ) );
+    }
+) );
 ```
 
 #### Basic Authentication
@@ -137,14 +137,14 @@ example:
 Example:
 
 ```ts
+...
+@ApiOperationGet( {
     ...
-    @ApiOperationGet( {
-        ...
-        security : {
-            basicAuth : []
-        }
-    } )
-    ...
+    security : {
+        basicAuth : []
+    }
+} )
+...
 ```
 
 #### API Keys
@@ -152,14 +152,14 @@ Example:
 Example:
 
 ```ts
+...
+@ApiOperationGet( {
     ...
-    @ApiOperationGet( {
-        ...
-        security : {
-            apiKeyHeader : []
-        }
-    } )
-    ...
+    security : {
+        apiKeyHeader : []
+    }
+} )
+...
 ```
 
 ### Operations as deprecated
@@ -167,23 +167,23 @@ Example:
 Example in path:
 
 ```ts
+...
+@ApiPath( {
     ...
-    @ApiPath( {
-        ...
-        deprecated: true
-    } )
-    ...
+    deprecated: true
+} )
+...
 ```
 
 Example in operation:
 
 ```ts
+...
+@ApiOperationGet( {
     ...
-    @ApiOperationGet( {
-        ...
-        deprecated: true
-    } )
-    ...
+    deprecated: true
+} )
+...
 ```
 
 <a name="1.0.0-alpha.5"></a>

@@ -4,12 +4,6 @@ Decorate method for getting a resource in your controller.
 Example:
 
 ```ts
-import * as express from "express";
-import { injectable } from "inversify";
-import { controller, interfaces, requestParam, httpGet } from "inversify-express-utils";
-import { ApiPath, ApiOperationGet, SwaggerDefinitionConstant } from "swagger-express-ts";
-import "reflect-metadata";
-
 @ApiPath( {
     path : "/versions",
     name : "Version"
@@ -70,7 +64,7 @@ Define parameters in path, body, query and formData.
 Define all responses.
 - Required
 
-## setProduces: string[]
+## produces: string[]
 Define type list that resource produce.
 - Optional
 - Default is global type list defined in ISwaggerBuildDefinition when execute [.express(options: ISwaggerExpressOptions)](./configuration.md)

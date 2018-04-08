@@ -5,13 +5,13 @@ Decorate model class.
 Example:
 
 ```ts
-    @ApiModel({
-      description: "Version description",
-      name: "Version"
-    })
-    export class VersionModel {
-     ...
-    }
+@ApiModel({
+  description: "Version description",
+  name: "Version"
+})
+export class VersionModel {
+ ...
+}
 ```
 
 # IApiModelArgs

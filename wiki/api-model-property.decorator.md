@@ -5,19 +5,19 @@ Decorate property in model class.
 Example:
 
 ```ts
-    @ApiModel({
-      description: "Version description",
-      name: "Version"
-    })
-    export class VersionModel {
-    
-      @ApiModelProperty({
-        description: "number value",
-        enum : ['1', '2']
-      })
-      number: number;
-      ...
-    }
+@ApiModel({
+  description: "Version description",
+  name: "Version"
+})
+export class VersionModel {
+
+  @ApiModelProperty({
+    description: "number value",
+    enum : ['1', '2']
+  })
+  number: number;
+  ...
+}
 ```
 
 # IApiModelPropertyArgs
