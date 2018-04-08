@@ -4,6 +4,7 @@
   "description": "Generate and serve swagger.json",
   "main": "./dist/index.js",
   "types": "./dist/index.d.ts",
+  "typings": "./dist/index.d.ts",
   "scripts": {
     "package": "echo \"Packaging...\" && npm run clean && node node_modules/typescript/bin/tsc -p tsconfig.package.json",
     "build": "echo \"Building...\" && node node_modules/gulp/bin/gulp.js build",

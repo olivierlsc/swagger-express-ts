@@ -6,29 +6,31 @@ import { interfaces, InversifyExpressServer, TYPE } from "inversify-express-util
 import { VersionController } from "./version/version.controller";
 import * as swagger from "./lib/swagger-express-ts";
 import { SwaggerDefinitionConstant } from "./lib/swagger-express-ts";
-const config = require("../config.json");
+const config = require ( "../config.json" );
 
+// import models
 import './version/version.model';
+import './author/author.model';
 
 // set up container
-const container = new Container();
+const container = new Container ();
 
 // note that you *must* bind your controllers to Controller
-container.bind<interfaces.Controller>( TYPE.Controller )
+container.bind<interfaces.Controller> ( TYPE.Controller )
     .to( VersionController ).inSingletonScope().whenTargetNamed( VersionController.TARGET_NAME );
 
 // create server
-const server = new InversifyExpressServer( container );
+const server = new InversifyExpressServer ( container );
 
-server.setConfig( ( app: any ) => {
-    app.use( '/api-docs/swagger', express.static( 'swagger' ) );
-    app.use( '/api-docs/swagger/assets', express.static( 'node_modules/swagger-ui-dist' ) );
+server.setConfig( ( app : any ) => {
+    app.use( '/api-docs/swagger' , express.static( 'swagger' ) );
+    app.use( '/api-docs/swagger/assets' , express.static( 'node_modules/swagger-ui-dist' ) );
     app.use( bodyParser.json() );
     app.use( swagger.express(
         {
             definition : {
                 info : {
-                    title : "My api",
+                    title : "My api" ,
                     version : "1.0"
                 }
                 //,
@@ -70,15 +72,15 @@ server.setConfig( ( app: any ) => {
                 ,
                 externalDocs : {
                     url : "My url"
-                },
+                } ,
                 securityDefinitions : {
                     basicAuth : {
                         type : SwaggerDefinitionConstant.Security.Type.BASIC_AUTHENTICATION
-                    },
+                    } ,
                     apiKeyHeader : {
-                        type: SwaggerDefinitionConstant.Security.Type.API_KEY,
-                        in: SwaggerDefinitionConstant.Security.In.HEADER,
-                        name: "apiHeader"
+                        type : SwaggerDefinitionConstant.Security.Type.API_KEY ,
+                        in : SwaggerDefinitionConstant.Security.In.HEADER ,
+                        name : "apiHeader"
                     }
                 }
             }
@@ -86,8 +88,8 @@ server.setConfig( ( app: any ) => {
     ) );
 } );
 
-server.setErrorConfig( ( app: any ) => {
-    app.use( ( err: Error, request: express.Request, response: express.Response, next: express.NextFunction ) => {
+server.setErrorConfig( ( app : any ) => {
+    app.use( ( err : Error , request : express.Request , response : express.Response , next : express.NextFunction ) => {
         console.error( err.stack );
         response.status( 500 ).send( "Something broke!" );
     } );
