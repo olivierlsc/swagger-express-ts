@@ -129,17 +129,27 @@ export class SwaggerService {
             let newDefinition : ISwaggerDefinition = {
                 type : SwaggerDefinitionConstant.Model.Type.OBJECT ,
                 properties : {} ,
-                required : [] ,
-                description : model.description
+                required : []
             };
+            if ( model.description ) {
+                newDefinition.description = model.description;
+            }
             for ( let propertyIndex in model.properties ) {
                 let property : ISwaggerBuildDefinitionModelProperty = model.properties[ propertyIndex ];
                 let newProperty : ISwaggerDefinitionProperty = {
                     type : property.type
                 };
-                newProperty.format = property.format;
-                newProperty.description = property.description;
-                newProperty.enum = property.enum;
+                if ( property.format ) {
+                    newProperty.format = property.format;
+                }
+
+                if ( property.description ) {
+                    newProperty.description = property.description;
+                }
+
+                if ( property.enum ) {
+                    newProperty.enum = property.enum;
+                }
                 if ( property.model ) {
                     if ( _.isEqual( SwaggerDefinitionConstant.Model.Property.Type.ARRAY , property.type ) ) {
                         newProperty.items = <ISwaggerDefinitionPropertyItems>{

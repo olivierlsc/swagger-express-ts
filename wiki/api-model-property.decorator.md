@@ -6,9 +6,10 @@ Example:
 
 ```ts
     @ApiModel({
-      description: "Version description"
+      description: "Version description",
+      name: "Version"
     })
-    export class Version {
+    export class VersionModel {
     
       @ApiModelProperty({
         description: "number value",
@@ -43,4 +44,9 @@ Define description of property.
 ## enum: string[]
 
 Define enum of property.
+- Optional
+
+## model: string
+
+Define model
 - Optional

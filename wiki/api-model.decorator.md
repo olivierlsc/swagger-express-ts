@@ -6,9 +6,10 @@ Example:
 
 ```ts
     @ApiModel({
-      description: "Version description"
+      description: "Version description",
+      name: "Version"
     })
-    export class Version {
+    export class VersionModel {
      ...
     }
 ```
@@ -19,3 +20,9 @@ Example:
 
 Define description
 - Optional
+
+## name: string
+
+Define name
+- Optional
+- Default is name of model class

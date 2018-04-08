@@ -7,13 +7,13 @@ import { ApiModel, ApiModelProperty } from "../lib/swagger-express-ts";
 export class AuthorModel {
 
     @ApiModelProperty( {
-        description : "Description id" ,
+        description : "Id of author" ,
         required : true
     } )
     id : string;
 
     @ApiModelProperty( {
-        description : "Description name" ,
+        description : "Name of author" ,
         required : true
     } )
     name : string;
