@@ -8,7 +8,10 @@ Welcome to the SwaggerExpressTS wiki!
 
 ## Features and API
 
+- [Installation](./installation.md)
 - [Configuration](./configuration.md)
+- [@ApiModel](./api-model.decorator.md)
+- [@ApiModelProperty](./api-model-property.decorator.md)
 - [@ApiPath](./api-path.decorator.md)
 - [@ApiOperationGet](./api-operation-get.decorator.md)
 - [@ApiOperationPost](./api-operation-post.decorator.md)
@@ -18,4 +21,4 @@ Welcome to the SwaggerExpressTS wiki!
 
 ## Test
 
-- [Test](./test.md)
+- [example-swagger-express-ts](https://github.com/olivierlsc/example-swagger-express-ts)

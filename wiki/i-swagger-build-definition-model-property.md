@@ -12,5 +12,19 @@ Define format of property.
 
 ## required: boolean
 Define if property is required.
-- Optionnal
+- Optional
 - Default is false.
+
+## model: string
+Define model reference
+- Optional
+- If you want specify Array of model, you must set type with [SwaggerDefinitionConstant](./swagger-definition-constant.md).Definition.Property.Type.ARRAY
+
+## description: string
+Define description of property.
+- Optional
+
+## enum: string[]
+
+Define enum of property.
+- Optional

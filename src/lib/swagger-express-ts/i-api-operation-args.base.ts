@@ -10,7 +10,7 @@ export interface IApiOperationArgsBaseParameter {
 
 export interface IApiOperationArgsBaseResponse {
     description?: string;
-    isArray?: boolean; // Default is "false"
+    type?: string;
     model?: string;
 }
 

@@ -6,7 +6,9 @@ import { interfaces, InversifyExpressServer, TYPE } from "inversify-express-util
 import { VersionController } from "./version/version.controller";
 import * as swagger from "./lib/swagger-express-ts";
 import { SwaggerDefinitionConstant } from "./lib/swagger-express-ts";
-const config = require( "../config.json" );
+const config = require("../config.json");
+
+import './version/version.model';
 
 // set up container
 const container = new Container();
@@ -28,27 +30,44 @@ server.setConfig( ( app: any ) => {
                 info : {
                     title : "My api",
                     version : "1.0"
-                },
-                models : {
-                    Version : {
-                        properties : {
-                            id : {
-                                type : SwaggerDefinitionConstant.Model.Property.Type.STRING,
-                                required : true
-                            },
-                            name : {
-                                type : SwaggerDefinitionConstant.Model.Property.Type.STRING,
-                                required : true
-                            },
-                            description : {
-                                type : SwaggerDefinitionConstant.Model.Property.Type.STRING
-                            },
-                            version : {
-                                type : SwaggerDefinitionConstant.Model.Property.Type.STRING
-                            }
-                        }
-                    }
-                },
+                }
+                //,
+                //models : {
+                //    Version : {
+                //        properties : {
+                //            id : {
+                //                type : SwaggerDefinitionConstant.Model.Property.Type.STRING,
+                //                required : true
+                //            },
+                //            name : {
+                //                type : SwaggerDefinitionConstant.Model.Property.Type.STRING,
+                //                required : true
+                //            },
+                //            description : {
+                //                type : SwaggerDefinitionConstant.Model.Property.Type.STRING
+                //            },
+                //            version : {
+                //                type : SwaggerDefinitionConstant.Model.Property.Type.STRING
+                //            },
+                //            author: {
+                //                model: "Author"
+                //            }
+                //        }
+                //    },
+                //    Author: {
+                //        properties: {
+                //            id: {
+                //                type: SwaggerDefinitionConstant.Model.Property.Type.STRING,
+                //                required : true
+                //            },
+                //            name : {
+                //                type : SwaggerDefinitionConstant.Model.Property.Type.STRING,
+                //                required : true
+                //            },
+                //        }
+                //    }
+                //}
+                ,
                 externalDocs : {
                     url : "My url"
                 },

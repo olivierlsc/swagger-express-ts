@@ -4,12 +4,6 @@ Decorate method for getting a resource in your controller.
 Example:
 
 ```ts
-import * as express from "express";
-import { injectable } from "inversify";
-import { controller, interfaces, requestParam, httpGet } from "inversify-express-utils";
-import { ApiPath, ApiOperationGet, SwaggerDefinitionConstant } from "swagger-express-ts";
-import "reflect-metadata";
-
 @ApiPath( {
     path : "/versions",
     name : "Version"
@@ -37,7 +31,7 @@ export class VersionController implements interfaces.Controller {
         description : "Get version object",
         summary : "Get version",
         responses : {
-            200 : { description : "Success", isArray : true, model : "Version" }
+            200 : { description : "Success", type : SwaggerDefinitionConstant.Response.Type.ARRAY  , model : "Version" }
         }
     } )
     @httpGet( "/" )
@@ -70,7 +64,7 @@ Define parameters in path, body, query and formData.
 Define all responses.
 - Required
 
-## setProduces: string[]
+## produces: string[]
 Define type list that resource produce.
 - Optional
 - Default is global type list defined in ISwaggerBuildDefinition when execute [.express(options: ISwaggerExpressOptions)](./configuration.md)
@@ -84,11 +78,7 @@ Example:
 ```ts
     ...
     @ApiOperationGet( {
-        description : "Get version object",
-        summary : "Get version",
-        responses : {
-            200 : { description : "Success", isArray : true, model : "Version" }
-        },
+        ...
         security : {
             basicAuth : []
         }
