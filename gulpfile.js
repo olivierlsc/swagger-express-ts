@@ -35,9 +35,9 @@ gulp.task ('build:ts', ['clean'], function () {
         ])
         .pipe (sourcemaps.init ({loadMaps: true}))
         .pipe (tsProject ())
-        .on ("error", function (err) {
-            process.exit (1);
-        })
+        //.on ("error", function (err) {
+        //    process.exit (1);
+        //})
         .js
         .pipe (sourcemaps.write ("../".concat(path.built)))
         .pipe (gulp.dest (path.built));
@@ -105,7 +105,8 @@ gulp.task ('build', ['clean', 'build:ts']);
 gulp.task ('dev', ['build', 'watch'], function () {
     return nodemon ({
         script: 'built/main.js',
-        ext: 'js',
+        //ext: 'js',
+        watch: "built/main.js",
         ignore: [
             'node_modules/',
             'config/',
