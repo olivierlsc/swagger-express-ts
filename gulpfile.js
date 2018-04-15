@@ -32,7 +32,11 @@ gulp.task("prettier", function() {
       .src([path.app.src])
       .pipe(prettierPlugin(undefined, { filter: true }))
       // passing a function that returns base will write the files in-place
-      .pipe(gulp.dest(file => file.base))
+      .pipe(
+        gulp.dest(function(file) {
+          return file.base;
+        })
+      )
   );
 });
 
