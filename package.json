@@ -16,7 +16,7 @@
     "tslint": "echo \"TsLint...\" && node node_modules/gulp/bin/gulp.js tslint",
     "dev": "echo \"Developing...\" && node node_modules/gulp/bin/gulp.js dev",
     "start": "echo \"Starting...\" && npm run build && node built/main.js",
-    "precommit": "pretty-quick"
+    "precommit": "pretty-quick --staged"
   },
   "repository": {
     "type": "git",
