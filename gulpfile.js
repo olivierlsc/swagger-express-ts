@@ -45,7 +45,7 @@ gulp.task("copy:src", ["clean"], function() {
 });
 
 var tsProject = ts.createProject("tsconfig.json", { typescript: require("typescript") });
-gulp.task("build:ts", ["prettier", "copy:src"], function() {
+gulp.task("build:ts", ["copy:src"], function() {
   console.info("Compiling files .ts...");
   return (
     gulp
@@ -134,14 +134,21 @@ gulp.task("watch", function() {
   gulp.watch(path.app.src, ["prettier", "build"]);
 });
 
-gulp.task("build", ["clean", "copy:src", "build:ts"]);
+gulp.task("build", ["prettier", "clean", "copy:src", "build:ts"]);
 gulp.task("dev", ["build", "watch"], function() {
   return nodemon({
     script: "built/main.js",
-    //ext: 'js',
-    watch: "built/main.js",
+    ext: "js",
     ignore: ["node_modules/", "config/", "src"]
-  }).on("restart", function() {
-    console.log("restarted!");
-  });
+  })
+    .on("start", function() {
+      console.info("nodemon has started app");
+    })
+    .on("quit", function() {
+      console.info("nodedmon has quit");
+      process.exit();
+    })
+    .on("restart", function(files) {
+      console.info("App restarted due to: ", files);
+    });
 });

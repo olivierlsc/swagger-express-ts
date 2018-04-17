@@ -187,7 +187,7 @@ export class SwaggerService {
         currentController.deprecated = args.deprecated;
       }
     }
-    this.controllerMap[target.name] = currentController;
+    this.controllerMap[target.name] = _.merge(this.controllerMap[target.name], currentController);
   }
 
   public addOperationGet(

@@ -22,8 +22,6 @@ container
   .inSingletonScope()
   .whenTargetNamed(VersionController.TARGET_NAME);
 
-console.log("oto");
-
 // create server
 const server = new InversifyExpressServer(container);
 
