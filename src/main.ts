@@ -7,10 +7,12 @@ import {
   InversifyExpressServer,
   TYPE
 } from "inversify-express-utils";
-import { VersionController } from "./version/version.controller";
+import { VersionsController } from "./version/versions.controller";
 import * as swagger from "./lib/swagger-express-ts";
 import { SwaggerDefinitionConstant } from "./lib/swagger-express-ts";
 const config = require("../config.json");
+import { VersionController } from "./version/version.controller";
+import { VersionsService } from "./version/versions.service";
 
 // import models
 import "./version/version.model";
@@ -22,10 +24,18 @@ const container = new Container();
 // note that you *must* bind your controllers to Controller
 container
   .bind<interfaces.Controller>(TYPE.Controller)
+  .to(VersionsController)
+  .inSingletonScope()
+  .whenTargetNamed(VersionsController.TARGET_NAME);
+container
+  .bind<interfaces.Controller>(TYPE.Controller)
   .to(VersionController)
   .inSingletonScope()
   .whenTargetNamed(VersionController.TARGET_NAME);
-
+container
+  .bind<VersionsService>(VersionsService.TARGET_NAME)
+  .to(VersionsService)
+  .inSingletonScope();
 // create server
 const server = new InversifyExpressServer(container);
 

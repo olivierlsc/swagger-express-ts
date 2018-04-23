@@ -1,91 +1,51 @@
-import * as express from "express";
-import { injectable } from "inversify";
+import { injectable, inject } from "inversify";
 import {
+  interfaces,
   controller,
   httpGet,
-  interfaces,
-  httpPost,
-  requestParam,
-  httpPut
+  requestParam
 } from "inversify-express-utils";
 import {
   ApiPath,
-  ApiOperationGet,
-  ApiOperationPost
-} from "../lib/swagger-express-ts/index";
+  SwaggerDefinitionConstant,
+  ApiOperationGet
+} from "../lib/swagger-express-ts";
+import * as express from "express";
 import "reflect-metadata";
-import { SwaggerDefinitionConstant } from "../lib/swagger-express-ts/swagger-definition.constant";
-import { ApiOperationPut } from "../lib/swagger-express-ts/api-operation-put.decorator";
+import { VersionsService } from "./versions.service";
 
 @ApiPath({
-  path: "/versions",
-  name: "Version",
-  security: { basicAuth: [] }
+  path: "/versions/{id}",
+  name: "Version"
 })
-@controller("/versions")
+@controller("/versions/:id")
 @injectable()
 export class VersionController implements interfaces.Controller {
   public static TARGET_NAME: string = "VersionController";
 
-  private data = [
-    {
-      id: "1",
-      name: "Version 1",
-      description: "Description Version 1",
-      version: "1.0.0"
-    },
-    {
-      id: "2",
-      name: "Version 2",
-      description: "Description Version 2",
-      version: "2.0.0"
-    }
-  ];
+  constructor(
+    @inject(VersionsService.TARGET_NAME)
+    private versionsService: VersionsService
+  ) {}
 
   @ApiOperationGet({
-    description: "Get versions objects list",
-    summary: "Get versions list",
+    description: "Get version object",
     responses: {
       200: {
         description: "Success",
         type: SwaggerDefinitionConstant.Response.Type.ARRAY,
         model: "Version"
-      }
-    },
-    security: {
-      apiKeyHeader: []
+      },
+      500: { description: "Internal Server Error" }
     }
   })
   @httpGet("/")
-  public getVersions(
+  public getVersion(
+    @requestParam("id") id: string,
     request: express.Request,
     response: express.Response,
     next: express.NextFunction
   ): void {
-    response.json(this.data);
-  }
-
-  @ApiOperationPost({
-    description: "Post version object",
-    summary: "Post new version",
-    parameters: {
-      body: { description: "New version", required: true, model: "Version" }
-    },
-    responses: {
-      200: { description: "Success" },
-      400: { description: "Parameters fail" }
-    }
-  })
-  @httpPost("/")
-  public postVersion(
-    request: express.Request,
-    response: express.Response,
-    next: express.NextFunction
-  ): void {
-    if (!request.body) {
-      return response.status(400).end();
-    }
-    this.data.push(request.body);
-    response.json(request.body);
+    response.json(this.versionsService.getVersionById(id));
   }
 }

@@ -1,3 +1,34 @@
+<a name="1.0.0-rc.2"></a>
+# [1.0.0-rc.2] (2018-04-08)
+
+## Features
+
+### Name
+
+Merge name when several controllers that point to the same name .
+
+Example:
+
+```ts
+@ApiPath({
+  path: "/versions",
+  name: "Version"
+})
+...
+export class VersionsController implements interfaces.Controller {
+    ...
+}
+
+@ApiPath({
+  path: "/versions/:id",
+  name: "Version"
+})
+...
+export class VersionController implements interfaces.Controller {
+    ...
+}
+```  
+
 <a name="1.0.0-rc.1"></a>
 # [1.0.0-rc.1] (2018-04-08)
 

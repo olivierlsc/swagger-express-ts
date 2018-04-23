@@ -10,7 +10,7 @@ export class VersionModel {
     description: "Id of version",
     required: true
   })
-  id: number;
+  id: string;
 
   @ApiModelProperty({
     description: "",
