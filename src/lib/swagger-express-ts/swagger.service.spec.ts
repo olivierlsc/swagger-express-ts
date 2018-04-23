@@ -33,7 +33,9 @@ describe("SwaggerService", () => {
 
       SwaggerService.getInstance().setBasePath(basePath);
 
-      expect(SwaggerService.getInstance().getData().basePath).to.equal(basePath);
+      expect(SwaggerService.getInstance().getData().basePath).to.equal(
+        basePath
+      );
     });
   });
 
@@ -65,8 +67,12 @@ describe("SwaggerService", () => {
 
       SwaggerService.getInstance().setInfo(info);
 
-      expect(SwaggerService.getInstance().getData().info.title).to.equal(info.title);
-      expect(SwaggerService.getInstance().getData().info.version).to.equal(info.version);
+      expect(SwaggerService.getInstance().getData().info.title).to.equal(
+        info.title
+      );
+      expect(SwaggerService.getInstance().getData().info.version).to.equal(
+        info.version
+      );
     });
   });
 
@@ -85,7 +91,9 @@ describe("SwaggerService", () => {
 
       SwaggerService.getInstance().setSchemes(schemes);
 
-      expect(SwaggerService.getInstance().getData().schemes).to.deep.equal(schemes);
+      expect(SwaggerService.getInstance().getData().schemes).to.deep.equal(
+        schemes
+      );
     });
   });
 
@@ -101,7 +109,9 @@ describe("SwaggerService", () => {
 
       SwaggerService.getInstance().setExternalDocs(externalDocs);
 
-      expect(SwaggerService.getInstance().getData().externalDocs.url).to.equal(externalDocs.url);
+      expect(SwaggerService.getInstance().getData().externalDocs.url).to.equal(
+        externalDocs.url
+      );
     });
   });
 
@@ -120,7 +130,9 @@ describe("SwaggerService", () => {
 
       SwaggerService.getInstance().setProduces(produces);
 
-      expect(SwaggerService.getInstance().getData().produces).to.deep.equal(produces);
+      expect(SwaggerService.getInstance().getData().produces).to.deep.equal(
+        produces
+      );
     });
   });
 
@@ -139,7 +151,9 @@ describe("SwaggerService", () => {
 
       SwaggerService.getInstance().setConsumes(consumes);
 
-      expect(SwaggerService.getInstance().getData().consumes).to.deep.equal(consumes);
+      expect(SwaggerService.getInstance().getData().consumes).to.deep.equal(
+        consumes
+      );
     });
   });
 
@@ -159,7 +173,9 @@ describe("SwaggerService", () => {
 
   describe("setDefinitions", () => {
     it("expect default definitions when they not defined", () => {
-      expect(SwaggerService.getInstance().getData().definitions).to.deep.equal({});
+      expect(SwaggerService.getInstance().getData().definitions).to.deep.equal(
+        {}
+      );
     });
 
     it("expect definitions when they defined", () => {
@@ -267,7 +283,9 @@ describe("SwaggerService", () => {
         );
 
         SwaggerService.getInstance().buildSwagger();
-        expect(SwaggerService.getInstance().getData().paths).to.deep.equal(expectedPaths);
+        expect(SwaggerService.getInstance().getData().paths).to.deep.equal(
+          expectedPaths
+        );
       });
 
       it("expect description", () => {
@@ -288,8 +306,11 @@ describe("SwaggerService", () => {
         );
 
         SwaggerService.getInstance().buildSwagger();
-        expectedPaths["/versions"].get.description = operationGetArgs.description;
-        expect(SwaggerService.getInstance().getData().paths).to.deep.equal(expectedPaths);
+        expectedPaths["/versions"].get.description =
+          operationGetArgs.description;
+        expect(SwaggerService.getInstance().getData().paths).to.deep.equal(
+          expectedPaths
+        );
       });
 
       it("expect summary", () => {
@@ -311,12 +332,17 @@ describe("SwaggerService", () => {
 
         SwaggerService.getInstance().buildSwagger();
         expectedPaths["/versions"].get.summary = operationGetArgs.summary;
-        expect(SwaggerService.getInstance().getData().paths).to.deep.equal(expectedPaths);
+        expect(SwaggerService.getInstance().getData().paths).to.deep.equal(
+          expectedPaths
+        );
       });
 
       it("expect consumes", () => {
         let operationGetArgs: IApiOperationGetArgs = {
-          consumes: [SwaggerDefinitionConstant.Consume.JSON, SwaggerDefinitionConstant.Consume.XML],
+          consumes: [
+            SwaggerDefinitionConstant.Consume.JSON,
+            SwaggerDefinitionConstant.Consume.XML
+          ],
           responses: {
             200: {
               model: "Version",
@@ -333,12 +359,17 @@ describe("SwaggerService", () => {
 
         SwaggerService.getInstance().buildSwagger();
         expectedPaths["/versions"].get.consumes = operationGetArgs.consumes;
-        expect(SwaggerService.getInstance().getData().paths).to.deep.equal(expectedPaths);
+        expect(SwaggerService.getInstance().getData().paths).to.deep.equal(
+          expectedPaths
+        );
       });
 
       it("expect produces", () => {
         let operationGetArgs: IApiOperationGetArgs = {
-          produces: [SwaggerDefinitionConstant.Produce.JSON, SwaggerDefinitionConstant.Produce.XML],
+          produces: [
+            SwaggerDefinitionConstant.Produce.JSON,
+            SwaggerDefinitionConstant.Produce.XML
+          ],
           responses: {
             200: {
               model: "Version",
@@ -355,7 +386,9 @@ describe("SwaggerService", () => {
 
         SwaggerService.getInstance().buildSwagger();
         expectedPaths["/versions"].get.produces = operationGetArgs.produces;
-        expect(SwaggerService.getInstance().getData().paths).to.deep.equal(expectedPaths);
+        expect(SwaggerService.getInstance().getData().paths).to.deep.equal(
+          expectedPaths
+        );
       });
 
       it("expect responses", () => {
@@ -378,7 +411,9 @@ describe("SwaggerService", () => {
         SwaggerService.getInstance().buildSwagger();
         expectedPaths["/versions"].get.responses[200].description =
           operationGetArgs.responses[200].description;
-        expect(SwaggerService.getInstance().getData().paths).to.deep.equal(expectedPaths);
+        expect(SwaggerService.getInstance().getData().paths).to.deep.equal(
+          expectedPaths
+        );
       });
     });
 
@@ -420,7 +455,9 @@ describe("SwaggerService", () => {
         );
 
         SwaggerService.getInstance().buildSwagger();
-        expect(SwaggerService.getInstance().getData().paths).to.deep.equal(expectedPaths);
+        expect(SwaggerService.getInstance().getData().paths).to.deep.equal(
+          expectedPaths
+        );
       });
 
       it("expect description", () => {
@@ -439,8 +476,11 @@ describe("SwaggerService", () => {
         );
 
         SwaggerService.getInstance().buildSwagger();
-        expectedPaths["/versions/{id}"].get.description = operationGetArgs.description;
-        expect(SwaggerService.getInstance().getData().paths).to.deep.equal(expectedPaths);
+        expectedPaths["/versions/{id}"].get.description =
+          operationGetArgs.description;
+        expect(SwaggerService.getInstance().getData().paths).to.deep.equal(
+          expectedPaths
+        );
       });
 
       it("expect summary", () => {
@@ -460,13 +500,18 @@ describe("SwaggerService", () => {
 
         SwaggerService.getInstance().buildSwagger();
         expectedPaths["/versions/{id}"].get.summary = operationGetArgs.summary;
-        expect(SwaggerService.getInstance().getData().paths).to.deep.equal(expectedPaths);
+        expect(SwaggerService.getInstance().getData().paths).to.deep.equal(
+          expectedPaths
+        );
       });
 
       it("expect consumes", () => {
         let operationGetArgs: IApiOperationGetArgs = {
           path: "/{id}",
-          consumes: [SwaggerDefinitionConstant.Consume.JSON, SwaggerDefinitionConstant.Consume.XML],
+          consumes: [
+            SwaggerDefinitionConstant.Consume.JSON,
+            SwaggerDefinitionConstant.Consume.XML
+          ],
           responses: {
             200: { model: "Version" }
           }
@@ -479,14 +524,20 @@ describe("SwaggerService", () => {
         );
 
         SwaggerService.getInstance().buildSwagger();
-        expectedPaths["/versions/{id}"].get.consumes = operationGetArgs.consumes;
-        expect(SwaggerService.getInstance().getData().paths).to.deep.equal(expectedPaths);
+        expectedPaths["/versions/{id}"].get.consumes =
+          operationGetArgs.consumes;
+        expect(SwaggerService.getInstance().getData().paths).to.deep.equal(
+          expectedPaths
+        );
       });
 
       it("expect produces", () => {
         let operationGetArgs: IApiOperationGetArgs = {
           path: "/{id}",
-          produces: [SwaggerDefinitionConstant.Produce.JSON, SwaggerDefinitionConstant.Produce.XML],
+          produces: [
+            SwaggerDefinitionConstant.Produce.JSON,
+            SwaggerDefinitionConstant.Produce.XML
+          ],
           responses: {
             200: { model: "Version" }
           }
@@ -499,8 +550,11 @@ describe("SwaggerService", () => {
         );
 
         SwaggerService.getInstance().buildSwagger();
-        expectedPaths["/versions/{id}"].get.produces = operationGetArgs.produces;
-        expect(SwaggerService.getInstance().getData().paths).to.deep.equal(expectedPaths);
+        expectedPaths["/versions/{id}"].get.produces =
+          operationGetArgs.produces;
+        expect(SwaggerService.getInstance().getData().paths).to.deep.equal(
+          expectedPaths
+        );
       });
 
       it("expect responses", () => {
@@ -520,7 +574,9 @@ describe("SwaggerService", () => {
         SwaggerService.getInstance().buildSwagger();
         expectedPaths["/versions/{id}"].get.responses[200].description =
           operationGetArgs.responses[200].description;
-        expect(SwaggerService.getInstance().getData().paths).to.deep.equal(expectedPaths);
+        expect(SwaggerService.getInstance().getData().paths).to.deep.equal(
+          expectedPaths
+        );
       });
     });
   });
@@ -600,7 +656,9 @@ describe("SwaggerService", () => {
       );
 
       SwaggerService.getInstance().buildSwagger();
-      expect(SwaggerService.getInstance().getData().paths).to.deep.equal(expectedPaths);
+      expect(SwaggerService.getInstance().getData().paths).to.deep.equal(
+        expectedPaths
+      );
     });
 
     it("expect description", () => {
@@ -628,8 +686,11 @@ describe("SwaggerService", () => {
       );
 
       SwaggerService.getInstance().buildSwagger();
-      expectedPaths["/versions"].post.description = argsOperationPost.description;
-      expect(SwaggerService.getInstance().getData().paths).to.deep.equal(expectedPaths);
+      expectedPaths["/versions"].post.description =
+        argsOperationPost.description;
+      expect(SwaggerService.getInstance().getData().paths).to.deep.equal(
+        expectedPaths
+      );
     });
 
     it("expect summary", () => {
@@ -658,12 +719,17 @@ describe("SwaggerService", () => {
 
       SwaggerService.getInstance().buildSwagger();
       expectedPaths["/versions"].post.summary = argsOperationPost.summary;
-      expect(SwaggerService.getInstance().getData().paths).to.deep.equal(expectedPaths);
+      expect(SwaggerService.getInstance().getData().paths).to.deep.equal(
+        expectedPaths
+      );
     });
 
     it("expect consumes", () => {
       let argsOperationPost: IApiOperationPostArgs = {
-        consumes: [SwaggerDefinitionConstant.Consume.JSON, SwaggerDefinitionConstant.Consume.XML],
+        consumes: [
+          SwaggerDefinitionConstant.Consume.JSON,
+          SwaggerDefinitionConstant.Consume.XML
+        ],
         parameters: {
           body: {
             description: "New versions",
@@ -687,12 +753,17 @@ describe("SwaggerService", () => {
 
       SwaggerService.getInstance().buildSwagger();
       expectedPaths["/versions"].post.consumes = argsOperationPost.consumes;
-      expect(SwaggerService.getInstance().getData().paths).to.deep.equal(expectedPaths);
+      expect(SwaggerService.getInstance().getData().paths).to.deep.equal(
+        expectedPaths
+      );
     });
 
     it("expect produces", () => {
       let argsOperationPost: IApiOperationPostArgs = {
-        produces: [SwaggerDefinitionConstant.Consume.JSON, SwaggerDefinitionConstant.Consume.XML],
+        produces: [
+          SwaggerDefinitionConstant.Consume.JSON,
+          SwaggerDefinitionConstant.Consume.XML
+        ],
         parameters: {
           body: {
             description: "New versions",
@@ -716,7 +787,9 @@ describe("SwaggerService", () => {
 
       SwaggerService.getInstance().buildSwagger();
       expectedPaths["/versions"].post.produces = argsOperationPost.produces;
-      expect(SwaggerService.getInstance().getData().paths).to.deep.equal(expectedPaths);
+      expect(SwaggerService.getInstance().getData().paths).to.deep.equal(
+        expectedPaths
+      );
     });
   });
 
@@ -804,7 +877,9 @@ describe("SwaggerService", () => {
       );
 
       SwaggerService.getInstance().buildSwagger();
-      expect(SwaggerService.getInstance().getData().paths).to.deep.equal(expectedPaths);
+      expect(SwaggerService.getInstance().getData().paths).to.deep.equal(
+        expectedPaths
+      );
     });
 
     it("expect description", () => {
@@ -837,8 +912,11 @@ describe("SwaggerService", () => {
       );
 
       SwaggerService.getInstance().buildSwagger();
-      expectedPaths["/versions/{id}"].put.description = argsOperationPut.description;
-      expect(SwaggerService.getInstance().getData().paths).to.deep.equal(expectedPaths);
+      expectedPaths["/versions/{id}"].put.description =
+        argsOperationPut.description;
+      expect(SwaggerService.getInstance().getData().paths).to.deep.equal(
+        expectedPaths
+      );
     });
 
     it("expect summary", () => {
@@ -872,13 +950,18 @@ describe("SwaggerService", () => {
 
       SwaggerService.getInstance().buildSwagger();
       expectedPaths["/versions/{id}"].put.summary = argsOperationPut.summary;
-      expect(SwaggerService.getInstance().getData().paths).to.deep.equal(expectedPaths);
+      expect(SwaggerService.getInstance().getData().paths).to.deep.equal(
+        expectedPaths
+      );
     });
 
     it("expect consumes", () => {
       let argsOperationPut: IApiOperationPutArgs = {
         path: "/{id}",
-        consumes: [SwaggerDefinitionConstant.Consume.JSON, SwaggerDefinitionConstant.Consume.XML],
+        consumes: [
+          SwaggerDefinitionConstant.Consume.JSON,
+          SwaggerDefinitionConstant.Consume.XML
+        ],
         parameters: {
           path: {
             id: {
@@ -906,13 +989,18 @@ describe("SwaggerService", () => {
 
       SwaggerService.getInstance().buildSwagger();
       expectedPaths["/versions/{id}"].put.consumes = argsOperationPut.consumes;
-      expect(SwaggerService.getInstance().getData().paths).to.deep.equal(expectedPaths);
+      expect(SwaggerService.getInstance().getData().paths).to.deep.equal(
+        expectedPaths
+      );
     });
 
     it("expect produces", () => {
       let argsOperationPut: IApiOperationPutArgs = {
         path: "/{id}",
-        produces: [SwaggerDefinitionConstant.Consume.JSON, SwaggerDefinitionConstant.Consume.XML],
+        produces: [
+          SwaggerDefinitionConstant.Consume.JSON,
+          SwaggerDefinitionConstant.Consume.XML
+        ],
         parameters: {
           path: {
             id: {
@@ -940,7 +1028,9 @@ describe("SwaggerService", () => {
 
       SwaggerService.getInstance().buildSwagger();
       expectedPaths["/versions/{id}"].put.produces = argsOperationPut.produces;
-      expect(SwaggerService.getInstance().getData().paths).to.deep.equal(expectedPaths);
+      expect(SwaggerService.getInstance().getData().paths).to.deep.equal(
+        expectedPaths
+      );
     });
   });
 
@@ -1028,7 +1118,9 @@ describe("SwaggerService", () => {
       );
 
       SwaggerService.getInstance().buildSwagger();
-      expect(SwaggerService.getInstance().getData().paths).to.deep.equal(expectedPaths);
+      expect(SwaggerService.getInstance().getData().paths).to.deep.equal(
+        expectedPaths
+      );
     });
 
     it("expect description", () => {
@@ -1063,7 +1155,9 @@ describe("SwaggerService", () => {
       SwaggerService.getInstance().buildSwagger();
       expectedPaths["/versions/{id}/description"].patch.description =
         argsOperationPatch.description;
-      expect(SwaggerService.getInstance().getData().paths).to.deep.equal(expectedPaths);
+      expect(SwaggerService.getInstance().getData().paths).to.deep.equal(
+        expectedPaths
+      );
     });
 
     it("expect summary", () => {
@@ -1096,14 +1190,20 @@ describe("SwaggerService", () => {
       );
 
       SwaggerService.getInstance().buildSwagger();
-      expectedPaths["/versions/{id}/description"].patch.summary = argsOperationPatch.summary;
-      expect(SwaggerService.getInstance().getData().paths).to.deep.equal(expectedPaths);
+      expectedPaths["/versions/{id}/description"].patch.summary =
+        argsOperationPatch.summary;
+      expect(SwaggerService.getInstance().getData().paths).to.deep.equal(
+        expectedPaths
+      );
     });
 
     it("expect consumes", () => {
       let argsOperationPatch: IApiOperationPatchArgs = {
         path: "/{id}/description",
-        consumes: [SwaggerDefinitionConstant.Consume.JSON, SwaggerDefinitionConstant.Consume.XML],
+        consumes: [
+          SwaggerDefinitionConstant.Consume.JSON,
+          SwaggerDefinitionConstant.Consume.XML
+        ],
         parameters: {
           path: {
             id: {
@@ -1130,14 +1230,20 @@ describe("SwaggerService", () => {
       );
 
       SwaggerService.getInstance().buildSwagger();
-      expectedPaths["/versions/{id}/description"].patch.consumes = argsOperationPatch.consumes;
-      expect(SwaggerService.getInstance().getData().paths).to.deep.equal(expectedPaths);
+      expectedPaths["/versions/{id}/description"].patch.consumes =
+        argsOperationPatch.consumes;
+      expect(SwaggerService.getInstance().getData().paths).to.deep.equal(
+        expectedPaths
+      );
     });
 
     it("expect produces", () => {
       let argsOperationPut: IApiOperationPutArgs = {
         path: "/{id}/description",
-        produces: [SwaggerDefinitionConstant.Consume.JSON, SwaggerDefinitionConstant.Consume.XML],
+        produces: [
+          SwaggerDefinitionConstant.Consume.JSON,
+          SwaggerDefinitionConstant.Consume.XML
+        ],
         parameters: {
           path: {
             id: {
@@ -1164,8 +1270,11 @@ describe("SwaggerService", () => {
       );
 
       SwaggerService.getInstance().buildSwagger();
-      expectedPaths["/versions/{id}/description"].patch.produces = argsOperationPut.produces;
-      expect(SwaggerService.getInstance().getData().paths).to.deep.equal(expectedPaths);
+      expectedPaths["/versions/{id}/description"].patch.produces =
+        argsOperationPut.produces;
+      expect(SwaggerService.getInstance().getData().paths).to.deep.equal(
+        expectedPaths
+      );
     });
   });
 
@@ -1237,7 +1346,9 @@ describe("SwaggerService", () => {
       );
 
       SwaggerService.getInstance().buildSwagger();
-      expect(SwaggerService.getInstance().getData().paths).to.deep.equal(expectedPaths);
+      expect(SwaggerService.getInstance().getData().paths).to.deep.equal(
+        expectedPaths
+      );
     });
 
     it("expect description", () => {
@@ -1265,8 +1376,11 @@ describe("SwaggerService", () => {
       );
 
       SwaggerService.getInstance().buildSwagger();
-      expectedPaths["/versions/{id}"].delete.description = argsOperationDelete.description;
-      expect(SwaggerService.getInstance().getData().paths).to.deep.equal(expectedPaths);
+      expectedPaths["/versions/{id}"].delete.description =
+        argsOperationDelete.description;
+      expect(SwaggerService.getInstance().getData().paths).to.deep.equal(
+        expectedPaths
+      );
     });
 
     it("expect summary", () => {
@@ -1294,14 +1408,20 @@ describe("SwaggerService", () => {
       );
 
       SwaggerService.getInstance().buildSwagger();
-      expectedPaths["/versions/{id}"].delete.summary = argsOperationDelete.summary;
-      expect(SwaggerService.getInstance().getData().paths).to.deep.equal(expectedPaths);
+      expectedPaths["/versions/{id}"].delete.summary =
+        argsOperationDelete.summary;
+      expect(SwaggerService.getInstance().getData().paths).to.deep.equal(
+        expectedPaths
+      );
     });
 
     it("expect consumes", () => {
       let argsOperationDelete: IApiOperationDeleteArgs = {
         path: "/{id}",
-        consumes: [SwaggerDefinitionConstant.Consume.JSON, SwaggerDefinitionConstant.Consume.XML],
+        consumes: [
+          SwaggerDefinitionConstant.Consume.JSON,
+          SwaggerDefinitionConstant.Consume.XML
+        ],
         parameters: {
           path: {
             id: {
@@ -1323,14 +1443,20 @@ describe("SwaggerService", () => {
       );
 
       SwaggerService.getInstance().buildSwagger();
-      expectedPaths["/versions/{id}"].delete.consumes = argsOperationDelete.consumes;
-      expect(SwaggerService.getInstance().getData().paths).to.deep.equal(expectedPaths);
+      expectedPaths["/versions/{id}"].delete.consumes =
+        argsOperationDelete.consumes;
+      expect(SwaggerService.getInstance().getData().paths).to.deep.equal(
+        expectedPaths
+      );
     });
 
     it("expect produces", () => {
       let argsOperationDelete: IApiOperationDeleteArgs = {
         path: "/{id}",
-        produces: [SwaggerDefinitionConstant.Consume.JSON, SwaggerDefinitionConstant.Consume.XML],
+        produces: [
+          SwaggerDefinitionConstant.Consume.JSON,
+          SwaggerDefinitionConstant.Consume.XML
+        ],
         parameters: {
           path: {
             id: {
@@ -1352,8 +1478,11 @@ describe("SwaggerService", () => {
       );
 
       SwaggerService.getInstance().buildSwagger();
-      expectedPaths["/versions/{id}"].delete.produces = argsOperationDelete.produces;
-      expect(SwaggerService.getInstance().getData().paths).to.deep.equal(expectedPaths);
+      expectedPaths["/versions/{id}"].delete.produces =
+        argsOperationDelete.produces;
+      expect(SwaggerService.getInstance().getData().paths).to.deep.equal(
+        expectedPaths
+      );
     });
   });
 });

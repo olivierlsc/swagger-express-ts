@@ -119,7 +119,9 @@ export class SwaggerService {
     this.data.host = host;
   }
 
-  public setDefinitions(models: { [key: string]: ISwaggerBuildDefinitionModel }): void {
+  public setDefinitions(models: {
+    [key: string]: ISwaggerBuildDefinitionModel;
+  }): void {
     let definitions: { [key: string]: ISwaggerDefinition } = {};
     for (let modelIndex in models) {
       let model: ISwaggerBuildDefinitionModel = models[modelIndex];
@@ -132,7 +134,8 @@ export class SwaggerService {
         newDefinition.description = model.description;
       }
       for (let propertyIndex in model.properties) {
-        let property: ISwaggerBuildDefinitionModelProperty = model.properties[propertyIndex];
+        let property: ISwaggerBuildDefinitionModelProperty =
+          model.properties[propertyIndex];
         let newProperty: ISwaggerDefinitionProperty = {
           type: property.type
         };
@@ -148,7 +151,12 @@ export class SwaggerService {
           newProperty.enum = property.enum;
         }
         if (property.model) {
-          if (_.isEqual(SwaggerDefinitionConstant.Model.Property.Type.ARRAY, property.type)) {
+          if (
+            _.isEqual(
+              SwaggerDefinitionConstant.Model.Property.Type.ARRAY,
+              property.type
+            )
+          ) {
             newProperty.items = <ISwaggerDefinitionPropertyItems>{
               $ref: this.buildRef(property.model)
             };
@@ -187,7 +195,10 @@ export class SwaggerService {
         currentController.deprecated = args.deprecated;
       }
     }
-    this.controllerMap[target.name] = currentController;
+    this.controllerMap[target.name] = _.merge(
+      this.controllerMap[target.name],
+      currentController
+    );
   }
 
   public addOperationGet(
@@ -339,13 +350,19 @@ export class SwaggerService {
       if (args.parameters.path) {
         operation.parameters = _.concat(
           operation.parameters,
-          this.buildParameters(SwaggerDefinitionConstant.Parameter.In.PATH, args.parameters.path)
+          this.buildParameters(
+            SwaggerDefinitionConstant.Parameter.In.PATH,
+            args.parameters.path
+          )
         );
       }
       if (args.parameters.query) {
         operation.parameters = _.concat(
           operation.parameters,
-          this.buildParameters(SwaggerDefinitionConstant.Parameter.In.QUERY, args.parameters.query)
+          this.buildParameters(
+            SwaggerDefinitionConstant.Parameter.In.QUERY,
+            args.parameters.query
+          )
         );
       }
       if (args.parameters.body) {
@@ -377,7 +394,8 @@ export class SwaggerService {
     if (args.responses) {
       operation.responses = {};
       for (let responseIndex in args.responses) {
-        let response: IApiOperationArgsBaseResponse = args.responses[responseIndex];
+        let response: IApiOperationArgsBaseResponse =
+          args.responses[responseIndex];
         let newSwaggerOperationResponse: ISwaggerOperationResponse = {};
         if (response.description) {
           newSwaggerOperationResponse.description = response.description;
@@ -390,19 +408,24 @@ export class SwaggerService {
               newSwaggerOperationResponse.description = "Success and Created";
               break;
             case "204":
-              newSwaggerOperationResponse.description = "Success and 	No Content";
+              newSwaggerOperationResponse.description =
+                "Success and 	No Content";
               break;
             case "400":
-              newSwaggerOperationResponse.description = "Client error and Bad Request";
+              newSwaggerOperationResponse.description =
+                "Client error and Bad Request";
               break;
             case "401":
-              newSwaggerOperationResponse.description = "Client error and Unauthorized";
+              newSwaggerOperationResponse.description =
+                "Client error and Unauthorized";
               break;
             case "404":
-              newSwaggerOperationResponse.description = "Client error and Not Found";
+              newSwaggerOperationResponse.description =
+                "Client error and Not Found";
               break;
             case "406":
-              newSwaggerOperationResponse.description = "Client error and Not Acceptable";
+              newSwaggerOperationResponse.description =
+                "Client error and Not Acceptable";
               break;
             default:
               newSwaggerOperationResponse.description = null;
@@ -413,7 +436,12 @@ export class SwaggerService {
           let newSwaggerOperationResponseSchema: ISwaggerOperationSchema = {
             $ref: ref
           };
-          if (_.isEqual(response.type, SwaggerDefinitionConstant.Response.Type.ARRAY)) {
+          if (
+            _.isEqual(
+              response.type,
+              SwaggerDefinitionConstant.Response.Type.ARRAY
+            )
+          ) {
             newSwaggerOperationResponseSchema = {
               items: <ISwaggerOperationSchemaItems>{
                 $ref: ref
@@ -453,7 +481,8 @@ export class SwaggerService {
   ): ISwaggerOperationParameter[] {
     let swaggerOperationParameter: ISwaggerOperationParameter[] = [];
     for (let parameterIndex in parameters) {
-      let parameter: IApiOperationArgsBaseParameter = parameters[parameterIndex];
+      let parameter: IApiOperationArgsBaseParameter =
+        parameters[parameterIndex];
       let newSwaggerOperationParameter: ISwaggerOperationParameter = {
         name: parameterIndex,
         in: type,
@@ -491,16 +520,25 @@ export class SwaggerService {
             swaggerPath.get = this.buildSwaggerOperation(path.get, controller);
           }
           if (path.post) {
-            swaggerPath.post = this.buildSwaggerOperation(path.post, controller);
+            swaggerPath.post = this.buildSwaggerOperation(
+              path.post,
+              controller
+            );
           }
           if (path.put) {
             swaggerPath.put = this.buildSwaggerOperation(path.put, controller);
           }
           if (path.patch) {
-            swaggerPath.patch = this.buildSwaggerOperation(path.patch, controller);
+            swaggerPath.patch = this.buildSwaggerOperation(
+              path.patch,
+              controller
+            );
           }
           if (path.delete) {
-            swaggerPath.delete = this.buildSwaggerOperation(path.delete, controller);
+            swaggerPath.delete = this.buildSwaggerOperation(
+              path.delete,
+              controller
+            );
           }
           if (path.path && path.path.length > 0) {
             data.paths[controller.path.concat(path.path)] = swaggerPath;
@@ -551,7 +589,8 @@ export class SwaggerService {
     propertyType: string
   ) {
     const definitionKey = target.constructor.name;
-    let swaggerBuildDefinitionModel: ISwaggerBuildDefinitionModel = this.modelsMap[definitionKey];
+    let swaggerBuildDefinitionModel: ISwaggerBuildDefinitionModel = this
+      .modelsMap[definitionKey];
     if (!swaggerBuildDefinitionModel) {
       swaggerBuildDefinitionModel = {
         properties: {}
@@ -568,13 +607,16 @@ export class SwaggerService {
       swaggerBuildDefinitionModelProperty.enum = args.enum;
       swaggerBuildDefinitionModelProperty.model = args.model;
     }
-    swaggerBuildDefinitionModel.properties[propertyKey] = swaggerBuildDefinitionModelProperty;
+    swaggerBuildDefinitionModel.properties[
+      propertyKey
+    ] = swaggerBuildDefinitionModelProperty;
     this.setDefinitions(this.modelsMap);
   }
 
   public addApiModel(args: IApiModelArgs, target: any): any {
     const definitionKey = target.name;
-    let swaggerBuildDefinitionModel: ISwaggerBuildDefinitionModel = this.modelsMap[definitionKey];
+    let swaggerBuildDefinitionModel: ISwaggerBuildDefinitionModel = this
+      .modelsMap[definitionKey];
     if (!swaggerBuildDefinitionModel) {
       swaggerBuildDefinitionModel = {
         properties: {}
@@ -584,7 +626,9 @@ export class SwaggerService {
     if (args) {
       swaggerBuildDefinitionModel.description = args.description;
       if (args.name) {
-        this.modelsMap[_.capitalize(args.name)] = _.clone(this.modelsMap[definitionKey]);
+        this.modelsMap[_.capitalize(args.name)] = _.clone(
+          this.modelsMap[definitionKey]
+        );
         delete this.modelsMap[definitionKey];
         delete this.data.definitions[definitionKey];
       }

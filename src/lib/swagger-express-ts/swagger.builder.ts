@@ -168,7 +168,9 @@ export function build(buildDefinition: ISwaggerBuildDefinition): void {
     SwaggerService.getInstance().setExternalDocs(buildDefinition.externalDocs);
   }
   if (buildDefinition.securityDefinitions) {
-    SwaggerService.getInstance().addSecurityDefinitions(buildDefinition.securityDefinitions);
+    SwaggerService.getInstance().addSecurityDefinitions(
+      buildDefinition.securityDefinitions
+    );
   }
   if (buildDefinition.models) {
     SwaggerService.getInstance().setDefinitions(buildDefinition.models);
