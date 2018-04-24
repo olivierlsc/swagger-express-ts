@@ -1,4 +1,5 @@
 import { injectable, inject } from "inversify";
+import "reflect-metadata";
 import {
   interfaces,
   controller,
@@ -11,7 +12,6 @@ import {
   ApiOperationGet
 } from "../lib/swagger-express-ts";
 import * as express from "express";
-import "reflect-metadata";
 import { VersionsService } from "./versions.service";
 
 @ApiPath({
@@ -30,6 +30,14 @@ export class VersionController implements interfaces.Controller {
 
   @ApiOperationGet({
     description: "Get version object",
+    parameters: {
+      path: {
+        id: {
+          type: SwaggerDefinitionConstant.Parameter.Type.STRING,
+          required: true
+        }
+      }
+    },
     responses: {
       200: {
         description: "Success",

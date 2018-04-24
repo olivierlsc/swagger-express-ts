@@ -1,4 +1,5 @@
 import { injectable } from "inversify";
+import "reflect-metadata";
 import { VersionModel } from "./version.model";
 import * as _ from "lodash";
 

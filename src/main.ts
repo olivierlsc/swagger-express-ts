@@ -13,6 +13,7 @@ import { SwaggerDefinitionConstant } from "./lib/swagger-express-ts";
 const config = require("../config.json");
 import { VersionController } from "./version/version.controller";
 import { VersionsService } from "./version/versions.service";
+import * as _ from "lodash";
 
 // import models
 import "./version/version.model";
@@ -123,5 +124,7 @@ server.setErrorConfig((app: any) => {
 
 const app = server.build();
 
-app.listen(config.port);
-console.info("Server is listening on port : " + config.port);
+if (!_.isEqual(process.env.NODE_ENV, "test")) {
+  app.listen(config.port);
+  console.info("Server is listening on port : " + config.port);
+}

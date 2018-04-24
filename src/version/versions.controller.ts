@@ -1,5 +1,6 @@
 import * as express from "express";
 import { injectable, inject } from "inversify";
+import "reflect-metadata";
 import {
   controller,
   httpGet,
@@ -13,7 +14,6 @@ import {
   ApiOperationGet,
   ApiOperationPost
 } from "../lib/swagger-express-ts/index";
-import "reflect-metadata";
 import { SwaggerDefinitionConstant } from "../lib/swagger-express-ts/swagger-definition.constant";
 import { ApiOperationPut } from "../lib/swagger-express-ts/api-operation-put.decorator";
 import { VersionsService } from "./versions.service";
