@@ -53,6 +53,7 @@ export class SwaggerService {
   private controllerMap: IController[] = [];
   private data: ISwagger;
   private modelsMap: { [key: string]: ISwaggerBuildDefinitionModel } = {};
+  private globalResponses: { [key: string]: IApiOperationArgsBaseResponse };
 
   private constructeur() {}
 
@@ -117,6 +118,12 @@ export class SwaggerService {
 
   public setHost(host: string): void {
     this.data.host = host;
+  }
+
+  public setResponses(responses: {
+    [key: string]: IApiOperationArgsBaseResponse;
+  }): void {
+    this.globalResponses = responses;
   }
 
   public setDefinitions(models: {
@@ -405,11 +412,23 @@ export class SwaggerService {
               newSwaggerOperationResponse.description = "Success";
               break;
             case "201":
-              newSwaggerOperationResponse.description = "Success and Created";
+              newSwaggerOperationResponse.description = "Created";
+              break;
+            case "202":
+              newSwaggerOperationResponse.description = "Accepted";
+              break;
+            case "203":
+              newSwaggerOperationResponse.description =
+                "Non-Authoritative Information";
               break;
             case "204":
-              newSwaggerOperationResponse.description =
-                "Success and 	No Content";
+              newSwaggerOperationResponse.description = "No Content";
+              break;
+            case "205":
+              newSwaggerOperationResponse.description = "Reset Content";
+              break;
+            case "206":
+              newSwaggerOperationResponse.description = "Partial Content";
               break;
             case "400":
               newSwaggerOperationResponse.description =
@@ -426,6 +445,15 @@ export class SwaggerService {
             case "406":
               newSwaggerOperationResponse.description =
                 "Client error and Not Acceptable";
+              break;
+            case "500":
+              newSwaggerOperationResponse.description = "Internal Server Error";
+              break;
+            case "501":
+              newSwaggerOperationResponse.description = "Not Implemented";
+              break;
+            case "503":
+              newSwaggerOperationResponse.description = "Service Unavailable";
               break;
             default:
               newSwaggerOperationResponse.description = null;
@@ -574,6 +602,7 @@ export class SwaggerService {
     if (_.isUndefined(operation.deprecated) && controller.deprecated) {
       operation.deprecated = controller.deprecated;
     }
+    operation.responses = _.merge(this.globalResponses, operation.responses);
     operation.tags = [_.capitalize(controller.name)];
     return operation;
   }

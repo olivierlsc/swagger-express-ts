@@ -2,11 +2,16 @@ import {
   ISwaggerInfo,
   ISwaggerDefinition,
   ISwaggerDefinitionProperty,
-  ISwaggerExternalDocs
+  ISwaggerExternalDocs,
+  ISwaggerOperationResponse
 } from "./i-swagger";
 import * as assert from "assert";
 import { SwaggerService } from "./swagger.service";
 import { SwaggerDefinitionConstant } from "./swagger-definition.constant";
+import {
+  IApiOperationArgsBaseParameter,
+  IApiOperationArgsBaseResponse
+} from "./i-api-operation-args.base";
 
 export interface ISwaggerBuildDefinitionModelProperty {
   /**
@@ -135,6 +140,12 @@ export interface ISwaggerBuildDefinition {
    * Optional.
    */
   securityDefinitions?: { [key: string]: ISwaggerSecurityDefinition };
+
+  /**
+   * Define global responses.
+   * Optional.
+   */
+  responses?: { [key: string]: IApiOperationArgsBaseResponse };
 }
 
 export function build(buildDefinition: ISwaggerBuildDefinition): void {
@@ -174,6 +185,9 @@ export function build(buildDefinition: ISwaggerBuildDefinition): void {
   }
   if (buildDefinition.models) {
     SwaggerService.getInstance().setDefinitions(buildDefinition.models);
+  }
+  if (buildDefinition.responses) {
+    SwaggerService.getInstance().setResponses(buildDefinition.responses);
   }
   SwaggerService.getInstance().buildSwagger();
 }

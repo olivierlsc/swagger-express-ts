@@ -40,11 +40,8 @@ export class VersionController implements interfaces.Controller {
     },
     responses: {
       200: {
-        description: "Success",
-        type: SwaggerDefinitionConstant.Response.Type.ARRAY,
         model: "Version"
-      },
-      500: { description: "Internal Server Error" }
+      }
     }
   })
   @httpGet("/")

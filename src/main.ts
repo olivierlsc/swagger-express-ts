@@ -102,6 +102,9 @@ server.setConfig((app: any) => {
             in: SwaggerDefinitionConstant.Security.In.HEADER,
             name: "apiHeader"
           }
+        },
+        responses: {
+          200: { description: "Success operation" }
         }
       }
     })

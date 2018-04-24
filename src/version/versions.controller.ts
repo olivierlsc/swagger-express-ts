@@ -39,7 +39,6 @@ export class VersionsController implements interfaces.Controller {
     summary: "Get versions list",
     responses: {
       200: {
-        description: "Success",
         type: SwaggerDefinitionConstant.Response.Type.ARRAY,
         model: "Version"
       }
@@ -64,7 +63,9 @@ export class VersionsController implements interfaces.Controller {
       body: { description: "New version", required: true, model: "Version" }
     },
     responses: {
-      200: { description: "Success" },
+      200: {
+        model: "Version"
+      },
       400: { description: "Parameters fail" }
     }
   })

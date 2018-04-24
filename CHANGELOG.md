@@ -27,7 +27,25 @@ export class VersionsController implements interfaces.Controller {
 export class VersionController implements interfaces.Controller {
     ...
 }
-```  
+```
+
+### Global responses
+
+Defined global responses for all resources. Each response of resource can be overrride global responses.
+
+Example:
+
+```ts
+app.use(
+    swagger.express({
+      definition: {
+        responses: {
+            200: {description: "Success operation"}
+        }
+      }
+    })
+  );
+```
 
 <a name="1.0.0-rc.1"></a>
 # [1.0.0-rc.1] (2018-04-08)
