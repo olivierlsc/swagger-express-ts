@@ -53,7 +53,6 @@ export class SwaggerService {
   private controllerMap: IController[] = [];
   private data: ISwagger;
   private modelsMap: { [key: string]: ISwaggerBuildDefinitionModel } = {};
-  private globalResponses: { [key: string]: IApiOperationArgsBaseResponse };
 
   private constructeur() {}
 
@@ -118,10 +117,6 @@ export class SwaggerService {
 
   public setHost(host: string): void {
     this.data.host = host;
-  }
-
-  public setResponses(responses: { [key: string]: IApiOperationArgsBaseResponse }): void {
-    this.globalResponses = responses;
   }
 
   public setDefinitions(models: { [key: string]: ISwaggerBuildDefinitionModel }): void {
@@ -562,7 +557,6 @@ export class SwaggerService {
     if (_.isUndefined(operation.deprecated) && controller.deprecated) {
       operation.deprecated = controller.deprecated;
     }
-    //operation.responses = _.merge(this.globalResponses, operation.responses);
     operation.tags = [_.capitalize(controller.name)];
     return operation;
   }

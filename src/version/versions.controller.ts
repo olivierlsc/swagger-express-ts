@@ -9,11 +9,7 @@ import {
   requestParam,
   httpPut
 } from "inversify-express-utils";
-import {
-  ApiPath,
-  ApiOperationGet,
-  ApiOperationPost
-} from "../lib/swagger-express-ts/index";
+import { ApiPath, ApiOperationGet, ApiOperationPost } from "../lib/swagger-express-ts/index";
 import { SwaggerDefinitionConstant } from "../lib/swagger-express-ts/swagger-definition.constant";
 import { ApiOperationPut } from "../lib/swagger-express-ts/api-operation-put.decorator";
 import { VersionsService } from "./versions.service";
@@ -29,10 +25,7 @@ import { VersionModel } from "./version.model";
 export class VersionsController implements interfaces.Controller {
   public static TARGET_NAME: string = "VersionsController";
 
-  constructor(
-    @inject(VersionsService.TARGET_NAME)
-    private versionsService: VersionsService
-  ) {}
+  constructor(@inject(VersionsService.TARGET_NAME) private versionsService: VersionsService) {}
 
   @ApiOperationGet({
     description: "Get versions objects list",
@@ -41,7 +34,8 @@ export class VersionsController implements interfaces.Controller {
       200: {
         type: SwaggerDefinitionConstant.Response.Type.ARRAY,
         model: "Version"
-      }
+      },
+      500: {}
     },
     security: {
       apiKeyHeader: []
@@ -66,7 +60,8 @@ export class VersionsController implements interfaces.Controller {
       200: {
         model: "Version"
       },
-      400: { description: "Parameters fail" }
+      400: { description: "Parameters fail" },
+      500: {}
     }
   })
   @httpPost("/")

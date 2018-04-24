@@ -140,12 +140,6 @@ export interface ISwaggerBuildDefinition {
    * Optional.
    */
   securityDefinitions?: { [key: string]: ISwaggerSecurityDefinition };
-
-  /**
-   * Define global responses.
-   * Optional.
-   */
-  responses?: { [key: string]: IApiOperationArgsBaseResponse };
 }
 
 export function build(buildDefinition: ISwaggerBuildDefinition): void {
@@ -179,15 +173,10 @@ export function build(buildDefinition: ISwaggerBuildDefinition): void {
     SwaggerService.getInstance().setExternalDocs(buildDefinition.externalDocs);
   }
   if (buildDefinition.securityDefinitions) {
-    SwaggerService.getInstance().addSecurityDefinitions(
-      buildDefinition.securityDefinitions
-    );
+    SwaggerService.getInstance().addSecurityDefinitions(buildDefinition.securityDefinitions);
   }
   if (buildDefinition.models) {
     SwaggerService.getInstance().setDefinitions(buildDefinition.models);
-  }
-  if (buildDefinition.responses) {
-    SwaggerService.getInstance().setResponses(buildDefinition.responses);
   }
   SwaggerService.getInstance().buildSwagger();
 }

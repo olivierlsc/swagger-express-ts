@@ -1,16 +1,7 @@
 import { injectable, inject } from "inversify";
 import "reflect-metadata";
-import {
-  interfaces,
-  controller,
-  httpGet,
-  requestParam
-} from "inversify-express-utils";
-import {
-  ApiPath,
-  SwaggerDefinitionConstant,
-  ApiOperationGet
-} from "../lib/swagger-express-ts";
+import { interfaces, controller, httpGet, requestParam } from "inversify-express-utils";
+import { ApiPath, SwaggerDefinitionConstant, ApiOperationGet } from "../lib/swagger-express-ts";
 import * as express from "express";
 import { VersionsService } from "./versions.service";
 
@@ -23,10 +14,7 @@ import { VersionsService } from "./versions.service";
 export class VersionController implements interfaces.Controller {
   public static TARGET_NAME: string = "VersionController";
 
-  constructor(
-    @inject(VersionsService.TARGET_NAME)
-    private versionsService: VersionsService
-  ) {}
+  constructor(@inject(VersionsService.TARGET_NAME) private versionsService: VersionsService) {}
 
   @ApiOperationGet({
     description: "Get version object",
@@ -41,7 +29,9 @@ export class VersionController implements interfaces.Controller {
     responses: {
       200: {
         model: "Version"
-      }
+      },
+      400: {},
+      500: {}
     }
   })
   @httpGet("/")
