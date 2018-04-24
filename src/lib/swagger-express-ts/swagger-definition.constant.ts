@@ -1,10 +1,12 @@
 export class SwaggerDefinitionConstant {
   private static JSON: string = "application/json";
   private static XML: string = "application/xml";
-  private static OBJECT: string = "object";
-  private static INTEGER: string = "integer";
   private static STRING: string = "string";
+  private static NUMBER: string = "number";
+  private static INTEGER: string = "integer";
+  private static BOOLEAN: string = "boolean";
   private static ARRAY: string = "array";
+  private static OBJECT: string = "object";
   private static QUERY: string = "query";
   public static Produce = {
     XML: SwaggerDefinitionConstant.XML,
@@ -28,9 +30,12 @@ export class SwaggerDefinitionConstant {
     },
     Property: {
       Type: {
+        STRING: SwaggerDefinitionConstant.STRING,
+        NUMBER: SwaggerDefinitionConstant.NUMBER,
         INTEGER: SwaggerDefinitionConstant.INTEGER,
+        BOOLEAN: SwaggerDefinitionConstant.BOOLEAN,
         ARRAY: SwaggerDefinitionConstant.ARRAY,
-        STRING: SwaggerDefinitionConstant.STRING
+        OBJECT: SwaggerDefinitionConstant.OBJECT
       },
       Format: {
         INT_64: "int64"
@@ -40,9 +45,12 @@ export class SwaggerDefinitionConstant {
 
   public static Parameter = {
     Type: {
-      INTEGER: SwaggerDefinitionConstant.INTEGER,
       STRING: SwaggerDefinitionConstant.STRING,
-      ARRAY: SwaggerDefinitionConstant.ARRAY
+      NUMBER: SwaggerDefinitionConstant.NUMBER,
+      INTEGER: SwaggerDefinitionConstant.INTEGER,
+      BOOLEAN: SwaggerDefinitionConstant.BOOLEAN,
+      ARRAY: SwaggerDefinitionConstant.ARRAY,
+      OBJECT: SwaggerDefinitionConstant.OBJECT
     },
     In: {
       PATH: "path",
@@ -54,9 +62,12 @@ export class SwaggerDefinitionConstant {
 
   public static Response = {
     Type: {
-      INTEGER: SwaggerDefinitionConstant.INTEGER,
       STRING: SwaggerDefinitionConstant.STRING,
-      ARRAY: SwaggerDefinitionConstant.ARRAY
+      NUMBER: SwaggerDefinitionConstant.NUMBER,
+      INTEGER: SwaggerDefinitionConstant.INTEGER,
+      BOOLEAN: SwaggerDefinitionConstant.BOOLEAN,
+      ARRAY: SwaggerDefinitionConstant.ARRAY,
+      OBJECT: SwaggerDefinitionConstant.OBJECT
     }
   };
 
