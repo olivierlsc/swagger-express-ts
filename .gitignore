@@ -64,3 +64,4 @@ config.json
 src/**/*.js
 example/**/*.js
 .idea
+.vscode
