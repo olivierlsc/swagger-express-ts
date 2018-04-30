@@ -17,7 +17,7 @@ import { VersionModel } from "./version.model";
 
 @ApiPath({
   path: "/versions",
-  name: "Version",
+  name: "Versions",
   security: { basicAuth: [] }
 })
 @controller("/versions")
