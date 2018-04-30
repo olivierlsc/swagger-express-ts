@@ -7,7 +7,7 @@ import { VersionsService } from "./versions.service";
 
 @ApiPath({
   path: "/versions/{id}",
-  name: "Version"
+  name: "Versions"
 })
 @controller("/versions/:id")
 @injectable()

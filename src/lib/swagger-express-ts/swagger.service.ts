@@ -163,7 +163,7 @@ export class SwaggerService {
       }
       definitions[modelIndex] = newDefinition;
     }
-    this.data.definitions = _.merge(this.data.definitions, definitions);
+    this.data.definitions = _.mergeWith(this.data.definitions, definitions);
   }
 
   public setExternalDocs(externalDocs: ISwaggerExternalDocs): void {
@@ -187,7 +187,10 @@ export class SwaggerService {
         currentController.deprecated = args.deprecated;
       }
     }
-    this.controllerMap[target.name] = _.merge(this.controllerMap[target.name], currentController);
+    this.controllerMap[target.name] = _.mergeWith(
+      this.controllerMap[target.name],
+      currentController
+    );
   }
 
   public addOperationGet(
