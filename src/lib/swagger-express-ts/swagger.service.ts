@@ -53,6 +53,7 @@ export class SwaggerService {
   private controllerMap: IController[] = [];
   private data: ISwagger;
   private modelsMap: { [key: string]: ISwaggerBuildDefinitionModel } = {};
+  private globalResponses: { [key: string]: IApiOperationArgsBaseResponse };
 
   private constructeur() {}
 
@@ -168,6 +169,12 @@ export class SwaggerService {
 
   public setExternalDocs(externalDocs: ISwaggerExternalDocs): void {
     this.data.externalDocs = externalDocs;
+  }
+
+  public setGlobalResponses(globalResponses: {
+    [key: string]: IApiOperationArgsBaseResponse;
+  }): void {
+    this.globalResponses = this.buildOperationResponses(globalResponses);
   }
 
   public addPath(args: IApiPathArgs, target: any): void {
@@ -378,77 +385,7 @@ export class SwaggerService {
     }
 
     if (args.responses) {
-      operation.responses = {};
-      for (let responseIndex in args.responses) {
-        let response: IApiOperationArgsBaseResponse = args.responses[responseIndex];
-        let newSwaggerOperationResponse: ISwaggerOperationResponse = {};
-        if (response.description) {
-          newSwaggerOperationResponse.description = response.description;
-        } else {
-          switch (responseIndex) {
-            case "200":
-              newSwaggerOperationResponse.description = "Success";
-              break;
-            case "201":
-              newSwaggerOperationResponse.description = "Created";
-              break;
-            case "202":
-              newSwaggerOperationResponse.description = "Accepted";
-              break;
-            case "203":
-              newSwaggerOperationResponse.description = "Non-Authoritative Information";
-              break;
-            case "204":
-              newSwaggerOperationResponse.description = "No Content";
-              break;
-            case "205":
-              newSwaggerOperationResponse.description = "Reset Content";
-              break;
-            case "206":
-              newSwaggerOperationResponse.description = "Partial Content";
-              break;
-            case "400":
-              newSwaggerOperationResponse.description = "Client error and Bad Request";
-              break;
-            case "401":
-              newSwaggerOperationResponse.description = "Client error and Unauthorized";
-              break;
-            case "404":
-              newSwaggerOperationResponse.description = "Client error and Not Found";
-              break;
-            case "406":
-              newSwaggerOperationResponse.description = "Client error and Not Acceptable";
-              break;
-            case "500":
-              newSwaggerOperationResponse.description = "Internal Server Error";
-              break;
-            case "501":
-              newSwaggerOperationResponse.description = "Not Implemented";
-              break;
-            case "503":
-              newSwaggerOperationResponse.description = "Service Unavailable";
-              break;
-            default:
-              newSwaggerOperationResponse.description = null;
-          }
-        }
-        if (response.model) {
-          let ref = this.buildRef(response.model);
-          let newSwaggerOperationResponseSchema: ISwaggerOperationSchema = {
-            $ref: ref
-          };
-          if (_.isEqual(response.type, SwaggerDefinitionConstant.Response.Type.ARRAY)) {
-            newSwaggerOperationResponseSchema = {
-              items: <ISwaggerOperationSchemaItems>{
-                $ref: ref
-              },
-              type: SwaggerDefinitionConstant.Response.Type.ARRAY
-            };
-          }
-          newSwaggerOperationResponse.schema = newSwaggerOperationResponseSchema;
-        }
-        operation.responses[responseIndex] = newSwaggerOperationResponse;
-      }
+      operation.responses = this.buildOperationResponses(args.responses);
     }
 
     if (args.security) {
@@ -456,6 +393,87 @@ export class SwaggerService {
     }
 
     return operation;
+  }
+
+  private buildOperationResponses(responses: {
+    [key: string]: IApiOperationArgsBaseResponse;
+  }): {
+    [key: string]: ISwaggerOperationResponse;
+  } {
+    let swaggerOperationResponses: {
+      [key: string]: ISwaggerOperationResponse;
+    } = {};
+    for (let responseIndex in responses) {
+      let response: IApiOperationArgsBaseResponse = responses[responseIndex];
+      let newSwaggerOperationResponse: ISwaggerOperationResponse = {};
+      if (response.description) {
+        newSwaggerOperationResponse.description = response.description;
+      } else {
+        switch (responseIndex) {
+          case "200":
+            newSwaggerOperationResponse.description = "Success";
+            break;
+          case "201":
+            newSwaggerOperationResponse.description = "Created";
+            break;
+          case "202":
+            newSwaggerOperationResponse.description = "Accepted";
+            break;
+          case "203":
+            newSwaggerOperationResponse.description = "Non-Authoritative Information";
+            break;
+          case "204":
+            newSwaggerOperationResponse.description = "No Content";
+            break;
+          case "205":
+            newSwaggerOperationResponse.description = "Reset Content";
+            break;
+          case "206":
+            newSwaggerOperationResponse.description = "Partial Content";
+            break;
+          case "400":
+            newSwaggerOperationResponse.description = "Client error and Bad Request";
+            break;
+          case "401":
+            newSwaggerOperationResponse.description = "Client error and Unauthorized";
+            break;
+          case "404":
+            newSwaggerOperationResponse.description = "Client error and Not Found";
+            break;
+          case "406":
+            newSwaggerOperationResponse.description = "Client error and Not Acceptable";
+            break;
+          case "500":
+            newSwaggerOperationResponse.description = "Internal Server Error";
+            break;
+          case "501":
+            newSwaggerOperationResponse.description = "Not Implemented";
+            break;
+          case "503":
+            newSwaggerOperationResponse.description = "Service Unavailable";
+            break;
+          default:
+            newSwaggerOperationResponse.description = null;
+        }
+      }
+      if (response.model) {
+        let ref = this.buildRef(response.model);
+        let newSwaggerOperationResponseSchema: ISwaggerOperationSchema = {
+          $ref: ref
+        };
+        if (_.isEqual(response.type, SwaggerDefinitionConstant.Response.Type.ARRAY)) {
+          newSwaggerOperationResponseSchema = {
+            items: <ISwaggerOperationSchemaItems>{
+              $ref: ref
+            },
+            type: SwaggerDefinitionConstant.Response.Type.ARRAY
+          };
+        }
+        newSwaggerOperationResponse.schema = newSwaggerOperationResponseSchema;
+      }
+      swaggerOperationResponses[responseIndex] = newSwaggerOperationResponse;
+    }
+    return swaggerOperationResponses;
   }
 
   private buildOperationSecurity(argsSecurity: {
@@ -537,7 +555,7 @@ export class SwaggerService {
         data.paths[controller.path] = swaggerPath;
       }
       data.tags.push(<ISwaggerTag>{
-        name: _.capitalize(controller.name),
+        name: _.upperFirst(controller.name),
         description: controller.description
       });
     }
@@ -560,12 +578,15 @@ export class SwaggerService {
     if (_.isUndefined(operation.deprecated) && controller.deprecated) {
       operation.deprecated = controller.deprecated;
     }
-    operation.tags = [_.capitalize(controller.name)];
+    if (this.globalResponses) {
+      operation.responses = _.mergeWith(_.cloneDeep(this.globalResponses), operation.responses);
+    }
+    operation.tags = [_.upperFirst(controller.name)];
     return operation;
   }
 
   private buildRef(definition: string): string {
-    return "#/definitions/".concat(_.capitalize(definition));
+    return "#/definitions/".concat(_.upperFirst(definition));
   }
 
   public addApiModelProperty(
@@ -608,9 +629,12 @@ export class SwaggerService {
     if (args) {
       swaggerBuildDefinitionModel.description = args.description;
       if (args.name) {
-        this.modelsMap[_.capitalize(args.name)] = _.clone(this.modelsMap[definitionKey]);
-        delete this.modelsMap[definitionKey];
-        delete this.data.definitions[definitionKey];
+        const name: string = _.upperFirst(args.name);
+        this.modelsMap[name] = _.cloneDeep(this.modelsMap[definitionKey]);
+        if (!_.isEqual(name, definitionKey)) {
+          delete this.modelsMap[definitionKey];
+          delete this.data.definitions[definitionKey];
+        }
       }
     }
     this.setDefinitions(this.modelsMap);
