@@ -537,7 +537,7 @@ export class SwaggerService {
         data.paths[controller.path] = swaggerPath;
       }
       data.tags.push(<ISwaggerTag>{
-        name: _.capitalize(controller.name),
+        name: _.upperFirst(controller.name),
         description: controller.description
       });
     }
@@ -560,12 +560,12 @@ export class SwaggerService {
     if (_.isUndefined(operation.deprecated) && controller.deprecated) {
       operation.deprecated = controller.deprecated;
     }
-    operation.tags = [_.capitalize(controller.name)];
+    operation.tags = [_.upperFirst(controller.name)];
     return operation;
   }
 
   private buildRef(definition: string): string {
-    return "#/definitions/".concat(_.capitalize(definition));
+    return "#/definitions/".concat(_.upperFirst(definition));
   }
 
   public addApiModelProperty(
@@ -608,9 +608,12 @@ export class SwaggerService {
     if (args) {
       swaggerBuildDefinitionModel.description = args.description;
       if (args.name) {
-        this.modelsMap[_.capitalize(args.name)] = _.clone(this.modelsMap[definitionKey]);
-        delete this.modelsMap[definitionKey];
-        delete this.data.definitions[definitionKey];
+        const name: string = _.upperFirst(args.name);
+        this.modelsMap[name] = _.cloneDeep(this.modelsMap[definitionKey]);
+        if (!_.isEqual(name, definitionKey)) {
+          delete this.modelsMap[definitionKey];
+          delete this.data.definitions[definitionKey];
+        }
       }
     }
     this.setDefinitions(this.modelsMap);
