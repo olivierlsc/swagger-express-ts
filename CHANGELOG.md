@@ -1,3 +1,29 @@
+<a name="1.0.0-rc.4"></a>
+
+# [1.0.0-rc.4](2018-05-18)
+
+## Features
+
+### Add global responses
+
+Example:
+
+```ts
+swagger.express({
+  definition: {
+    ...
+    responses: {
+      500: {}
+    },
+    ...
+  }
+})
+```
+
+## Fixes
+
+### Fix ApiModel when arg "name" and class name are equal.
+
 <a name="1.0.0-rc.3"></a>
 
 # [1.0.0-rc.3](2018-04-30)
