@@ -47,7 +47,6 @@ server.setConfig((app: any) => {
           title: "My api",
           version: "1.0"
         },
-        //,
         //models : {
         //    Version : {
         //        properties : {
@@ -83,6 +82,9 @@ server.setConfig((app: any) => {
         //        }
         //    }
         //}
+        responses: {
+          500: {}
+        },
         externalDocs: {
           url: "My url"
         },

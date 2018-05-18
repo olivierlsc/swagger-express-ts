@@ -30,8 +30,7 @@ export class VersionController implements interfaces.Controller {
       200: {
         model: "Version"
       },
-      400: {},
-      500: {}
+      400: {}
     }
   })
   @httpGet("/")

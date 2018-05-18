@@ -140,6 +140,12 @@ export interface ISwaggerBuildDefinition {
    * Optional.
    */
   securityDefinitions?: { [key: string]: ISwaggerSecurityDefinition };
+
+  /**
+   * Define global responses.
+   * Optional.
+   */
+  responses?: { [key: string]: IApiOperationArgsBaseResponse };
 }
 
 export function build(buildDefinition: ISwaggerBuildDefinition): void {
@@ -177,6 +183,9 @@ export function build(buildDefinition: ISwaggerBuildDefinition): void {
   }
   if (buildDefinition.models) {
     SwaggerService.getInstance().setDefinitions(buildDefinition.models);
+  }
+  if (buildDefinition.responses) {
+    SwaggerService.getInstance().setGlobalResponses(buildDefinition.responses);
   }
   SwaggerService.getInstance().buildSwagger();
 }

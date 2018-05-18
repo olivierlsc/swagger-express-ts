@@ -34,8 +34,7 @@ export class VersionsController implements interfaces.Controller {
       200: {
         type: SwaggerDefinitionConstant.Response.Type.ARRAY,
         model: "Version"
-      },
-      500: {}
+      }
     },
     security: {
       apiKeyHeader: []
@@ -60,8 +59,7 @@ export class VersionsController implements interfaces.Controller {
       200: {
         model: "Version"
       },
-      400: { description: "Parameters fail" },
-      500: {}
+      400: { description: "Parameters fail" }
     }
   })
   @httpPost("/")
