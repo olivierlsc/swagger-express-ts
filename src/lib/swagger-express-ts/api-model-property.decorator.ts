@@ -13,12 +13,21 @@ export interface IApiModelPropertyArgs {
 export function ApiModelProperty(
   args?: IApiModelPropertyArgs
 ): PropertyDecorator {
-  return function(target: any, propertyKey: string | symbol) {
-    const propertyType = Reflect.getMetadata(
+  return function (target: any, propertyKey: string | symbol) {
+    let propertyType: any;
+    if (Reflect.getMetadata(
       "design:type",
       target,
       propertyKey
-    ).name.toLowerCase();
+    ) !== undefined) {
+      propertyType = Reflect.getMetadata(
+        "design:type",
+        target,
+        propertyKey
+      ).name.toLowerCase();
+    } else {
+      propertyType = undefined;
+    }
     SwaggerService.getInstance().addApiModelProperty(
       args,
       target,
