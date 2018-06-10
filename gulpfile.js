@@ -5,7 +5,7 @@ var nodemon = require("gulp-nodemon");
 var sourcemaps = require("gulp-sourcemaps");
 var mocha = require("gulp-mocha");
 var istanbul = require("gulp-istanbul");
-require("mocha-jenkins-reporter");
+//require("mocha-jenkins-reporter");
 var tslint = require("gulp-tslint");
 var tslintReporter = require("gulp-tslint-jenkins-reporter");
 var prettierPlugin = require("gulp-prettier-plugin");
@@ -96,7 +96,7 @@ gulp.task("test:coverage", ["set:node-env:test", "build:ts", "pre-test"], functi
       .src([path.built + "/**/*.spec.js"])
       .pipe(
         mocha({
-          reporter: "mocha-jenkins-reporter",
+          // reporter: "mocha-jenkins-reporter",
           reporterOptions: {
             junit_report_name: "Tests",
             junit_report_path: "reports/junit/results.xml",
@@ -130,7 +130,7 @@ gulp.task("test", ["set:node-env:test", "build:ts"], function() {
       // gulp-mocha needs filepaths so you can't have any plugins before it
       .pipe(
         mocha({
-          reporter: "mocha-jenkins-reporter",
+          // reporter: "mocha-jenkins-reporter",
           reporterOptions: {
             junit_report_name: "Tests",
             junit_report_path: "reports/junit/results.xml",
