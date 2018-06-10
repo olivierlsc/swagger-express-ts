@@ -91,7 +91,8 @@ export interface ISwaggerPath {
 }
 
 export interface ISwaggerDefinitionPropertyItems {
-  $ref: string;
+  $ref?: string;
+  type?: string;
 }
 
 export interface ISwaggerDefinitionProperty {

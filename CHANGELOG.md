@@ -1,3 +1,51 @@
+<a name="1.0.0"></a>
+
+# [1.0.0](2018-06-10)
+
+## Features
+
+### itemType
+
+Example:
+
+```ts
+...
+@ApiModelProperty({
+    description: "Name of author",
+    required: true,
+    itemType: SwaggerDefinitionConstant.Model.Property.Type.STRING
+  })
+name: string[];
+...
+```
+
+or
+
+```ts
+...
+app.use(
+    swagger.express({
+      definition: {
+        ...
+        models: {
+          Author: {
+               name: {
+                 description: "Name of author",
+                 type: SwaggerDefinitionConstant.Model.Property.Type.ARRAY,
+                 itemType:
+                   SwaggerDefinitionConstant.Model.Property.ItemType.STRING,
+                 required: true
+               }
+             }
+           }
+        }
+        ...
+      }
+    })
+  );
+...
+```
+
 <a name="1.0.0-rc.4"></a>
 
 # [1.0.0-rc.4](2018-05-18)
