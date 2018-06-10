@@ -50,3 +50,8 @@ Define enum of property.
 
 Define model
 - Optional
+
+## itemType: string
+
+Define item type.
+- Optional

@@ -55,6 +55,12 @@ export class SwaggerDefinitionConstant {
         ARRAY: SwaggerDefinitionConstant.ARRAY,
         OBJECT: SwaggerDefinitionConstant.OBJECT
       },
+      ItemType: {
+        STRING: SwaggerDefinitionConstant.STRING,
+        NUMBER: SwaggerDefinitionConstant.NUMBER,
+        INTEGER: SwaggerDefinitionConstant.INTEGER,
+        BOOLEAN: SwaggerDefinitionConstant.BOOLEAN
+      },
       Format: {
         INT_64: "int64"
       }

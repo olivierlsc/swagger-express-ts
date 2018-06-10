@@ -14,7 +14,7 @@ export class VersionsService {
       version: "1.0.0",
       author: {
         id: "1",
-        name: "John DOE"
+        name: ["John DOE"]
       }
     } as VersionModel,
     {
@@ -24,7 +24,7 @@ export class VersionsService {
       version: "2.0.0",
       author: {
         id: "1",
-        name: "John DOE"
+        name: ["John DOE"]
       }
     } as VersionModel
   ];

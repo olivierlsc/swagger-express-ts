@@ -666,7 +666,7 @@ export class SwaggerService {
       }
     }
     swaggerBuildDefinitionModel.properties[
-      propertyKey
+      propertyKey.toString()
     ] = swaggerBuildDefinitionModelProperty;
     this.setDefinitions(this.modelsMap);
   }
