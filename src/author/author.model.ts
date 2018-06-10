@@ -1,4 +1,9 @@
-import { ApiModel, ApiModelProperty } from "../lib/swagger-express-ts";
+import {
+  ApiModel,
+  ApiModelProperty,
+  SwaggerDefinitionConstant
+} from "../lib/swagger-express-ts";
+import { VersionModel } from "../version/version.model";
 
 @ApiModel({
   description: "Description Author.",
@@ -13,7 +18,8 @@ export class AuthorModel {
 
   @ApiModelProperty({
     description: "Name of author",
-    required: true
+    required: true,
+    itemType: SwaggerDefinitionConstant.Model.Property.Type.STRING
   })
-  name: string;
+  name: string[];
 }

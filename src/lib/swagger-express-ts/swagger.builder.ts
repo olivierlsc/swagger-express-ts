@@ -13,6 +13,10 @@ import {
   IApiOperationArgsBaseResponse
 } from "./i-api-operation-args.base";
 
+export interface ISwaggerBuildDefinitionModelPropertyType {
+  type?: string | ISwaggerBuildDefinitionModelPropertyType;
+}
+
 export interface ISwaggerBuildDefinitionModelProperty {
   /**
    * Define type of property. Example: SwaggerDefinitionConstant.Definition.Property.Type.STRING
@@ -46,8 +50,15 @@ export interface ISwaggerBuildDefinitionModelProperty {
 
   /**
    * Define description.
+   * Optional.
    */
   description?: string;
+
+  /**
+   * Define type of item. Example: SwaggerDefinitionConstant.Definition.Property.Type.STRING
+   * Optional.
+   */
+  itemType?: string;
 }
 
 export interface ISwaggerBuildDefinitionModel {
@@ -179,7 +190,9 @@ export function build(buildDefinition: ISwaggerBuildDefinition): void {
     SwaggerService.getInstance().setExternalDocs(buildDefinition.externalDocs);
   }
   if (buildDefinition.securityDefinitions) {
-    SwaggerService.getInstance().addSecurityDefinitions(buildDefinition.securityDefinitions);
+    SwaggerService.getInstance().addSecurityDefinitions(
+      buildDefinition.securityDefinitions
+    );
   }
   if (buildDefinition.models) {
     SwaggerService.getInstance().setDefinitions(buildDefinition.models);

@@ -2,7 +2,11 @@ import * as bodyParser from "body-parser";
 import * as express from "express";
 import "reflect-metadata";
 import { Container } from "inversify";
-import { interfaces, InversifyExpressServer, TYPE } from "inversify-express-utils";
+import {
+  interfaces,
+  InversifyExpressServer,
+  TYPE
+} from "inversify-express-utils";
 import { VersionsController } from "./version/versions.controller";
 import * as swagger from "./lib/swagger-express-ts";
 import { SwaggerDefinitionConstant } from "./lib/swagger-express-ts";
@@ -38,7 +42,10 @@ const server = new InversifyExpressServer(container);
 
 server.setConfig((app: any) => {
   app.use("/api-docs/swagger", express.static("swagger"));
-  app.use("/api-docs/swagger/assets", express.static("node_modules/swagger-ui-dist"));
+  app.use(
+    "/api-docs/swagger/assets",
+    express.static("node_modules/swagger-ui-dist")
+  );
   app.use(bodyParser.json());
   app.use(
     swagger.express({
@@ -89,9 +96,6 @@ server.setConfig((app: any) => {
           url: "My url"
         },
         securityDefinitions: {
-          basicAuth: {
-            type: SwaggerDefinitionConstant.Security.Type.BASIC_AUTHENTICATION
-          },
           apiKeyHeader: {
             type: SwaggerDefinitionConstant.Security.Type.API_KEY,
             in: SwaggerDefinitionConstant.Security.In.HEADER,
