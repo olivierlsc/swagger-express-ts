@@ -28,3 +28,35 @@ Define description of property.
 
 Define enum of property.
 - Optional
+
+## itemType: string
+
+Define item type.
+- Optional
+
+Example:
+
+```ts
+...
+app.use(
+    swagger.express({
+      definition: {
+        ...
+        models: {
+          Author: {
+               name: {
+                 description: "Name of author",
+                 type: SwaggerDefinitionConstant.Model.Property.Type.ARRAY,
+                 itemType:
+                   SwaggerDefinitionConstant.Model.Property.ItemType.STRING,
+                 required: true
+               }
+             }
+           }
+        }
+        ...
+      }
+    })
+  );
+...
+```
