@@ -499,7 +499,30 @@ export class SwaggerService {
           };
         }
         newSwaggerOperationResponse.schema = newSwaggerOperationResponseSchema;
+      } else if (response.type) {
+        if(
+          _.isEqual(
+            response.type,
+            SwaggerDefinitionConstant.Response.Type.ARRAY
+          ) || _.isEqual(
+            response.type,
+            SwaggerDefinitionConstant.Response.Type.OBJECT
+          )
+        ) {
+          throw new Error("Invalid response schema for type " + response.type);
+        }
+
+        const newSwaggerOperationResponseSchema: ISwaggerOperationSchema = {
+          type: response.type
+        };
+
+        if(response.format){
+          newSwaggerOperationResponseSchema.format = response.format;
+        }
+
+        newSwaggerOperationResponse.schema = newSwaggerOperationResponseSchema
       }
+
       swaggerOperationResponses[responseIndex] = newSwaggerOperationResponse;
     }
     return swaggerOperationResponses;

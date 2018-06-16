@@ -17,6 +17,10 @@ export class SwaggerDefinitionConstant {
   private static ARRAY: string = "array";
   private static OBJECT: string = "object";
   private static QUERY: string = "query";
+  private static FLOAT: string = "float";
+  private static DOUBLE: string = "double";
+  private static INT_32: string = "int32";
+  private static INT_64: string = "int64";
   public static Produce = {
     JSON: SwaggerDefinitionConstant.JSON,
     XML: SwaggerDefinitionConstant.XML,
@@ -62,7 +66,10 @@ export class SwaggerDefinitionConstant {
         BOOLEAN: SwaggerDefinitionConstant.BOOLEAN
       },
       Format: {
-        INT_64: "int64"
+        FLOAT: SwaggerDefinitionConstant.FLOAT,
+        DOUBLE: SwaggerDefinitionConstant.DOUBLE,
+        INT_32: SwaggerDefinitionConstant.INT_32,
+        INT_64: SwaggerDefinitionConstant.INT_64
       }
     }
   };
@@ -92,13 +99,22 @@ export class SwaggerDefinitionConstant {
       BOOLEAN: SwaggerDefinitionConstant.BOOLEAN,
       ARRAY: SwaggerDefinitionConstant.ARRAY,
       OBJECT: SwaggerDefinitionConstant.OBJECT
+    },
+    Format: {
+        FLOAT: SwaggerDefinitionConstant.FLOAT,
+        DOUBLE: SwaggerDefinitionConstant.DOUBLE,
+        INT_32: SwaggerDefinitionConstant.INT_32,
+        INT_64: SwaggerDefinitionConstant.INT_64
     }
   };
 
   public static Security = {
     Type: {
       BASIC_AUTHENTICATION: "basic",
-      API_KEY: "apiKey"
+      API_KEY: "apiKey",
+      BEARER: "Bearer",
+      OAUTH2: "OAuth2",
+      OPENID: "OpenID"
     },
     In: {
       HEADER: "header",

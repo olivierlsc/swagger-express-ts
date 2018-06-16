@@ -12,6 +12,7 @@ export interface IApiOperationArgsBaseResponse {
   description?: string;
   type?: string;
   model?: string;
+  format?: string;
 }
 
 export interface IApiOperationArgsBaseParameters {
