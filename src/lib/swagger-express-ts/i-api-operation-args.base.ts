@@ -47,6 +47,12 @@ export interface IApiOperationArgsBase {
   consumes?: string[];
 
   /**
+   * Define consumes
+   * Optional.
+   */
+  tags?: string[];
+
+  /**
    * Define path
    * Optional.
    */
