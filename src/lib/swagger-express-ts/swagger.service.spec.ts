@@ -29,7 +29,7 @@ describe("SwaggerService", () => {
     });
 
     it("expect basePath exist when it setted", () => {
-      let basePath = "/basepath";
+      const basePath = "/basepath";
 
       SwaggerService.getInstance().setBasePath(basePath);
 
@@ -43,7 +43,7 @@ describe("SwaggerService", () => {
     });
 
     it("expect openapi exist when it setted", () => {
-      let openapi = "openapi";
+      const openapi = "openapi";
 
       SwaggerService.getInstance().setOpenapi(openapi);
 
@@ -58,7 +58,7 @@ describe("SwaggerService", () => {
     });
 
     it("expect info when it defined", () => {
-      let info: ISwaggerInfo = {
+      const info: ISwaggerInfo = {
         title: "Title",
         version: "1.0.1"
       };
@@ -78,7 +78,7 @@ describe("SwaggerService", () => {
     });
 
     it("expect schemes when it defined", () => {
-      let schemes: string[] = [
+      const schemes: string[] = [
         SwaggerDefinitionConstant.Scheme.HTTP,
         SwaggerDefinitionConstant.Scheme.HTTPS
       ];
@@ -95,7 +95,7 @@ describe("SwaggerService", () => {
     });
 
     it("expect externalDocs when it defined", () => {
-      let externalDocs: ISwaggerExternalDocs = {
+      const externalDocs: ISwaggerExternalDocs = {
         url: "Mon url"
       };
 
@@ -113,7 +113,7 @@ describe("SwaggerService", () => {
     });
 
     it("expect produces when it defined", () => {
-      let produces: string[] = [
+      const produces: string[] = [
         SwaggerDefinitionConstant.Produce.JSON,
         SwaggerDefinitionConstant.Produce.XML
       ];
@@ -132,7 +132,7 @@ describe("SwaggerService", () => {
     });
 
     it("expect consumes when it defined", () => {
-      let consumes: string[] = [
+      const consumes: string[] = [
         SwaggerDefinitionConstant.Consume.JSON,
         SwaggerDefinitionConstant.Consume.XML
       ];
@@ -149,7 +149,7 @@ describe("SwaggerService", () => {
     });
 
     it("expect host when it defined", () => {
-      let host: string = "host";
+      const host: string = "host";
 
       SwaggerService.getInstance().setHost(host);
 
@@ -163,7 +163,7 @@ describe("SwaggerService", () => {
     });
 
     it("expect definitions when they defined", () => {
-      let models: {
+      const models: {
         [key: string]: {
           name: string;
           definition: ISwaggerBuildDefinitionModel;
@@ -173,9 +173,9 @@ describe("SwaggerService", () => {
           name: "Version",
           definition: {
             properties: {
-              id: <ISwaggerDefinitionProperty>{
+              id: {
                 type: SwaggerDefinitionConstant.Model.Property.Type.STRING
-              }
+              } as ISwaggerDefinitionProperty
             }
           }
         }
@@ -196,11 +196,11 @@ describe("SwaggerService", () => {
 
   describe("addPath", () => {
     it("expect new path", () => {
-      let args: IApiPathArgs = {
+      const args: IApiPathArgs = {
         path: "/versions",
         name: "version"
       };
-      let target: any = {
+      const target: any = {
         name: "MyName"
       };
 
@@ -214,14 +214,14 @@ describe("SwaggerService", () => {
   });
 
   describe("addOperationGet", () => {
-    let pathArgs: IApiPathArgs = {
+    const pathArgs: IApiPathArgs = {
       path: "/versions",
       name: "Version"
     };
-    let pathTarget: any = {
+    const pathTarget: any = {
       name: "VersionsController"
     };
-    let operationGetTarget: any = {
+    const operationGetTarget: any = {
       constructor: {
         name: "VersionsController"
       }
@@ -258,7 +258,7 @@ describe("SwaggerService", () => {
       });
 
       it("expect default", () => {
-        let operationGetArgs: IApiOperationGetArgs = {
+        const operationGetArgs: IApiOperationGetArgs = {
           responses: {
             200: {
               model: "Version",
@@ -278,7 +278,7 @@ describe("SwaggerService", () => {
       });
 
       it("expect description", () => {
-        let operationGetArgs: IApiOperationGetArgs = {
+        const operationGetArgs: IApiOperationGetArgs = {
           description: "get versions",
           responses: {
             200: {
@@ -300,7 +300,7 @@ describe("SwaggerService", () => {
       });
 
       it("expect summary", () => {
-        let operationGetArgs: IApiOperationGetArgs = {
+        const operationGetArgs: IApiOperationGetArgs = {
           summary: "get versions",
           responses: {
             200: {
@@ -322,7 +322,7 @@ describe("SwaggerService", () => {
       });
 
       it("expect consumes", () => {
-        let operationGetArgs: IApiOperationGetArgs = {
+        const operationGetArgs: IApiOperationGetArgs = {
           consumes: [SwaggerDefinitionConstant.Consume.JSON, SwaggerDefinitionConstant.Consume.XML],
           responses: {
             200: {
@@ -344,7 +344,7 @@ describe("SwaggerService", () => {
       });
 
       it("expect produces", () => {
-        let operationGetArgs: IApiOperationGetArgs = {
+        const operationGetArgs: IApiOperationGetArgs = {
           produces: [SwaggerDefinitionConstant.Produce.JSON, SwaggerDefinitionConstant.Produce.XML],
           responses: {
             200: {
@@ -366,7 +366,7 @@ describe("SwaggerService", () => {
       });
 
       it("expect responses", () => {
-        let operationGetArgs: IApiOperationGetArgs = {
+        const operationGetArgs: IApiOperationGetArgs = {
           responses: {
             200: {
               description: "return version object",
@@ -413,7 +413,7 @@ describe("SwaggerService", () => {
       });
 
       it("expect default", () => {
-        let operationGetArgs: IApiOperationGetArgs = {
+        const operationGetArgs: IApiOperationGetArgs = {
           path: "/{id}",
           responses: {
             200: { model: "Version" }
@@ -431,7 +431,7 @@ describe("SwaggerService", () => {
       });
 
       it("expect description", () => {
-        let operationGetArgs: IApiOperationGetArgs = {
+        const operationGetArgs: IApiOperationGetArgs = {
           path: "/{id}",
           description: "get version",
           responses: {
@@ -451,7 +451,7 @@ describe("SwaggerService", () => {
       });
 
       it("expect summary", () => {
-        let operationGetArgs: IApiOperationGetArgs = {
+        const operationGetArgs: IApiOperationGetArgs = {
           path: "/{id}",
           summary: "get version",
           responses: {
@@ -471,7 +471,7 @@ describe("SwaggerService", () => {
       });
 
       it("expect consumes", () => {
-        let operationGetArgs: IApiOperationGetArgs = {
+        const operationGetArgs: IApiOperationGetArgs = {
           path: "/{id}",
           consumes: [SwaggerDefinitionConstant.Consume.JSON, SwaggerDefinitionConstant.Consume.XML],
           responses: {
@@ -491,7 +491,7 @@ describe("SwaggerService", () => {
       });
 
       it("expect produces", () => {
-        let operationGetArgs: IApiOperationGetArgs = {
+        const operationGetArgs: IApiOperationGetArgs = {
           path: "/{id}",
           produces: [SwaggerDefinitionConstant.Produce.JSON, SwaggerDefinitionConstant.Produce.XML],
           responses: {
@@ -511,7 +511,7 @@ describe("SwaggerService", () => {
       });
 
       it("expect responses", () => {
-        let operationGetArgs: IApiOperationGetArgs = {
+        const operationGetArgs: IApiOperationGetArgs = {
           path: "/{id}",
           responses: {
             200: { description: "return version object", model: "Version" }
@@ -533,19 +533,19 @@ describe("SwaggerService", () => {
   });
 
   describe("addOperationPost", () => {
-    let argsPath: IApiPathArgs = {
+    const argsPath: IApiPathArgs = {
       path: "/versions",
       name: "Version"
     };
-    let targetPath: any = {
+    const targetPath: any = {
       name: "VersionController"
     };
-    let targetOperationPost: any = {
+    const targetOperationPost: any = {
       constructor: {
         name: "VersionController"
       }
     };
-    let propertyKey: string | symbol = "postVersion";
+    const propertyKey: string | symbol = "postVersion";
     let expectedPaths: { [key: string]: ISwaggerPath };
 
     beforeEach(() => {
@@ -585,7 +585,7 @@ describe("SwaggerService", () => {
     });
 
     it("expect default", () => {
-      let argsOperationPost: IApiOperationPostArgs = {
+      const argsOperationPost: IApiOperationPostArgs = {
         parameters: {
           body: {
             description: "New versions",
@@ -613,7 +613,7 @@ describe("SwaggerService", () => {
     });
 
     it("expect description", () => {
-      let argsOperationPost: IApiOperationPostArgs = {
+      const argsOperationPost: IApiOperationPostArgs = {
         description: "post version",
         parameters: {
           body: {
@@ -642,7 +642,7 @@ describe("SwaggerService", () => {
     });
 
     it("expect summary", () => {
-      let argsOperationPost: IApiOperationPostArgs = {
+      const argsOperationPost: IApiOperationPostArgs = {
         summary: "post version",
         parameters: {
           body: {
@@ -671,7 +671,7 @@ describe("SwaggerService", () => {
     });
 
     it("expect consumes", () => {
-      let argsOperationPost: IApiOperationPostArgs = {
+      const argsOperationPost: IApiOperationPostArgs = {
         consumes: [SwaggerDefinitionConstant.Consume.JSON, SwaggerDefinitionConstant.Consume.XML],
         parameters: {
           body: {
@@ -700,7 +700,7 @@ describe("SwaggerService", () => {
     });
 
     it("expect produces", () => {
-      let argsOperationPost: IApiOperationPostArgs = {
+      const argsOperationPost: IApiOperationPostArgs = {
         produces: [SwaggerDefinitionConstant.Consume.JSON, SwaggerDefinitionConstant.Consume.XML],
         parameters: {
           body: {
@@ -730,19 +730,19 @@ describe("SwaggerService", () => {
   });
 
   describe("addOperationPut", () => {
-    let argsPath: IApiPathArgs = {
+    const argsPath: IApiPathArgs = {
       path: "/versions",
       name: "Version"
     };
-    let targetPath: any = {
+    const targetPath: any = {
       name: "VersionController"
     };
-    let targetOperationPut: any = {
+    const targetOperationPut: any = {
       constructor: {
         name: "VersionController"
       }
     };
-    let propertyKey: string | symbol = "putVersion";
+    const propertyKey: string | symbol = "putVersion";
     let expectedPaths: { [key: string]: ISwaggerPath };
 
     beforeEach(() => {
@@ -786,7 +786,7 @@ describe("SwaggerService", () => {
     });
 
     it("expect default", () => {
-      let argsOperationPut: IApiOperationPutArgs = {
+      const argsOperationPut: IApiOperationPutArgs = {
         path: "/{id}",
         parameters: {
           path: {
@@ -818,7 +818,7 @@ describe("SwaggerService", () => {
     });
 
     it("expect description", () => {
-      let argsOperationPut: IApiOperationPutArgs = {
+      const argsOperationPut: IApiOperationPutArgs = {
         path: "/{id}",
         description: "post version",
         parameters: {
@@ -852,7 +852,7 @@ describe("SwaggerService", () => {
     });
 
     it("expect summary", () => {
-      let argsOperationPut: IApiOperationPutArgs = {
+      const argsOperationPut: IApiOperationPutArgs = {
         path: "/{id}",
         summary: "post version",
         parameters: {
@@ -886,7 +886,7 @@ describe("SwaggerService", () => {
     });
 
     it("expect consumes", () => {
-      let argsOperationPut: IApiOperationPutArgs = {
+      const argsOperationPut: IApiOperationPutArgs = {
         path: "/{id}",
         consumes: [SwaggerDefinitionConstant.Consume.JSON, SwaggerDefinitionConstant.Consume.XML],
         parameters: {
@@ -920,7 +920,7 @@ describe("SwaggerService", () => {
     });
 
     it("expect produces", () => {
-      let argsOperationPut: IApiOperationPutArgs = {
+      const argsOperationPut: IApiOperationPutArgs = {
         path: "/{id}",
         produces: [SwaggerDefinitionConstant.Consume.JSON, SwaggerDefinitionConstant.Consume.XML],
         parameters: {
@@ -955,19 +955,19 @@ describe("SwaggerService", () => {
   });
 
   describe("addOperationPatch", () => {
-    let argsPath: IApiPathArgs = {
+    const argsPath: IApiPathArgs = {
       path: "/versions",
       name: "Version"
     };
-    let targetPath: any = {
+    const targetPath: any = {
       name: "VersionController"
     };
-    let targetOperationPatch: any = {
+    const targetOperationPatch: any = {
       constructor: {
         name: "VersionController"
       }
     };
-    let propertyKey: string | symbol = "patchVersionDescription";
+    const propertyKey: string | symbol = "patchVersionDescription";
     let expectedPaths: { [key: string]: ISwaggerPath };
 
     beforeEach(() => {
@@ -1011,7 +1011,7 @@ describe("SwaggerService", () => {
     });
 
     it("expect default", () => {
-      let argsOperationPatch: IApiOperationPatchArgs = {
+      const argsOperationPatch: IApiOperationPatchArgs = {
         path: "/{id}/description",
         parameters: {
           path: {
@@ -1043,7 +1043,7 @@ describe("SwaggerService", () => {
     });
 
     it("expect description", () => {
-      let argsOperationPatch: IApiOperationPutArgs = {
+      const argsOperationPatch: IApiOperationPutArgs = {
         path: "/{id}/description",
         description: "patch version description",
         parameters: {
@@ -1078,7 +1078,7 @@ describe("SwaggerService", () => {
     });
 
     it("expect summary", () => {
-      let argsOperationPatch: IApiOperationPatchArgs = {
+      const argsOperationPatch: IApiOperationPatchArgs = {
         path: "/{id}/description",
         summary: "patch version description",
         parameters: {
@@ -1112,7 +1112,7 @@ describe("SwaggerService", () => {
     });
 
     it("expect consumes", () => {
-      let argsOperationPatch: IApiOperationPatchArgs = {
+      const argsOperationPatch: IApiOperationPatchArgs = {
         path: "/{id}/description",
         consumes: [SwaggerDefinitionConstant.Consume.JSON, SwaggerDefinitionConstant.Consume.XML],
         parameters: {
@@ -1146,7 +1146,7 @@ describe("SwaggerService", () => {
     });
 
     it("expect produces", () => {
-      let argsOperationPut: IApiOperationPutArgs = {
+      const argsOperationPut: IApiOperationPutArgs = {
         path: "/{id}/description",
         produces: [SwaggerDefinitionConstant.Consume.JSON, SwaggerDefinitionConstant.Consume.XML],
         parameters: {
@@ -1181,19 +1181,19 @@ describe("SwaggerService", () => {
   });
 
   describe("addOperationDelete", () => {
-    let argsPath: IApiPathArgs = {
+    const argsPath: IApiPathArgs = {
       path: "/versions",
       name: "Version"
     };
-    let targetPath: any = {
+    const targetPath: any = {
       name: "VersionController"
     };
-    let targetOperationDelete: any = {
+    const targetOperationDelete: any = {
       constructor: {
         name: "VersionController"
       }
     };
-    let propertyKey: string | symbol = "deleteVersion";
+    const propertyKey: string | symbol = "deleteVersion";
     let expectedPaths: { [key: string]: ISwaggerPath };
 
     beforeEach(() => {
@@ -1225,7 +1225,7 @@ describe("SwaggerService", () => {
     });
 
     it("expect default", () => {
-      let argsOperationDelete: IApiOperationDeleteArgs = {
+      const argsOperationDelete: IApiOperationDeleteArgs = {
         path: "/{id}",
         parameters: {
           path: {
@@ -1252,7 +1252,7 @@ describe("SwaggerService", () => {
     });
 
     it("expect description", () => {
-      let argsOperationDelete: IApiOperationDeleteArgs = {
+      const argsOperationDelete: IApiOperationDeleteArgs = {
         path: "/{id}",
         description: "delete version",
         parameters: {
@@ -1281,7 +1281,7 @@ describe("SwaggerService", () => {
     });
 
     it("expect summary", () => {
-      let argsOperationDelete: IApiOperationDeleteArgs = {
+      const argsOperationDelete: IApiOperationDeleteArgs = {
         path: "/{id}",
         summary: "delete version",
         parameters: {
@@ -1310,7 +1310,7 @@ describe("SwaggerService", () => {
     });
 
     it("expect consumes", () => {
-      let argsOperationDelete: IApiOperationDeleteArgs = {
+      const argsOperationDelete: IApiOperationDeleteArgs = {
         path: "/{id}",
         consumes: [SwaggerDefinitionConstant.Consume.JSON, SwaggerDefinitionConstant.Consume.XML],
         parameters: {
@@ -1339,7 +1339,7 @@ describe("SwaggerService", () => {
     });
 
     it("expect produces", () => {
-      let argsOperationDelete: IApiOperationDeleteArgs = {
+      const argsOperationDelete: IApiOperationDeleteArgs = {
         path: "/{id}",
         produces: [SwaggerDefinitionConstant.Consume.JSON, SwaggerDefinitionConstant.Consume.XML],
         parameters: {

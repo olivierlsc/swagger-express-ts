@@ -7,7 +7,7 @@ export interface IApiModelArgs {
 
 export function ApiModel(args?: IApiModelArgs): ClassDecorator {
   return (target: any) => {
-    //Extracting possible super class from prototype
+    // Extracting possible super class from prototype
     const protoType = Object.getPrototypeOf(target).name;
     let superClass = null;
     if (protoType !== "") {

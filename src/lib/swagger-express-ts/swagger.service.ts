@@ -694,7 +694,7 @@ export class SwaggerService {
     }
 
     if (superClass) {
-      let superClassSwaggerBuildDefinitionModel = this.modelsMap[superClass];
+      const superClassSwaggerBuildDefinitionModel = this.modelsMap[superClass];
       namedBuildDefinitionModel.definition.properties = {
         ...superClassSwaggerBuildDefinitionModel.definition.properties,
         ...namedBuildDefinitionModel.definition.properties

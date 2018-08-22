@@ -17,7 +17,8 @@ var path = {
   reports: "reports",
   app: {
     src: "src/**/*.ts",
-    built: "built/**/*.ts"
+    built: "built/**/*.ts",
+    lint: "src/lib/**/*.ts",
   }
 };
 
@@ -61,23 +62,30 @@ gulp.task("build:ts", ["prettier", "copy:src"], function() {
   );
 });
 
-gulp.task("tslint", function() {
-  return gulp
-    .src(path.app.src)
-    .pipe(
-      tslint({
-        formatter: "verbose"
-      })
-    )
-    .pipe(tslint.report())
-    .pipe(
-      tslintReporter({
-        sort: true,
-        filename: "reports/checkstyle/results.xml",
-        severity: "error"
-      })
-    );
-});
+function lint(fix) {
+  return function () {
+    console.log("fix : " + fix);
+    return gulp
+      .src(path.app.lint)
+      .pipe(
+        tslint({
+          formatter: "verbose",
+          fix: fix
+        })
+      )
+      .pipe(tslint.report())
+      .pipe(
+        tslintReporter({
+          sort: true,
+          filename: "reports/checkstyle/results.xml",
+          severity: "error"
+        })
+      );
+  }
+}
+
+gulp.task("tslint", lint(false));
+gulp.task("tslint:fix", lint(true));
 
 gulp.task("pre-test", ["set:node-env:test", "build:ts"], function() {
   return (
