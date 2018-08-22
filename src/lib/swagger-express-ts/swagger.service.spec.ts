@@ -163,16 +163,23 @@ describe("SwaggerService", () => {
     });
 
     it("expect definitions when they defined", () => {
-      let models: { [key: string]: ISwaggerBuildDefinitionModel } = {
+      let models: {
+        [key: string]: {
+          name: string;
+          definition: ISwaggerBuildDefinitionModel;
+        };
+      } = {
         Version: {
-          properties: {
-            id: <ISwaggerDefinitionProperty>{
-              type: SwaggerDefinitionConstant.Model.Property.Type.STRING
+          name: "Version",
+          definition: {
+            properties: {
+              id: <ISwaggerDefinitionProperty>{
+                type: SwaggerDefinitionConstant.Model.Property.Type.STRING
+              }
             }
           }
         }
       };
-
       SwaggerService.getInstance().setDefinitions(models);
 
       expect(SwaggerService.getInstance().getData().definitions).to.deep.equal({

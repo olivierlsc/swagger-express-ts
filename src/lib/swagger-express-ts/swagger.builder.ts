@@ -12,6 +12,7 @@ import {
   IApiOperationArgsBaseParameter,
   IApiOperationArgsBaseResponse
 } from "./i-api-operation-args.base";
+import * as _ from "lodash";
 
 export interface ISwaggerBuildDefinitionModelPropertyType {
   type?: string | ISwaggerBuildDefinitionModelPropertyType;
@@ -195,7 +196,14 @@ export function build(buildDefinition: ISwaggerBuildDefinition): void {
     );
   }
   if (buildDefinition.models) {
-    SwaggerService.getInstance().setDefinitions(buildDefinition.models);
+    const models: any = {};
+    _.forOwn(buildDefinition.models, (value, key) => {
+      models[key] = {
+        name: key,
+        definition: value
+      };
+    });
+    SwaggerService.getInstance().setDefinitions(models);
   }
   if (buildDefinition.responses) {
     SwaggerService.getInstance().setGlobalResponses(buildDefinition.responses);
