@@ -1,15 +1,20 @@
-import { SwaggerService } from "./swagger.service";
-import { IApiOperationArgsBase } from "./i-api-operation-args.base";
-export interface IApiOperationDeleteArgs extends IApiOperationArgsBase {}
+import {SwaggerService} from "./swagger.service";
+import {IApiOperationArgsBase} from "./i-api-operation-args.base";
 
-export function ApiOperationDelete(
-  args: IApiOperationDeleteArgs
-): MethodDecorator {
-  return function(
-    target: any,
-    propertyKey: string | symbol,
-    descriptor: PropertyDescriptor
-  ) {
-    SwaggerService.getInstance().addOperationDelete(args, target, propertyKey);
-  };
+export interface IApiOperationDeleteArgs extends IApiOperationArgsBase {
+}
+
+export function ApiOperationDelete(args: IApiOperationDeleteArgs): MethodDecorator {
+    return function (target: any,
+                     propertyKey: string | symbol,
+                     descriptor: PropertyDescriptor) {
+        const apiVersions = args.apiVersion || ["v1"];
+        apiVersions.forEach((apiV: string) => {
+            SwaggerService.getInstance(apiV).addOperationDelete(
+                args,
+                target,
+                propertyKey
+            );
+        });
+    };
 }

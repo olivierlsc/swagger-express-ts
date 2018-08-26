@@ -159,46 +159,46 @@ export interface ISwaggerBuildDefinition {
   responses?: { [key: string]: IApiOperationArgsBaseResponse };
 }
 
-export function build(buildDefinition: ISwaggerBuildDefinition): void {
-  assert.ok(buildDefinition, "Definition are required.");
+export function build(buildDefinition: ISwaggerBuildDefinition, apiVersion: string = "v1"): void {
+    assert.ok(buildDefinition, "Definition are required.");
   assert.ok(
     buildDefinition.info,
     'Informations are required. Base is { title: "Title of my API", version: "1.0.0"}'
   );
   if (buildDefinition.basePath) {
-    SwaggerService.getInstance().setBasePath(buildDefinition.basePath);
+    SwaggerService.getInstance(apiVersion).setBasePath(buildDefinition.basePath);
   }
   if (buildDefinition.openapi) {
-    SwaggerService.getInstance().setOpenapi(buildDefinition.openapi);
+    SwaggerService.getInstance(apiVersion).setOpenapi(buildDefinition.openapi);
   }
   if (buildDefinition.info) {
-    SwaggerService.getInstance().setInfo(buildDefinition.info);
+    SwaggerService.getInstance(apiVersion).setInfo(buildDefinition.info);
   }
   if (buildDefinition.schemes) {
-    SwaggerService.getInstance().setSchemes(buildDefinition.schemes);
+    SwaggerService.getInstance(apiVersion).setSchemes(buildDefinition.schemes);
   }
   if (buildDefinition.produces) {
-    SwaggerService.getInstance().setProduces(buildDefinition.produces);
+    SwaggerService.getInstance(apiVersion).setProduces(buildDefinition.produces);
   }
   if (buildDefinition.consumes) {
-    SwaggerService.getInstance().setConsumes(buildDefinition.consumes);
+    SwaggerService.getInstance(apiVersion).setConsumes(buildDefinition.consumes);
   }
   if (buildDefinition.host) {
-    SwaggerService.getInstance().setHost(buildDefinition.host);
+    SwaggerService.getInstance(apiVersion).setHost(buildDefinition.host);
   }
   if (buildDefinition.externalDocs) {
-    SwaggerService.getInstance().setExternalDocs(buildDefinition.externalDocs);
+    SwaggerService.getInstance(apiVersion).setExternalDocs(buildDefinition.externalDocs);
   }
   if (buildDefinition.securityDefinitions) {
-    SwaggerService.getInstance().addSecurityDefinitions(
+    SwaggerService.getInstance(apiVersion).addSecurityDefinitions(
       buildDefinition.securityDefinitions
     );
   }
   if (buildDefinition.models) {
-    SwaggerService.getInstance().setDefinitions(buildDefinition.models);
+    SwaggerService.getInstance(apiVersion).setDefinitions(buildDefinition.models);
   }
   if (buildDefinition.responses) {
-    SwaggerService.getInstance().setGlobalResponses(buildDefinition.responses);
+    SwaggerService.getInstance(apiVersion).setGlobalResponses(buildDefinition.responses);
   }
-  SwaggerService.getInstance().buildSwagger();
+  SwaggerService.getInstance(apiVersion).buildSwagger();
 }
