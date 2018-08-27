@@ -1,5 +1,4 @@
 import { SwaggerService } from "./swagger.service";
-import { IApiOperationArgsBase } from "./i-api-operation-args.base";
 
 export interface IApiModelPropertyArgs {
   /**
@@ -48,9 +47,10 @@ export interface IApiModelPropertyArgs {
 export function ApiModelProperty(
   args?: IApiModelPropertyArgs
 ): PropertyDecorator {
-  return function(target: any, propertyKey: string | symbol) {
+  return (target: any, propertyKey: string | symbol) => {
     const propertyType = Reflect.getMetadata("design:type", target, propertyKey)
       .name;
+
     SwaggerService.getInstance().addApiModelProperty(
       args,
       target,
