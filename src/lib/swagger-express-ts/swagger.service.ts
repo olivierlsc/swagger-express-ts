@@ -651,7 +651,7 @@ export class SwaggerService {
     let namedBuildDefinitionModel = this.modelsMap[definitionKey];
     if (!namedBuildDefinitionModel) {
       namedBuildDefinitionModel = {
-        name: '',
+        name: "",
         definition: { properties: {} }
       };
       this.modelsMap[definitionKey] = namedBuildDefinitionModel;

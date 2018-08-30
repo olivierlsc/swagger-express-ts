@@ -11,6 +11,8 @@ First, install [swagger-express-ts](https://www.npmjs.com/package/swagger-expres
 npm install swagger-express-ts --save
 ```
 
+and [init tsconfig.json](./wiki/installation.md)
+
 ## The Basics
 
 In the examples below, we use [inversify-express-utils](https://www.npmjs.com/package/inversify-express-utils). inversify-express-utils is not required to work with swagger-express-ts.
