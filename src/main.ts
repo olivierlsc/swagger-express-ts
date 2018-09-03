@@ -9,7 +9,6 @@ import {
 } from "inversify-express-utils";
 import { VersionsController } from "./version/versions.controller";
 import * as swagger from "./lib/swagger-express-ts";
-import { SwaggerDefinitionConstant } from "./lib/swagger-express-ts";
 const config = require("../config.json");
 import { VersionController } from "./version/version.controller";
 import { VersionsService } from "./version/versions.service";
@@ -101,8 +100,8 @@ server.setConfig((app: any) => {
         },
         securityDefinitions: {
           apiKeyHeader: {
-            type: SwaggerDefinitionConstant.Security.Type.API_KEY,
-            in: SwaggerDefinitionConstant.Security.In.HEADER,
+            type: swagger.SwaggerDefinitionConstant.Security.Type.API_KEY,
+            in: swagger.SwaggerDefinitionConstant.Security.In.HEADER,
             name: "apiHeader"
           }
         }

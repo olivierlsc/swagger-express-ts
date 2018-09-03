@@ -1,28 +1,29 @@
 import * as chai from "chai";
 import { VersionsController } from "./versions.controller";
 import { VersionsService } from "./versions.service";
-const expect = chai.expect;
 import * as express from "express";
 import * as sinon from "sinon";
 import { VersionModel } from "./version.model";
+
+const expect = chai.expect;
 
 describe("VersionsController", () => {
   let versionsController: VersionsController;
   let versionsService: VersionsService;
 
   beforeEach(() => {
-    versionsService = {} as VersionsService;
+    versionsService = {} as any;
     versionsController = new VersionsController(versionsService);
   });
   describe("GET:/versions", () => {
     it("expect version list", () => {
-      let request: express.Request;
-      let response: express.Response = {} as express.Response;
-      let next: express.NextFunction;
-      let versionList: VersionModel[] = [];
-      let versionsServiceGetVersionsStub = sinon.stub().returns(versionList);
+      const request: express.Request = {} as any;
+      const response: express.Response = {} as any;
+      const next: express.NextFunction = {} as any;
+      const versionList: VersionModel[] = [];
+      const versionsServiceGetVersionsStub = sinon.stub().returns(versionList);
       versionsService.getVersions = versionsServiceGetVersionsStub;
-      let responseJsonSpy = sinon.spy();
+      const responseJsonSpy = sinon.spy();
       response.json = responseJsonSpy;
 
       versionsController.getVersions(request, response, next);
@@ -34,13 +35,13 @@ describe("VersionsController", () => {
 
   describe("POST:/versions", () => {
     it("expect post version", () => {
-      let request: express.Request = {} as express.Request;
-      let response: express.Response = {} as express.Response;
-      let next: express.NextFunction;
-      let version: VersionModel = {} as VersionModel;
-      let versionsServiceAddVersionStub = sinon.stub().returns(version);
+      const request: express.Request = {} as any;
+      const response: express.Response = {} as any;
+      const next: express.NextFunction = {} as any;
+      const version: VersionModel = {} as any;
+      const versionsServiceAddVersionStub = sinon.stub().returns(version);
       versionsService.addVersion = versionsServiceAddVersionStub;
-      let responseJsonSpy = sinon.spy();
+      const responseJsonSpy = sinon.spy();
       response.json = responseJsonSpy;
       request.body = {};
 

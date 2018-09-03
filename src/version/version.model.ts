@@ -10,23 +10,23 @@ export class VersionModel {
     description: "Id of version",
     required: true
   })
-  id: string;
+  public id: string;
 
   @ApiModelProperty({
     description: "",
     required: true
   })
-  name: string;
+  public name: string;
 
   @ApiModelProperty({
     description: "Description of version",
     required: true
   })
-  description: string;
+  public description: string;
 
   @ApiModelProperty({
     description: "Author of version",
     model: "Author"
   })
-  author: AuthorModel;
+  public author: AuthorModel;
 }

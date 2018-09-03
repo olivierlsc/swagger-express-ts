@@ -28,7 +28,7 @@ export interface ISwaggerVariableServer {
 export interface ISwaggerServer {
   url: string;
   description?: string;
-  variables: [ISwaggerVariableServer]; //TODO : Fix it
+  variables: [ISwaggerVariableServer]; // TODO : Fix it
 }
 
 export interface ISwaggerExternalDocs {
@@ -73,7 +73,7 @@ export interface ISwaggerOperation {
   produces?: string[];
   consumes?: string[];
   responses?: { [key: string]: ISwaggerOperationResponse };
-  security?: { [key: string]: any[] }[];
+  security?: Array<{ [key: string]: any[] }>;
   deprecated?: boolean;
 }
 
