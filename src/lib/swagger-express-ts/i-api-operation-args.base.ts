@@ -48,6 +48,12 @@ export interface IApiOperationArgsBase {
     consumes?: string[];
 
     /**
+     * Define tags
+     * Optional.
+     */
+    tags?: string[];
+
+    /**
      * Define path
      * Optional.
      */

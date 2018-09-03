@@ -468,6 +468,10 @@ export class SwaggerService {
             operation.consumes = args.consumes;
         }
 
+        if (args.tags && args.tags.length > 0) {
+            operation.tags = args.tags;
+        }
+
         if (args.deprecated) {
             operation.deprecated = args.deprecated;
         }
@@ -723,7 +727,13 @@ export class SwaggerService {
                 operation.responses
             );
         }
-        operation.tags = [_.upperFirst(controller.name)];
+
+        if (!operation.tags) {
+            operation.tags = [];
+        }
+
+        operation.tags.unshift(_.upperFirst(controller.name));
+
         return operation;
     }
 
