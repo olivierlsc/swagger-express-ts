@@ -46,12 +46,6 @@ app.use(
 ...
 ```
 
-<a name="1.0.0-rc.4"></a>
-
-# [1.0.0-rc.4](2018-05-18)
-
-## Features
-
 ### Add global responses
 
 Example:
@@ -67,24 +61,6 @@ swagger.express({
   }
 })
 ```
-
-## Fixes
-
-### Fix ApiModel when arg "name" and class name are equal.
-
-<a name="1.0.0-rc.3"></a>
-
-# [1.0.0-rc.3](2018-04-30)
-
-## Fixes
-
-### Merge models and path
-
-<a name="1.0.0-rc.2"></a>
-
-# [1.0.0-rc.2](2018-04-26)
-
-## Features
 
 ### Name
 
@@ -111,12 +87,6 @@ export class VersionController implements interfaces.Controller {
     ...
 }
 ```
-
-<a name="1.0.0-rc.1"></a>
-
-# [1.0.0-rc.1](2018-04-08)
-
-## Features
 
 ### Model
 
@@ -214,12 +184,6 @@ example:
 } )
 ```
 
-<a name="1.0.0-beta.1"></a>
-
-# [1.0.0-beta.1](2018-03-02)
-
-## Features
-
 ### Authentication
 
 #### Configuration
@@ -300,12 +264,6 @@ Example in operation:
 ...
 ```
 
-<a name="1.0.0-alpha.5"></a>
-
-# [1.0.0-alpha.5](2018-02-18)
-
-## Features
-
 ### externalDocs
 
 Example:
@@ -345,36 +303,6 @@ app.use(
   })
 );
 ```
-
-<a name="1.0.0-alpha.4"></a>
-
-# [1.0.0-alpha.4](2018-01-19)
-
-Add keywords for npm.
-
-<a name="1.0.0-alpha.3"></a>
-
-# [1.0.0-alpha.3](2018-01-18)
-
-Complete informations.
-
-<a name="1.0.0-alpha.2"></a>
-
-# [1.0.0-alpha.2](2018-01-18)
-
-Complete informations.
-
-<a name="1.0.0-alpha.1"></a>
-
-# [1.0.0-alpha.1](2018-01-18)
-
-Complete informations.
-
-<a name="1.0.0-alpha.0"></a>
-
-# [1.0.0-alpha.0](2018-01-18)
-
-## Features
 
 ### .express(options: ISwaggerExpressOptions)
 

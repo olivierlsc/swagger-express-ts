@@ -1,14 +1,15 @@
 ![](wiki/img/logo.png)
 
-# swagger-express-ts
-Automatically generate and serve swagger.json v2.0.
+# swagger-express-ts2
+Automatically generate and serve swagger.json v2.0 by express. 
+This project is derived by base project [swagger-express-ts](https://github.com/olivierlsc/swagger-express-ts).
 
 ## Getting started
 
-First, install [swagger-express-ts](https://www.npmjs.com/package/swagger-express-ts).
+First, install [swagger-express-ts2](https://www.npmjs.com/package/swagger-express-ts2).
 
 ```sh
-npm install swagger-express-ts --save
+npm install swagger-express-ts2 --save
 ```
 
 ## The Basics
@@ -312,13 +313,22 @@ You can quickly test swagger-express-ts with the project example [example-swagge
 
 ## For any questions, suggestions, or feature requests
 
-[Please file an issue](https://github.com/olivierlsc/swagger-express-ts/issues)!
+[Please file an issue](https://github.com/pesoklp13/swagger-express-ts/issues)!
+
+## Contribution
+
+In case you wanna contribute feel free to create pull request. 
+After review it will be merged into sources, just follow the basic rules
+
+* Try to write clean code
+* Write Unit tests for all work you do
+* Use strict Type definitions instead of any (or pure JS - use TypeScript instead)
 
 ## License
 
 License under the MIT License (MIT)
 
-Copyright © 2018 [Olivier LIN-SI-CHENG](http://www.olivierlinsicheng.com)
+Copyright © 2018 [Peter Sokolík](mailto:pesoklp13@gmail.com)
 
 Permission is hereby granted, free of charge, to any person obtaining a copy of this software and associated documentation files (the "Software"), to deal in the Software without restriction, including without limitation the rights to use, copy, modify, merge, publish, distribute, sublicense, and/or sell copies of the Software, and to permit persons to whom the Software is furnished to do so, subject to the following conditions:
 

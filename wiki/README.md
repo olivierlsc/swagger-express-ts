@@ -1,6 +1,6 @@
 # Wiki
 
-Welcome to the SwaggerExpressTS wiki!
+Welcome to the SwaggerExpressTS2 wiki!
 
 ## Installation and environment support
 
@@ -21,4 +21,5 @@ Welcome to the SwaggerExpressTS wiki!
 
 ## Test
 
+Actually for the example project can be still used original example project
 - [example-swagger-express-ts](https://github.com/olivierlsc/example-swagger-express-ts)
