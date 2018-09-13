@@ -16,8 +16,6 @@ import * as _ from "lodash";
 import "./version/version.model";
 import "./author/author.model";
 
-const config = require("../config.json");
-
 // set up container
 const container = new Container();
 
@@ -118,8 +116,8 @@ server.setErrorConfig((app: any) => {
       response: express.Response,
       next: express.NextFunction
     ) => {
-      console.error(err.stack);
       response.status(500).send("Something broke!");
+      next(err);
     }
   );
 });
@@ -127,6 +125,7 @@ server.setErrorConfig((app: any) => {
 const app = server.build();
 
 if (!_.isEqual(process.env.NODE_ENV, "test")) {
-  app.listen(config.port);
-  console.info("Server is listening on port : " + config.port);
+  const port = 9001;
+  app.listen(port);
+  console.info("Server is listening on port : " + port);
 }
