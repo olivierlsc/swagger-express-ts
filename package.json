@@ -1,7 +1,7 @@
 {
-  "name": "swagger-express-ts",
+  "name": "swagger-express-ts2",
   "version": "1.0.0",
-  "description": "Generate and serve swagger.json",
+  "description": "Generate and serve swagger.json by express",
   "main": "./dist/index.js",
   "types": "./dist/index.d.ts",
   "typings": "./dist/index.d.ts",
@@ -18,9 +18,14 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/olivierlsc/swagger-specification-ts.git"
+    "url": "https://github.com/pesoklp13/swagger-express-ts"
   },
-  "author": "Olivier LIN-SI-CHENG",
+  "author": {
+    "name": "Peter Sokolík"
+  },
+  "maintainers": [
+    { "name": "Peter Sokolík" }
+  ],
   "license": "MIT",
   "keywords": [
     "inversify",
@@ -40,11 +45,12 @@
     "rest"
   ],
   "bugs": {
-    "url": "https://github.com/olivierlsc/swagger-specification-ts/issues"
+    "url": "https://github.com/pesoklp13/swagger-specification-ts/issues"
   },
-  "homepage": "https://github.com/olivierlsc/swagger-specification-ts#readme",
+  "homepage": "https://github.com/pesoklp13/swagger-specification-ts#readme",
   "dependencies": {
     "@types/lodash": "^4.14.109",
+    "express": "^4.16.3",
     "lodash": "^4.17.10",
     "reflect-metadata": "^0.1.10"
   },
@@ -77,6 +83,7 @@
     "rimraf": "^2.6.2",
     "sinon": "^4.5.0",
     "swagger-ui-dist": "^3.17.0",
+    "ts-node": "^6.1.1",
     "tslint": "^5.10.0",
     "tslint-config-prettier": "^1.10.0",
     "typescript": "^2.9.1"

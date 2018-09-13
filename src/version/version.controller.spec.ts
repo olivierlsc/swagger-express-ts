@@ -1,30 +1,31 @@
 import * as chai from "chai";
 import { VersionController } from "./version.controller";
 import { VersionsService } from "./versions.service";
-const expect = chai.expect;
 import * as express from "express";
 import * as sinon from "sinon";
 import { VersionModel } from "./version.model";
+
+const expect = chai.expect;
 
 describe("VersionController", () => {
   let versionController: VersionController;
   let versionsService: VersionsService;
 
   beforeEach(() => {
-    versionsService = {} as VersionsService;
+    versionsService = {} as any;
     versionController = new VersionController(versionsService);
   });
 
   describe("getVersion", () => {
     it("expect version", () => {
-      let request: express.Request;
-      let response: express.Response = {} as express.Response;
-      let next: express.NextFunction;
-      let id: string = "1";
-      let version: VersionModel = {} as VersionModel;
-      let versionsServiceGetVersionByIdStub = sinon.stub().returns(version);
+      const request: express.Request = {} as any;
+      const response: express.Response = {} as any;
+      const next: express.NextFunction = {} as any;
+      const id: string = "1";
+      const version: VersionModel = {} as any;
+      const versionsServiceGetVersionByIdStub = sinon.stub().returns(version);
       versionsService.getVersionById = versionsServiceGetVersionByIdStub;
-      let responseJsonSpy = sinon.spy();
+      const responseJsonSpy = sinon.spy();
       response.json = responseJsonSpy;
 
       versionController.getVersion(id, request, response, next);

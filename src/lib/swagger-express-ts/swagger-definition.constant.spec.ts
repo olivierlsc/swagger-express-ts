@@ -1,5 +1,6 @@
 import * as chai from "chai";
 import { SwaggerDefinitionConstant } from ".";
+
 const expect = chai.expect;
 
 describe("SwaggerDefinitionConstant", () => {

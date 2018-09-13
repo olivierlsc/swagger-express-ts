@@ -1,4 +1,5 @@
 import { SwaggerService } from "./swagger.service";
+
 export interface IApiPathArgs {
   path: string;
   name: string;
@@ -6,8 +7,9 @@ export interface IApiPathArgs {
   security?: { [key: string]: any[] };
   deprecated?: boolean;
 }
+
 export function ApiPath(args: IApiPathArgs): ClassDecorator {
-  return function(target: any) {
+  return (target: any) => {
     SwaggerService.getInstance().addPath(args, target);
   };
 }

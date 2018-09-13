@@ -8,7 +8,7 @@ Define description of response.
 
 ## type: string
 
-Define type of response.
+Define type of response. (see [types of response](./swagger-definition-constant.md#response))
 
 * Optional
 

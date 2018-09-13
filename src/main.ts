@@ -9,12 +9,9 @@ import {
 } from "inversify-express-utils";
 import { VersionsController } from "./version/versions.controller";
 import * as swagger from "./lib/swagger-express-ts";
-import { SwaggerDefinitionConstant } from "./lib/swagger-express-ts";
-const config = require("../config.json");
 import { VersionController } from "./version/version.controller";
 import { VersionsService } from "./version/versions.service";
 import * as _ from "lodash";
-
 // import models
 import "./version/version.model";
 import "./author/author.model";
@@ -101,8 +98,8 @@ server.setConfig((app: any) => {
         },
         securityDefinitions: {
           apiKeyHeader: {
-            type: SwaggerDefinitionConstant.Security.Type.API_KEY,
-            in: SwaggerDefinitionConstant.Security.In.HEADER,
+            type: swagger.SwaggerDefinitionConstant.Security.Type.API_KEY,
+            in: swagger.SwaggerDefinitionConstant.Security.In.HEADER,
             name: "apiHeader"
           }
         }
@@ -119,8 +116,8 @@ server.setErrorConfig((app: any) => {
       response: express.Response,
       next: express.NextFunction
     ) => {
-      console.error(err.stack);
       response.status(500).send("Something broke!");
+      next(err);
     }
   );
 });
@@ -128,6 +125,7 @@ server.setErrorConfig((app: any) => {
 const app = server.build();
 
 if (!_.isEqual(process.env.NODE_ENV, "test")) {
-  app.listen(config.port);
-  console.info("Server is listening on port : " + config.port);
+  const port = 9001;
+  app.listen(port);
+  console.info("Server is listening on port : " + port);
 }

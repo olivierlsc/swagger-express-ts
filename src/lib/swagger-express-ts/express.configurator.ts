@@ -1,4 +1,4 @@
-import { Router, Request, Response, NextFunction } from "express";
+import { NextFunction, Request, Response, Router } from "express";
 import { SwaggerService } from "./swagger.service";
 import * as assert from "assert";
 import { build, ISwaggerBuildDefinition } from "./swagger.builder";
@@ -37,7 +37,7 @@ function buildRouter(path: string): Router {
   router.get(
     path,
     (request: Request, response: Response, next: NextFunction) => {
-      let data: ISwagger = SwaggerService.getInstance().getData();
+      const data: ISwagger = SwaggerService.getInstance().getData();
       response.json(data);
     }
   );

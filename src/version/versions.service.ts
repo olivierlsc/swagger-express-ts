@@ -11,22 +11,20 @@ export class VersionsService {
       id: "1",
       name: "Version 1",
       description: "Description Version 1",
-      version: "1.0.0",
       author: {
         id: "1",
         name: ["John DOE"]
       }
-    } as VersionModel,
+    },
     {
       id: "2",
       name: "Version 2",
       description: "Description Version 2",
-      version: "2.0.0",
       author: {
         id: "1",
         name: ["John DOE"]
       }
-    } as VersionModel
+    }
   ];
 
   public getVersions(): VersionModel[] {

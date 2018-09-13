@@ -12,6 +12,7 @@ export interface IApiOperationArgsBaseResponse {
   description?: string;
   type?: string;
   model?: string;
+  format?: string;
 }
 
 export interface IApiOperationArgsBaseParameters {
@@ -45,6 +46,12 @@ export interface IApiOperationArgsBase {
    * Optional.
    */
   consumes?: string[];
+
+  /**
+   * Define tags
+   * Optional.
+   */
+  tags?: string[];
 
   /**
    * Define path

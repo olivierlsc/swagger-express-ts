@@ -1,21 +1,18 @@
 import * as express from "express";
-import { injectable, inject } from "inversify";
+import { inject, injectable } from "inversify";
 import "reflect-metadata";
 import {
   controller,
   httpGet,
-  interfaces,
   httpPost,
-  requestParam,
-  httpPut
+  interfaces
 } from "inversify-express-utils";
 import {
-  ApiPath,
   ApiOperationGet,
-  ApiOperationPost
-} from "../lib/swagger-express-ts/index";
-import { SwaggerDefinitionConstant } from "../lib/swagger-express-ts/swagger-definition.constant";
-import { ApiOperationPut } from "../lib/swagger-express-ts/api-operation-put.decorator";
+  ApiOperationPost,
+  ApiPath,
+  SwaggerDefinitionConstant
+} from "../lib/swagger-express-ts";
 import { VersionsService } from "./versions.service";
 import { VersionModel } from "./version.model";
 
@@ -78,7 +75,7 @@ export class VersionsController implements interfaces.Controller {
     if (!request.body) {
       return response.status(400).end();
     }
-    let newVersion = new VersionModel();
+    const newVersion = new VersionModel();
     newVersion.id = request.body.id;
     newVersion.name = request.body.name;
     newVersion.description = request.body.description;

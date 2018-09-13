@@ -62,8 +62,16 @@
 
 ### Type
 
-#### INTEGER: string = "integer"
-
 #### STRING: string = "string"
 
+#### INTEGER: string = "integer"
+
+#### NUMBER: string = "number"
+
+#### BOOLEAN: string = "boolean"
+
 #### ARRAY: string = "array"
+
+#### OBJECT: string = "object"
+
+#### 

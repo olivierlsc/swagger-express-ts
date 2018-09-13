@@ -1,15 +1,15 @@
-import { injectable, inject } from "inversify";
+import { inject, injectable } from "inversify";
 import "reflect-metadata";
 import {
-  interfaces,
   controller,
   httpGet,
+  interfaces,
   requestParam
 } from "inversify-express-utils";
 import {
+  ApiOperationGet,
   ApiPath,
-  SwaggerDefinitionConstant,
-  ApiOperationGet
+  SwaggerDefinitionConstant
 } from "../lib/swagger-express-ts";
 import * as express from "express";
 import { VersionsService } from "./versions.service";

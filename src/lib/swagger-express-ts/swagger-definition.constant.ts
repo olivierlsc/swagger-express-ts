@@ -1,22 +1,27 @@
 export class SwaggerDefinitionConstant {
-  private static JSON: string = "application/json";
-  private static XML: string = "application/xml";
-  private static ZIP: string = "application/zip";
-  private static PDF: string = "application/pdf";
-  private static X_WWW_FORM_URLENCODED: string = "application/x-www-form-urlencoded";
-  private static FORM_DATA: string = "multipart/form-data";
-  private static TEXT_PLAIN: string = "text/plain";
-  private static TEXT_HTML: string = "text/html";
-  private static PNG: string = "image/png";
-  private static GIF: string = "image/gif";
-  private static JPEG: string = "image/jpeg";
-  private static STRING: string = "string";
-  private static NUMBER: string = "number";
-  private static INTEGER: string = "integer";
-  private static BOOLEAN: string = "boolean";
-  private static ARRAY: string = "array";
-  private static OBJECT: string = "object";
-  private static QUERY: string = "query";
+  public static JSON: string = "application/json";
+  public static XML: string = "application/xml";
+  public static ZIP: string = "application/zip";
+  public static PDF: string = "application/pdf";
+  public static X_WWW_FORM_URLENCODED: string = "application/x-www-form-urlencoded";
+  public static FORM_DATA: string = "multipart/form-data";
+  public static TEXT_PLAIN: string = "text/plain";
+  public static TEXT_HTML: string = "text/html";
+  public static PNG: string = "image/png";
+  public static GIF: string = "image/gif";
+  public static JPEG: string = "image/jpeg";
+  public static STRING: string = "string";
+  public static NUMBER: string = "number";
+  public static INTEGER: string = "integer";
+  public static BOOLEAN: string = "boolean";
+  public static ARRAY: string = "array";
+  public static OBJECT: string = "object";
+  public static QUERY: string = "query";
+  public static FLOAT: string = "float";
+  public static DOUBLE: string = "double";
+  public static INT_32: string = "int32";
+  public static INT_64: string = "int64";
+
   public static Produce = {
     JSON: SwaggerDefinitionConstant.JSON,
     XML: SwaggerDefinitionConstant.XML,
@@ -62,7 +67,10 @@ export class SwaggerDefinitionConstant {
         BOOLEAN: SwaggerDefinitionConstant.BOOLEAN
       },
       Format: {
-        INT_64: "int64"
+        FLOAT: SwaggerDefinitionConstant.FLOAT,
+        DOUBLE: SwaggerDefinitionConstant.DOUBLE,
+        INT_32: SwaggerDefinitionConstant.INT_32,
+        INT_64: SwaggerDefinitionConstant.INT_64
       }
     }
   };
@@ -92,13 +100,22 @@ export class SwaggerDefinitionConstant {
       BOOLEAN: SwaggerDefinitionConstant.BOOLEAN,
       ARRAY: SwaggerDefinitionConstant.ARRAY,
       OBJECT: SwaggerDefinitionConstant.OBJECT
+    },
+    Format: {
+      FLOAT: SwaggerDefinitionConstant.FLOAT,
+      DOUBLE: SwaggerDefinitionConstant.DOUBLE,
+      INT_32: SwaggerDefinitionConstant.INT_32,
+      INT_64: SwaggerDefinitionConstant.INT_64
     }
   };
 
   public static Security = {
     Type: {
       BASIC_AUTHENTICATION: "basic",
-      API_KEY: "apiKey"
+      API_KEY: "apiKey",
+      BEARER: "Bearer",
+      OAUTH2: "OAuth2",
+      OPENID: "OpenID"
     },
     In: {
       HEADER: "header",

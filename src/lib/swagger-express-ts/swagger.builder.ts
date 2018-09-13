@@ -1,17 +1,7 @@
-import {
-  ISwaggerInfo,
-  ISwaggerDefinition,
-  ISwaggerDefinitionProperty,
-  ISwaggerExternalDocs,
-  ISwaggerOperationResponse
-} from "./i-swagger";
+import { ISwaggerExternalDocs, ISwaggerInfo } from "./i-swagger";
 import * as assert from "assert";
 import { SwaggerService } from "./swagger.service";
-import { SwaggerDefinitionConstant } from "./swagger-definition.constant";
-import {
-  IApiOperationArgsBaseParameter,
-  IApiOperationArgsBaseResponse
-} from "./i-api-operation-args.base";
+import { IApiOperationArgsBaseResponse } from "./i-api-operation-args.base";
 
 export interface ISwaggerBuildDefinitionModelPropertyType {
   type?: string | ISwaggerBuildDefinitionModelPropertyType;
