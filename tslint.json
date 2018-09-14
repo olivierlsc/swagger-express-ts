@@ -10,6 +10,7 @@
     "no-var-requires": false,
     "no-implicit-dependencies": [true, "dev"],
     "object-literal-sort-keys": false,
+    "interface-name": false,
     "member-ordering": [
       true,
       {
