@@ -7,6 +7,7 @@ Define name of contact.
 ## url: string
 Define url of contact.
 - Optional
+- in URI format
 
 ## email: string
 Define email of contact.

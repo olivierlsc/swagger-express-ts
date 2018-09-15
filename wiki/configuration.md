@@ -31,7 +31,7 @@ app.use( swagger.express({
             }
         } ,
         externalDocs : {
-            url : "My url"
+            url : "http://localhost:8080"
         }
     }
 }) );

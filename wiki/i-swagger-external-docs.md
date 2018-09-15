@@ -7,3 +7,4 @@ Define description of external docs.
 ## url: string
 Define url of external docs/
 - Required
+- in URI format

@@ -4,7 +4,7 @@
 
 Define description of response.
 
-* Optional
+* Optional - when want to use implicit predefined responses based of http status code
 
 ## type: string
 

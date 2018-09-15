@@ -7,3 +7,4 @@ Define name of license.
 ## url: string
 Define URL of license.
 - Optional
+- in URI format
