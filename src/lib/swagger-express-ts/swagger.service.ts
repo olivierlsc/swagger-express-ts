@@ -1,36 +1,40 @@
 import {
-    ISwagger,
-    ISwaggerContact,
-    ISwaggerDefinition,
-    ISwaggerDefinitionProperty,
-    ISwaggerExternalDocs,
-    ISwaggerInfo,
-    ISwaggerLicense,
-    ISwaggerOperation,
-    ISwaggerOperationParameter,
-    ISwaggerOperationResponse,
-    ISwaggerOperationSchema,
-    ISwaggerPath
+  ISwagger,
+  ISwaggerContact,
+  ISwaggerDefinition,
+  ISwaggerDefinitionProperty,
+  ISwaggerExternalDocs,
+  ISwaggerInfo,
+  ISwaggerLicense,
+  ISwaggerOperation,
+  ISwaggerOperationParameter,
+  ISwaggerOperationResponse,
+  ISwaggerOperationSchema,
+  ISwaggerPath
 } from "./i-swagger";
-import {IApiPathArgs} from "./api-path.decorator";
-import {IApiOperationPostArgs} from "./api-operation-post.decorator";
-import {SwaggerDefinitionConstant} from "./swagger-definition.constant";
+import { IApiPathArgs } from "./api-path.decorator";
+import { IApiOperationPostArgs } from "./api-operation-post.decorator";
+import { SwaggerDefinitionConstant } from "./swagger-definition.constant";
 import * as _ from "lodash";
 import {
-    IApiOperationArgsBase,
-    IApiOperationArgsBaseParameter,
-    IApiOperationArgsBaseResponse
+  IApiOperationArgsBase,
+  IApiOperationArgsBaseParameter,
+  IApiOperationArgsBaseResponse
 } from "./i-api-operation-args.base";
-import {IApiOperationGetArgs} from "./api-operation-get.decorator";
-import {IApiModelPropertyArgs} from "./api-model-property.decorator";
-import {IApiModelArgs} from ".";
+import { IApiOperationGetArgs } from "./api-operation-get.decorator";
+import { IApiModelPropertyArgs } from "./api-model-property.decorator";
+import { IApiModelArgs } from ".";
 import * as assert from "assert";
 import {
-    ISwaggerBuildDefinitionModel,
-    ISwaggerBuildDefinitionModelProperty,
-    ISwaggerSecurityDefinition
+  ISwaggerBuildDefinitionModel,
+  ISwaggerBuildDefinitionModelProperty,
+  ISwaggerSecurityDefinition
 } from "./swagger.builder";
-import {URI, Validate} from "./decorators/validate.decorator";
+import {
+  Pattern,
+  PatternEnum,
+  Validate
+} from "./decorators/validate.decorator";
 
 interface IPath {
   path?: string;
@@ -191,7 +195,7 @@ export class SwaggerService {
 
   @Validate
   public setExternalDocs(
-    @URI({ path: "url" })
+    @Pattern({ pattern: PatternEnum.URI, path: "url" })
     externalDocs: ISwaggerExternalDocs
   ): void {
     this.data.externalDocs = externalDocs;
@@ -417,7 +421,7 @@ export class SwaggerService {
 
   @Validate
   private setContact(
-    @URI({ path: "url", nullable: true })
+    @Pattern({ pattern: PatternEnum.URI, path: "url", nullable: true })
     contact: ISwaggerContact
   ) {
     this.data.info.contact = contact;
@@ -425,7 +429,7 @@ export class SwaggerService {
 
   @Validate
   private setLicense(
-    @URI({ path: "url", nullable: true })
+    @Pattern({ pattern: PatternEnum.URI, path: "url", nullable: true })
     license: ISwaggerLicense
   ) {
     this.data.info.license = license;
@@ -548,7 +552,7 @@ export class SwaggerService {
         }
 
         newParameterBody.schema = {
-            $ref: SwaggerService.buildRef(args.parameters.body.model)
+          $ref: SwaggerService.buildRef(args.parameters.body.model)
         };
         operation.parameters.push(newParameterBody);
       }
