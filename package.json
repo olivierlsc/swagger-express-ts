@@ -18,7 +18,7 @@
   },
   "repository": {
     "type": "git",
-    "url": "https://github.com/pesoklp13/swagger-express-ts"
+    "url": "https://github.com/pesoklp13/swagger-express-ts2"
   },
   "author": {
     "name": "Peter Sokolík"
@@ -47,9 +47,9 @@
     "rest"
   ],
   "bugs": {
-    "url": "https://github.com/pesoklp13/swagger-specification-ts/issues"
+    "url": "https://github.com/pesoklp13/swagger-specification-ts2/issues"
   },
-  "homepage": "https://github.com/pesoklp13/swagger-specification-ts#readme",
+  "homepage": "https://github.com/pesoklp13/swagger-specification-ts2#readme",
   "dependencies": {
     "@types/lodash": "^4.14.109",
     "express": "^4.16.3",
