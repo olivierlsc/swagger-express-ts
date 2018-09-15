@@ -64,6 +64,6 @@ Define security definitions
 
 ## responses: {[key: string]: [IApiOperationArgsBaseResponse](./i-api-operation-args-base-response.md)}
 
-Define global responses
+An object to hold responses that can be used across operations. This property does not define global responses for all operations.
 
 * Optional

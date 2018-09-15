@@ -285,6 +285,32 @@ describe("SwaggerService", () => {
     });
   });
 
+  describe("setResponses", () => {
+    it("should set responses", () => {
+      const expected = {
+        NotFound: {
+          description: "Not Found",
+          schema: {
+            type: "string"
+          }
+        }
+      };
+
+      SwaggerService.getInstance().setGlobalResponses({
+        NotFound: {
+          description: "Not Found",
+          type: SwaggerDefinitionConstant.Response.Type.STRING
+        }
+      });
+
+      SwaggerService.getInstance().buildSwagger();
+
+      expect(SwaggerService.getInstance().getData().responses).to.deep.equal(
+        expected
+      );
+    });
+  });
+
   describe("addPath", () => {
     it("expect new arguments", () => {
       const args: IApiPathArgs = {

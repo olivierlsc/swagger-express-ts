@@ -133,4 +133,5 @@ export interface ISwagger {
   definitions: { [key: string]: ISwaggerDefinition };
   externalDocs?: ISwaggerExternalDocs;
   securityDefinitions?: { [key: string]: ISwaggerSecurityDefinition };
+  responses?: { [key: string]: ISwaggerOperationResponse };
 }

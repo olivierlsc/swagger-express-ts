@@ -68,7 +68,6 @@ export class SwaggerService {
   private controllerMap: IController[] = [];
   private data: ISwagger;
   private modelsMap: { [key: string]: ISwaggerBuildDefinitionModel } = {};
-  private globalResponses: { [key: string]: IApiOperationArgsBaseResponse };
 
   private constructor() {}
 
@@ -208,7 +207,7 @@ export class SwaggerService {
   public setGlobalResponses(globalResponses: {
     [key: string]: IApiOperationArgsBaseResponse;
   }): void {
-    this.globalResponses = this.buildOperationResponses(globalResponses);
+    this.data.responses = this.buildOperationResponses(globalResponses);
   }
 
   public addPath(args: IApiPathArgs, target: any): void {
@@ -772,12 +771,6 @@ export class SwaggerService {
     }
     if (_.isUndefined(operation.deprecated) && controller.deprecated) {
       operation.deprecated = controller.deprecated;
-    }
-    if (this.globalResponses) {
-      operation.responses = _.mergeWith(
-        _.cloneDeep(this.globalResponses),
-        operation.responses
-      );
     }
 
     if (!operation.tags) {
