@@ -1,33 +1,36 @@
 import {
-  ISwagger,
-  ISwaggerDefinition,
-  ISwaggerDefinitionProperty,
-  ISwaggerExternalDocs,
-  ISwaggerInfo,
-  ISwaggerOperation,
-  ISwaggerOperationParameter,
-  ISwaggerOperationResponse,
-  ISwaggerOperationSchema,
-  ISwaggerPath
+    ISwagger,
+    ISwaggerContact,
+    ISwaggerDefinition,
+    ISwaggerDefinitionProperty,
+    ISwaggerExternalDocs,
+    ISwaggerInfo,
+    ISwaggerLicense,
+    ISwaggerOperation,
+    ISwaggerOperationParameter,
+    ISwaggerOperationResponse,
+    ISwaggerOperationSchema,
+    ISwaggerPath
 } from "./i-swagger";
-import { IApiPathArgs } from "./api-path.decorator";
-import { IApiOperationPostArgs } from "./api-operation-post.decorator";
-import { SwaggerDefinitionConstant } from "./swagger-definition.constant";
+import {IApiPathArgs} from "./api-path.decorator";
+import {IApiOperationPostArgs} from "./api-operation-post.decorator";
+import {SwaggerDefinitionConstant} from "./swagger-definition.constant";
 import * as _ from "lodash";
 import {
-  IApiOperationArgsBase,
-  IApiOperationArgsBaseParameter,
-  IApiOperationArgsBaseResponse
+    IApiOperationArgsBase,
+    IApiOperationArgsBaseParameter,
+    IApiOperationArgsBaseResponse
 } from "./i-api-operation-args.base";
-import { IApiOperationGetArgs } from "./api-operation-get.decorator";
-import { IApiModelPropertyArgs } from "./api-model-property.decorator";
-import { IApiModelArgs } from ".";
+import {IApiOperationGetArgs} from "./api-operation-get.decorator";
+import {IApiModelPropertyArgs} from "./api-model-property.decorator";
+import {IApiModelArgs} from ".";
 import * as assert from "assert";
 import {
-  ISwaggerBuildDefinitionModel,
-  ISwaggerBuildDefinitionModelProperty,
-  ISwaggerSecurityDefinition
+    ISwaggerBuildDefinitionModel,
+    ISwaggerBuildDefinitionModelProperty,
+    ISwaggerSecurityDefinition
 } from "./swagger.builder";
+import {URI, Validate} from "./decorators/validate.decorator";
 
 interface IPath {
   path?: string;
@@ -83,7 +86,26 @@ export class SwaggerService {
   }
 
   public setInfo(info: ISwaggerInfo): void {
-    this.data.info = info;
+    this.data.info = {
+      title: info.title,
+      version: info.version
+    };
+
+    if (info.description) {
+      this.data.info.description = info.description;
+    }
+
+    if (info.termsOfService) {
+      this.data.info.termsOfService = info.termsOfService;
+    }
+
+    if (info.contact) {
+      this.setContact(info.contact);
+    }
+
+    if (info.license) {
+      this.setLicense(info.license);
+    }
   }
 
   public setSchemes(schemes: string[]): void {
@@ -148,10 +170,10 @@ export class SwaggerService {
                 )
               ) {
                 newProperty.items = {
-                  $ref: this.buildRef(property.model)
+                  $ref: SwaggerService.buildRef(property.model)
                 };
               } else {
-                newProperty.$ref = this.buildRef(property.model);
+                newProperty.$ref = SwaggerService.buildRef(property.model);
               }
             }
             if (property.required) {
@@ -167,7 +189,11 @@ export class SwaggerService {
     this.data.definitions = _.mergeWith(this.data.definitions, definitions);
   }
 
-  public setExternalDocs(externalDocs: ISwaggerExternalDocs): void {
+  @Validate
+  public setExternalDocs(
+    @URI({ path: "url" })
+    externalDocs: ISwaggerExternalDocs
+  ): void {
     this.data.externalDocs = externalDocs;
   }
 
@@ -389,6 +415,22 @@ export class SwaggerService {
     this.setDefinitions(this.modelsMap);
   }
 
+  @Validate
+  private setContact(
+    @URI({ path: "url", nullable: true })
+    contact: ISwaggerContact
+  ) {
+    this.data.info.contact = contact;
+  }
+
+  @Validate
+  private setLicense(
+    @URI({ path: "url", nullable: true })
+    license: ISwaggerLicense
+  ) {
+    this.data.info.license = license;
+  }
+
   private addOperation(
     operation: string,
     args: IApiOperationArgsBase,
@@ -504,10 +546,10 @@ export class SwaggerService {
         if (args.parameters.body.required) {
           newParameterBody.required = true;
         }
-        const swaggerOperationSchema: ISwaggerOperationSchema = {
-          $ref: this.buildRef(args.parameters.body.model)
+
+        newParameterBody.schema = {
+            $ref: SwaggerService.buildRef(args.parameters.body.model)
         };
-        newParameterBody.schema = swaggerOperationSchema;
         operation.parameters.push(newParameterBody);
       }
       if (args.parameters.formData) {
@@ -603,7 +645,7 @@ export class SwaggerService {
           }
         }
         if (response.model) {
-          const ref = this.buildRef(response.model);
+          const ref = SwaggerService.buildRef(response.model);
           let newSwaggerOperationResponseSchema: ISwaggerOperationSchema = {
             $ref: ref
           };
@@ -738,7 +780,7 @@ export class SwaggerService {
     return operation;
   }
 
-  private buildRef(definition: string): string {
+  private static buildRef(definition: string): string {
     return "#/definitions/".concat(_.upperFirst(definition));
   }
 
@@ -746,8 +788,8 @@ export class SwaggerService {
     this.data = {
       basePath: "/",
       info: {
-        title: "",
-        version: ""
+        title: "Generated swagger project",
+        version: "1.0.0"
       },
       paths: {},
       tags: [],

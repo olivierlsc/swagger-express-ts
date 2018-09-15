@@ -94,7 +94,7 @@ server.setConfig((app: any) => {
           500: {}
         },
         externalDocs: {
-          url: "My url"
+          url: "localhost:8080"
         },
         securityDefinitions: {
           apiKeyHeader: {

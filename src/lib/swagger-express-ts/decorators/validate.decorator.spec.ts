@@ -33,6 +33,12 @@ describe("Validators", () => {
       expect(value).to.be.equal(undefined);
     });
 
+    it("should return undefined when fetching nonexisting field", () => {
+      const value = getProperty(outer, "inner.field.value");
+
+      expect(value).to.be.equal(undefined);
+    });
+
     it("should find value from outer object", () => {
       const value = getProperty(outer, "field");
 
@@ -51,100 +57,158 @@ describe("Validators", () => {
 
     describe("match a (commonly found) URI", () => {
       const uri =
-        "http://user:password@example.com:8080/some/path/to/somewhere?search=regex&order=desc#fragment";
+        "http://user:password@example.com:8080/some/arguments/to/somewhere?search=regex&order=desc#fragment";
 
       it("should match from string", () => {
-        validateURIPattern(uri, propertyName);
+        validateURIPattern(uri, {
+          path: propertyName
+        });
+      });
+
+      it("should not failed when nullable true and value null", () => {
+        validateURIPattern(null, { nullable: true });
+      });
+
+      it("should not failed when nullable true and value undefined", () => {
+        validateURIPattern(undefined, { nullable: true });
       });
 
       it("should match from object", () => {
-        validateURIPattern({ field: uri }, "field");
+        validateURIPattern(
+          { field: uri },
+          {
+            path: "field"
+          }
+        );
       });
 
       it("should match from object's inner field", () => {
         validateURIPattern(
           { field: null, inner: { field: uri } },
-          "inner.field"
+          { path: "inner.field" }
         );
+      });
+
+      it("should not fail when object's inner field not set with nullable", () => {
+        validateURIPattern(
+          { field: null, inner: { field: null } },
+          { path: "inner.field", nullable: true }
+        );
+      });
+
+      it("should fail when object's inner field not set", () => {
+        expect(() => {
+          validateURIPattern(
+            { field: null, inner: { field: null } },
+            { path: "inner.field" }
+          );
+        }).to.throw("inner.field has to be valid URI");
       });
     });
 
     it("should match URIs with URI as hostname", () => {
       const uri = "mina:tcp://mainframeip:4444?textline=true";
 
-      validateURIPattern(uri, propertyName);
+      validateURIPattern(uri, {
+        path: propertyName
+      });
     });
 
     it("should match IPv6 hosts", () => {
       const uri = "ldap://[2001:db8::7]/c=GB?objectClass?one";
 
-      validateURIPattern(uri, propertyName);
+      validateURIPattern(uri, {
+        path: propertyName
+      });
     });
 
     it("should match URIs w/o authority", () => {
       const uri = "urn:oasis:names:specification:docbook:dtd:xml:4.1.2";
 
-      validateURIPattern(uri, propertyName);
+      validateURIPattern(uri, {
+        path: propertyName
+      });
     });
 
     it("should match unicode hostnames", () => {
       const uri = "https://www.日本平.jp";
 
-      validateURIPattern(uri, propertyName);
+      validateURIPattern(uri, {
+        path: propertyName
+      });
     });
 
     it("should match punycode hostnames", () => {
       const uri = "http://www.xn--gwtq9nb2a.jp";
 
-      validateURIPattern(uri, propertyName);
+      validateURIPattern(uri, {
+        path: propertyName
+      });
     });
 
     it("should match percent encoded parts", () => {
       const uri = "http://www.fran%c3%a7ois.fr/fran%c3%a7ois";
 
-      validateURIPattern(uri, propertyName);
+      validateURIPattern(uri, {
+        path: propertyName
+      });
     });
 
     it("should match RFC 3986's example URIs", () => {
       const uri = "ftp://ftp.is.co.za/rfc/rfc1808.txt";
 
-      validateURIPattern(uri, propertyName);
+      validateURIPattern(uri, {
+        path: propertyName
+      });
     });
 
     it("http://www.ietf.org/rfc/rfc2396.txt", () => {
       const uri = "http://www.ietf.org/rfc/rfc2396.txt";
 
-      validateURIPattern(uri, propertyName);
+      validateURIPattern(uri, {
+        path: propertyName
+      });
     });
 
     it("mailto:John.Doe@example.com", () => {
       const uri = "mailto:John.Doe@example.com";
 
-      validateURIPattern(uri, propertyName);
+      validateURIPattern(uri, {
+        path: propertyName
+      });
     });
 
     it("news:comp.infosystems.www.servers.unix", () => {
       const uri = "news:comp.infosystems.www.servers.unix";
 
-      validateURIPattern(uri, propertyName);
+      validateURIPattern(uri, {
+        path: propertyName
+      });
     });
 
     it("tel:+1-816-555-1212", () => {
       const uri = "tel:+1-816-555-1212";
 
-      validateURIPattern(uri, propertyName);
+      validateURIPattern(uri, {
+        path: propertyName
+      });
     });
 
     it("telnet://192.0.2.16:80/", () => {
       const uri = "telnet://192.0.2.16:80/";
-      validateURIPattern(uri, propertyName);
+
+      validateURIPattern(uri, {
+        path: propertyName
+      });
     });
 
     it("should fail", () => {
       const uri = "localhost";
 
       expect(() => {
-        validateURIPattern(uri, propertyName);
+        validateURIPattern(uri, {
+          path: propertyName
+        });
       }).to.throw("testProperty has to be valid URI");
     });
   });
@@ -161,7 +225,7 @@ describe("Validators", () => {
 
     it("should match a (commonly found) URI", () => {
       const uri =
-        "http://user:password@example.com:8080/some/path/to/somewhere?search=regex&order=desc#fragment";
+        "http://user:password@example.com:8080/some/arguments/to/somewhere?search=regex&order=desc#fragment";
       const testClass = new TestURI(uri);
 
       testClass.testMethod(uri);
