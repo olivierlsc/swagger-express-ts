@@ -31,6 +31,7 @@ import {
   ISwaggerSecurityDefinition
 } from "./swagger.builder";
 import {
+  NotEmpty,
   Pattern,
   PatternEnum,
   Validate
@@ -582,7 +583,9 @@ export class SwaggerService {
     return operation;
   }
 
-  private buildOperationResponses(responses: {
+  @Validate
+  private buildOperationResponses(@NotEmpty()
+  responses: {
     [key: string]: IApiOperationArgsBaseResponse;
   }): {
     [key: string]: ISwaggerOperationResponse;

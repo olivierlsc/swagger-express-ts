@@ -309,6 +309,12 @@ describe("SwaggerService", () => {
         expected
       );
     });
+
+    it("should fail when empty response set", () => {
+      expect(() => {
+        SwaggerService.getInstance().setGlobalResponses({});
+      }).to.throw("Cannot be empty");
+    });
   });
 
   describe("addPath", () => {

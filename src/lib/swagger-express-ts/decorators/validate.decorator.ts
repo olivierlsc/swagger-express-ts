@@ -21,6 +21,7 @@ const PATTERNS: { [pattern: string]: RegExp } = {
 };
 
 export const PATTERN_KEY = Symbol("PATTERN_KEY");
+export const NOT_EMPTY_KEY = Symbol("NOT_EMPTY_KEY");
 
 /**
  *
@@ -57,6 +58,24 @@ export function Pattern(
     Reflect.defineMetadata(
       PATTERN_KEY,
       existingPatternParameters,
+      target,
+      propertyKey
+    );
+  };
+}
+
+export function NotEmpty(): ParameterDecorator {
+  return (
+    target: any,
+    propertyKey: string | symbol,
+    parameterIndex: number
+  ) => {
+    const existingNotEmptyParameters: number[] =
+      Reflect.getOwnMetadata(NOT_EMPTY_KEY, target, propertyKey) || [];
+    existingNotEmptyParameters.push(parameterIndex);
+    Reflect.defineMetadata(
+      NOT_EMPTY_KEY,
+      existingNotEmptyParameters,
       target,
       propertyKey
     );
@@ -138,18 +157,35 @@ export function Validate(
   const method = descriptor.value;
 
   descriptor.value = function() {
-    const existingPatternParameters: Array<{
-      key: number;
-      arguments: PatternArguments;
-    }> =
-      Reflect.getOwnMetadata(PATTERN_KEY, target, propertyName) || [];
-    if (existingPatternParameters) {
-      let argument;
-      for (const it of existingPatternParameters) {
-        argument = arguments[it.key];
-        validatePattern(argument, it.arguments);
+    function checkPattern(outerArguments: IArguments) {
+      const existingPatternParameters: Array<{
+        key: number;
+        arguments: PatternArguments;
+      }> =
+        Reflect.getOwnMetadata(PATTERN_KEY, target, propertyName) || [];
+      if (existingPatternParameters) {
+        let argument;
+        for (const it of existingPatternParameters) {
+          argument = outerArguments[it.key];
+          validatePattern(argument, it.arguments);
+        }
       }
     }
+
+    function checkNotEmpty(outerArguments: IArguments) {
+      const existingNotEmptyParameters: number[] =
+        Reflect.getOwnMetadata(NOT_EMPTY_KEY, target, propertyName) || [];
+      if (existingNotEmptyParameters) {
+        for (const it of existingNotEmptyParameters) {
+          if (_(outerArguments[it]).isEmpty()) {
+            throw new Error("Cannot be empty");
+          }
+        }
+      }
+    }
+
+    checkPattern(arguments);
+    checkNotEmpty(arguments);
 
     return method.apply(this, arguments);
   };

@@ -2,6 +2,7 @@ import "reflect-metadata";
 import * as chai from "chai";
 import {
   getProperty,
+  NotEmpty,
   Pattern,
   PatternEnum,
   Validate,
@@ -18,6 +19,23 @@ describe("Validators", () => {
   interface Outer {
     field: string;
     inner?: Inner;
+  }
+
+  class TestClass {
+    constructor(private uri?: string) {}
+
+    @Validate
+    public testValidateURIMethod(
+      @Pattern({ pattern: PatternEnum.URI })
+      uri: string
+    ) {
+      expect(uri).to.deep.equal(this.uri);
+    }
+
+    @Validate
+    public testValidateNotEmptyMethod(@NotEmpty() object: any) {
+      expect(object !== null).to.be.true("");
+    }
   }
 
   describe("getProperty", () => {
@@ -294,49 +312,46 @@ describe("Validators", () => {
   });
 
   describe("Pattern", () => {
-    class TestURI {
-      constructor(private uri: string) {}
-
-      @Validate
-      public testMethod(
-        @Pattern({ pattern: PatternEnum.URI })
-        uri: string
-      ) {
-        expect(uri).to.deep.equal(this.uri);
-      }
-    }
-
     it("should match a (commonly found) URI", () => {
       const uri =
         "http://user:password@example.com:8080/some/arguments/to/somewhere?search=regex&order=desc#fragment";
-      const testClass = new TestURI(uri);
+      const testClass = new TestClass(uri);
 
-      testClass.testMethod(uri);
+      testClass.testValidateURIMethod(uri);
     });
 
     it("should fail with localhost", () => {
       const uri = "localhost";
-      const testClass = new TestURI(uri);
+      const testClass = new TestClass(uri);
 
       expect(() => {
-        testClass.testMethod(uri);
+        testClass.testValidateURIMethod(uri);
       }).to.throw("localhost has to be valid URI");
     });
 
     it("should fail when empty", () => {
-      const testClass = new TestURI(null);
+      const testClass = new TestClass(null);
 
       expect(() => {
-        testClass.testMethod(null);
+        testClass.testValidateURIMethod(null);
       }).to.throw("Validated property is empty. Has to be valid URI");
     });
 
     it("should fail when undefined", () => {
-      const testClass = new TestURI(undefined);
+      const testClass = new TestClass(undefined);
 
       expect(() => {
-        testClass.testMethod(undefined);
+        testClass.testValidateURIMethod(undefined);
       }).to.throw("Validated property is empty. Has to be valid URI");
+    });
+  });
+
+  describe("NotEmpty", () => {
+    it("should fail when empty object passed", () => {
+      const testClass = new TestClass();
+      expect(() => {
+        testClass.testValidateNotEmptyMethod({});
+      }).to.throw("Cannot be empty");
     });
   });
 });
