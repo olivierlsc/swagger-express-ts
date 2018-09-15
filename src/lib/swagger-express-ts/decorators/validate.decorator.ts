@@ -1,15 +1,28 @@
 import * as _ from "lodash";
 
-const pattern = new RegExp(
+export enum PatternEnum {
+  URI,
+  HOST
+}
+
+const URI_PATTERN = new RegExp(
   "([A-Za-z][A-Za-z0-9+\\-.]*):(?:(//)(?:((?:[A-Za-z0-9\\-._~!$&'()*+,;=:]|%[0-9A-Fa-f]{2})*)@)?((?:\\[(?:(?:(?:(?:[0-9A-Fa-f]{1,4}:){6}|::(?:[0-9A-Fa-f]{1,4}:){5}|(?:[0-9A-Fa-f]{1,4})?::(?:[0-9A-Fa-f]{1,4}:){4}|(?:(?:[0-9A-Fa-f]{1,4}:){0,1}[0-9A-Fa-f]{1,4})?::(?:[0-9A-Fa-f]{1,4}:){3}|(?:(?:[0-9A-Fa-f]{1,4}:){0,2}[0-9A-Fa-f]{1,4})?::(?:[0-9A-Fa-f]{1,4}:){2}|(?:(?:[0-9A-Fa-f]{1,4}:){0,3}[0-9A-Fa-f]{1,4})?::[0-9A-Fa-f]{1,4}:|(?:(?:[0-9A-Fa-f]{1,4}:){0,4}[0-9A-Fa-f]{1,4})?::)(?:[0-9A-Fa-f]{1,4}:[0-9A-Fa-f]{1,4}|(?:(?:25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\\.){3}(?:25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?))|(?:(?:[0-9A-Fa-f]{1,4}:){0,5}[0-9A-Fa-f]{1,4})?::[0-9A-Fa-f]{1,4}|(?:(?:[0-9A-Fa-f]{1,4}:){0,6}[0-9A-Fa-f]{1,4})?::)|[Vv][0-9A-Fa-f]+\\.[A-Za-z0-9\\-._~!$&'()*+,;=:]+)]|(?:(?:25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\\.){3}(?:25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)|(?:[A-Za-z0-9\\-._~!$&'()*+,;=]|%[0-9A-Fa-f]{2})*))(?::([0-9]*))?((?:/(?:[A-Za-z0-9\\-._~!$&'()*+,;=:@]|%[0-9A-Fa-f]{2})*)*)|/((?:(?:[A-Za-z0-9\\-._~!$&'()*+,;=:@]|%[0-9A-Fa-f]{2})+(?:/(?:[A-Za-z0-9\\-._~!$&'()*+,;=:@]|%[0-9A-Fa-f]{2})*)*)?)|((?:[A-Za-z0-9\\-._~!$&'()*+,;=:@]|%[0-9A-Fa-f]{2})+(?:/(?:[A-Za-z0-9\\-._~!$&'()*+,;=:@]|%[0-9A-Fa-f]{2})*)*)|)(?:\\?((?:[A-Za-z0-9\\-._~!$&'()*+,;=:@/?]|%[0-9A-Fa-f]{2})*))?(?:#((?:[A-Za-z0-9\\-._~!$&'()*+,;=:@/?]|%[0-9A-Fa-f]{2})*))?"
 );
 
-export const URI_KEY = Symbol("URI_KEY");
+const HOST_PATTERN = new RegExp("^[^{}/ :\\\\]+(?::\\d+)?$");
+
+const PATTERNS: { [pattern: string]: RegExp } = {
+  URI: URI_PATTERN,
+  HOST: HOST_PATTERN
+};
+
+export const PATTERN_KEY = Symbol("PATTERN_KEY");
 
 /**
  *
  */
-export interface URIValidateArguments {
+export interface PatternArguments {
+  pattern: PatternEnum;
   /**
    * dotted notation for retrieve value from object to be validated against
    */
@@ -20,22 +33,29 @@ export interface URIValidateArguments {
   nullable?: boolean;
 }
 
-export function URI(uriArguments?: URIValidateArguments): ParameterDecorator {
+export function Pattern(
+  patternArguments: PatternArguments
+): ParameterDecorator {
   return (
     target: any,
     propertyKey: string | symbol,
     parameterIndex: number
   ) => {
-    const existingURIParameters: Array<{
+    const existingPatternParameters: Array<{
       key: number;
-      arguments: URIValidateArguments;
+      arguments: PatternArguments;
     }> =
-      Reflect.getOwnMetadata(URI_KEY, target, propertyKey) || [];
-    existingURIParameters.push({
+      Reflect.getOwnMetadata(PATTERN_KEY, target, propertyKey) || [];
+    existingPatternParameters.push({
       key: parameterIndex,
-      arguments: uriArguments
+      arguments: patternArguments
     });
-    Reflect.defineMetadata(URI_KEY, existingURIParameters, target, propertyKey);
+    Reflect.defineMetadata(
+      PATTERN_KEY,
+      existingPatternParameters,
+      target,
+      propertyKey
+    );
   };
 }
 
@@ -57,17 +77,15 @@ export function getProperty(object: any, propertyName: string | symbol): any {
   return property;
 }
 
-export function validateURIPattern(
+export function validatePattern(
   object: any,
-  uriArguments: URIValidateArguments
+  patternArguments: PatternArguments
 ) {
   let propertyName: string | symbol;
   let nullable: boolean;
 
-  if (uriArguments) {
-    propertyName = uriArguments.path;
-    nullable = uriArguments.nullable;
-  }
+  propertyName = patternArguments.path;
+  nullable = patternArguments.nullable;
 
   if (!object) {
     if (nullable) {
@@ -75,9 +93,9 @@ export function validateURIPattern(
     }
 
     throw new Error(
-      (propertyName ? (propertyName as string) : "Validated property").concat(
-        " is empty. Has to be valid URI"
-      )
+      (propertyName ? (propertyName as string) : "Validated property")
+        .concat(" is empty. Has to be valid ")
+        .concat(PatternEnum[patternArguments.pattern])
     );
   }
 
@@ -93,17 +111,17 @@ export function validateURIPattern(
     }
 
     throw new Error(
-      (propertyName ? (propertyName as string) : foundURI).concat(
-        " has to be valid URI"
-      )
+      (propertyName ? (propertyName as string) : foundURI)
+        .concat(" has to be valid ")
+        .concat(PatternEnum[patternArguments.pattern])
     );
   }
 
-  if (!foundURI.match(pattern)) {
+  if (!foundURI.match(PATTERNS[PatternEnum[patternArguments.pattern]])) {
     throw new Error(
-      (propertyName ? (propertyName as string) : foundURI).concat(
-        " has to be valid URI"
-      )
+      (propertyName ? (propertyName as string) : foundURI)
+        .concat(" has to be valid ")
+        .concat(PatternEnum[patternArguments.pattern])
     );
   }
 }
@@ -116,39 +134,19 @@ export function Validate(
   const method = descriptor.value;
 
   descriptor.value = function() {
-    const existingURIParameters: Array<{
+    const existingPatternParameters: Array<{
       key: number;
-      arguments: URIValidateArguments;
+      arguments: PatternArguments;
     }> =
-      Reflect.getOwnMetadata(URI_KEY, target, propertyName) || [];
-    if (existingURIParameters) {
+      Reflect.getOwnMetadata(PATTERN_KEY, target, propertyName) || [];
+    if (existingPatternParameters) {
       let argument;
-      for (const it of existingURIParameters) {
+      for (const it of existingPatternParameters) {
         argument = arguments[it.key];
-        validateURIPattern(argument, it.arguments);
+        validatePattern(argument, it.arguments);
       }
     }
 
     return method.apply(this, arguments);
   };
 }
-
-/*export function Validate(
-  target: any,
-  propertyName: string,
-  descriptor: TypedPropertyDescriptor<() => void>
-): MethodDecorator {
-  const method = descriptor.value;
-  console.log(arguments);
-  /*descriptor.value = function () {
-      const existingURIParameters: Array<{key: number, fieldPath: URIValidateArguments}> = Reflect.getOwnMetadata(URI_KEY, target, propertyName) || [];
-      if(existingURIParameters){
-        let argument;
-        for (let it of existingURIParameters) {
-            argument = arguments[it.key];
-        }
-      }
-  };
-
-  return method.apply(this, arguments);
-}/**/

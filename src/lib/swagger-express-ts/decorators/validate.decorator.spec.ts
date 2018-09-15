@@ -2,9 +2,10 @@ import "reflect-metadata";
 import * as chai from "chai";
 import {
   getProperty,
-  URI,
+  Pattern,
+  PatternEnum,
   Validate,
-  validateURIPattern
+  validatePattern
 } from "./validate.decorator";
 
 const expect = chai.expect;
@@ -52,7 +53,7 @@ describe("Validators", () => {
     });
   });
 
-  describe("validateURIPattern", () => {
+  describe("validatePattern", () => {
     const propertyName = "testProperty";
 
     describe("match a (commonly found) URI", () => {
@@ -60,56 +61,62 @@ describe("Validators", () => {
         "http://user:password@example.com:8080/some/arguments/to/somewhere?search=regex&order=desc#fragment";
 
       it("should match from string", () => {
-        validateURIPattern(uri, {
+        validatePattern(uri, {
+          pattern: PatternEnum.URI,
           path: propertyName
         });
       });
 
       it("should not failed when nullable true and value null", () => {
-        validateURIPattern(null, { nullable: true });
+        validatePattern(null, { pattern: PatternEnum.URI, nullable: true });
       });
 
       it("should not failed when nullable true and value undefined", () => {
-        validateURIPattern(undefined, { nullable: true });
+        validatePattern(undefined, {
+          pattern: PatternEnum.URI,
+          nullable: true
+        });
       });
 
       it("should match from object", () => {
-        validateURIPattern(
+        validatePattern(
           { field: uri },
           {
+            pattern: PatternEnum.URI,
             path: "field"
           }
         );
       });
 
       it("should match from object's inner field", () => {
-        validateURIPattern(
+        validatePattern(
           { field: null, inner: { field: uri } },
-          { path: "inner.field" }
+          { pattern: PatternEnum.URI, path: "inner.field" }
         );
       });
 
       it("should not fail when object's inner field not set with nullable", () => {
-        validateURIPattern(
+        validatePattern(
           { field: null, inner: { field: null } },
-          { path: "inner.field", nullable: true }
+          { pattern: PatternEnum.URI, path: "inner.field", nullable: true }
         );
       });
 
       it("should fail when object's inner field not set", () => {
         expect(() => {
-          validateURIPattern(
+          validatePattern(
             { field: null, inner: { field: null } },
-            { path: "inner.field" }
+            { pattern: PatternEnum.URI, path: "inner.field" }
           );
         }).to.throw("inner.field has to be valid URI");
       });
     });
 
-    it("should match URIs with URI as hostname", () => {
+    it("should match URIs with Pattern as hostname", () => {
       const uri = "mina:tcp://mainframeip:4444?textline=true";
 
-      validateURIPattern(uri, {
+      validatePattern(uri, {
+        pattern: PatternEnum.URI,
         path: propertyName
       });
     });
@@ -117,7 +124,8 @@ describe("Validators", () => {
     it("should match IPv6 hosts", () => {
       const uri = "ldap://[2001:db8::7]/c=GB?objectClass?one";
 
-      validateURIPattern(uri, {
+      validatePattern(uri, {
+        pattern: PatternEnum.URI,
         path: propertyName
       });
     });
@@ -125,7 +133,8 @@ describe("Validators", () => {
     it("should match URIs w/o authority", () => {
       const uri = "urn:oasis:names:specification:docbook:dtd:xml:4.1.2";
 
-      validateURIPattern(uri, {
+      validatePattern(uri, {
+        pattern: PatternEnum.URI,
         path: propertyName
       });
     });
@@ -133,7 +142,8 @@ describe("Validators", () => {
     it("should match unicode hostnames", () => {
       const uri = "https://www.日本平.jp";
 
-      validateURIPattern(uri, {
+      validatePattern(uri, {
+        pattern: PatternEnum.URI,
         path: propertyName
       });
     });
@@ -141,7 +151,8 @@ describe("Validators", () => {
     it("should match punycode hostnames", () => {
       const uri = "http://www.xn--gwtq9nb2a.jp";
 
-      validateURIPattern(uri, {
+      validatePattern(uri, {
+        pattern: PatternEnum.URI,
         path: propertyName
       });
     });
@@ -149,7 +160,8 @@ describe("Validators", () => {
     it("should match percent encoded parts", () => {
       const uri = "http://www.fran%c3%a7ois.fr/fran%c3%a7ois";
 
-      validateURIPattern(uri, {
+      validatePattern(uri, {
+        pattern: PatternEnum.URI,
         path: propertyName
       });
     });
@@ -157,7 +169,8 @@ describe("Validators", () => {
     it("should match RFC 3986's example URIs", () => {
       const uri = "ftp://ftp.is.co.za/rfc/rfc1808.txt";
 
-      validateURIPattern(uri, {
+      validatePattern(uri, {
+        pattern: PatternEnum.URI,
         path: propertyName
       });
     });
@@ -165,7 +178,8 @@ describe("Validators", () => {
     it("http://www.ietf.org/rfc/rfc2396.txt", () => {
       const uri = "http://www.ietf.org/rfc/rfc2396.txt";
 
-      validateURIPattern(uri, {
+      validatePattern(uri, {
+        pattern: PatternEnum.URI,
         path: propertyName
       });
     });
@@ -173,7 +187,8 @@ describe("Validators", () => {
     it("mailto:John.Doe@example.com", () => {
       const uri = "mailto:John.Doe@example.com";
 
-      validateURIPattern(uri, {
+      validatePattern(uri, {
+        pattern: PatternEnum.URI,
         path: propertyName
       });
     });
@@ -181,7 +196,8 @@ describe("Validators", () => {
     it("news:comp.infosystems.www.servers.unix", () => {
       const uri = "news:comp.infosystems.www.servers.unix";
 
-      validateURIPattern(uri, {
+      validatePattern(uri, {
+        pattern: PatternEnum.URI,
         path: propertyName
       });
     });
@@ -189,7 +205,8 @@ describe("Validators", () => {
     it("tel:+1-816-555-1212", () => {
       const uri = "tel:+1-816-555-1212";
 
-      validateURIPattern(uri, {
+      validatePattern(uri, {
+        pattern: PatternEnum.URI,
         path: propertyName
       });
     });
@@ -197,7 +214,8 @@ describe("Validators", () => {
     it("telnet://192.0.2.16:80/", () => {
       const uri = "telnet://192.0.2.16:80/";
 
-      validateURIPattern(uri, {
+      validatePattern(uri, {
+        pattern: PatternEnum.URI,
         path: propertyName
       });
     });
@@ -206,19 +224,23 @@ describe("Validators", () => {
       const uri = "localhost";
 
       expect(() => {
-        validateURIPattern(uri, {
+        validatePattern(uri, {
+          pattern: PatternEnum.URI,
           path: propertyName
         });
       }).to.throw("testProperty has to be valid URI");
     });
   });
 
-  describe("URI", () => {
+  describe("Pattern", () => {
     class TestURI {
       constructor(private uri: string) {}
 
       @Validate
-      public testMethod(@URI() uri: string) {
+      public testMethod(
+        @Pattern({ pattern: PatternEnum.URI })
+        uri: string
+      ) {
         expect(uri).to.deep.equal(this.uri);
       }
     }
