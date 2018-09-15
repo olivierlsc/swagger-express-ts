@@ -42,7 +42,7 @@ Define Schemes.
 
 Define setHost.
 
-* Optional
+* Optional - must be in ```^[^{}/ :\\]+(?::\d+)?$``` format
 
 ## models: {[key: string]: [ISwaggerBuildDefinitionModel](./i-swagger-build-definition-model.md)}
 
