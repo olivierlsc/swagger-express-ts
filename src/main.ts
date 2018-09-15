@@ -49,7 +49,11 @@ server.setConfig((app: any) => {
       definition: {
         info: {
           title: "My api",
-          version: "1.0"
+          version: "1.0",
+          contact: {
+            email: "admin@swagger-express-ts.com",
+            url: "http://swagger-express-ts.com"
+          }
         },
         host: "localhost:9001",
         models: {

@@ -80,7 +80,8 @@ export interface ISwaggerOperation {
 
 export interface ISwaggerTag {
   name: string;
-  description: string;
+  description?: string;
+  externalDocs?: ISwaggerExternalDocs;
 }
 
 export interface ISwaggerPath {
@@ -133,4 +134,5 @@ export interface ISwagger {
   definitions: { [key: string]: ISwaggerDefinition };
   externalDocs?: ISwaggerExternalDocs;
   securityDefinitions?: { [key: string]: ISwaggerSecurityDefinition };
+  responses?: { [key: string]: ISwaggerOperationResponse };
 }

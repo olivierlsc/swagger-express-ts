@@ -2,7 +2,8 @@ import * as _ from "lodash";
 
 export enum PatternEnum {
   URI,
-  HOST
+  HOST,
+  EMAIL
 }
 
 const URI_PATTERN = new RegExp(
@@ -11,12 +12,16 @@ const URI_PATTERN = new RegExp(
 
 const HOST_PATTERN = new RegExp("^[^{}/ :\\\\]+(?::\\d+)?$");
 
+const EMAIL_PATTERN = /^(?=.{1,254}$)(?=.{1,64}@)[-!#$%&'*+/0-9=?A-Z^_`a-z{|}~]+(\.[-!#$%&'*+/0-9=?A-Z^_`a-z{|}~]+)*@[A-Za-z0-9]([A-Za-z0-9-]{0,61}[A-Za-z0-9])?(\.[A-Za-z0-9]([A-Za-z0-9-]{0,61}[A-Za-z0-9])?)*$/;
+
 const PATTERNS: { [pattern: string]: RegExp } = {
   URI: URI_PATTERN,
-  HOST: HOST_PATTERN
+  HOST: HOST_PATTERN,
+  EMAIL: EMAIL_PATTERN
 };
 
 export const PATTERN_KEY = Symbol("PATTERN_KEY");
+export const NOT_EMPTY_KEY = Symbol("NOT_EMPTY_KEY");
 
 /**
  *
@@ -53,6 +58,24 @@ export function Pattern(
     Reflect.defineMetadata(
       PATTERN_KEY,
       existingPatternParameters,
+      target,
+      propertyKey
+    );
+  };
+}
+
+export function NotEmpty(): ParameterDecorator {
+  return (
+    target: any,
+    propertyKey: string | symbol,
+    parameterIndex: number
+  ) => {
+    const existingNotEmptyParameters: number[] =
+      Reflect.getOwnMetadata(NOT_EMPTY_KEY, target, propertyKey) || [];
+    existingNotEmptyParameters.push(parameterIndex);
+    Reflect.defineMetadata(
+      NOT_EMPTY_KEY,
+      existingNotEmptyParameters,
       target,
       propertyKey
     );
@@ -129,23 +152,40 @@ export function validatePattern(
 export function Validate(
   target: any,
   propertyName: string,
-  descriptor: TypedPropertyDescriptor<(param: any) => void>
+  descriptor: TypedPropertyDescriptor<(...params: any[]) => void>
 ) {
   const method = descriptor.value;
 
   descriptor.value = function() {
-    const existingPatternParameters: Array<{
-      key: number;
-      arguments: PatternArguments;
-    }> =
-      Reflect.getOwnMetadata(PATTERN_KEY, target, propertyName) || [];
-    if (existingPatternParameters) {
-      let argument;
-      for (const it of existingPatternParameters) {
-        argument = arguments[it.key];
-        validatePattern(argument, it.arguments);
+    function checkPattern(outerArguments: IArguments) {
+      const existingPatternParameters: Array<{
+        key: number;
+        arguments: PatternArguments;
+      }> =
+        Reflect.getOwnMetadata(PATTERN_KEY, target, propertyName) || [];
+      if (existingPatternParameters) {
+        let argument;
+        for (const it of existingPatternParameters) {
+          argument = outerArguments[it.key];
+          validatePattern(argument, it.arguments);
+        }
       }
     }
+
+    function checkNotEmpty(outerArguments: IArguments) {
+      const existingNotEmptyParameters: number[] =
+        Reflect.getOwnMetadata(NOT_EMPTY_KEY, target, propertyName) || [];
+      if (existingNotEmptyParameters) {
+        for (const it of existingNotEmptyParameters) {
+          if (_(outerArguments[it]).isEmpty()) {
+            throw new Error("Cannot be empty");
+          }
+        }
+      }
+    }
+
+    checkPattern(arguments);
+    checkNotEmpty(arguments);
 
     return method.apply(this, arguments);
   };
