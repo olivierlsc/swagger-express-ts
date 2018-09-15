@@ -51,7 +51,7 @@ server.setConfig( ( app : any ) => {
                     version : "1.0"
                 } ,
                 externalDocs : {
-                    url : "My url"
+                    url : "http://localhost:8080"
                 }
                 // Models can be defined here
             }
