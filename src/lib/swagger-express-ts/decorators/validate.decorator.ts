@@ -152,7 +152,7 @@ export function validatePattern(
 export function Validate(
   target: any,
   propertyName: string,
-  descriptor: TypedPropertyDescriptor<(param: any) => void>
+  descriptor: TypedPropertyDescriptor<(...params: any[]) => void>
 ) {
   const method = descriptor.value;
 

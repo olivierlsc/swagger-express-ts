@@ -80,7 +80,8 @@ export interface ISwaggerOperation {
 
 export interface ISwaggerTag {
   name: string;
-  description: string;
+  description?: string;
+  externalDocs?: ISwaggerExternalDocs;
 }
 
 export interface ISwaggerPath {

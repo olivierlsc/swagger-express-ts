@@ -77,6 +77,10 @@ Define type list that resource produce.
 - Optional
 - Default is global type list defined in ISwaggerBuildDefinition when execute [.express(options: ISwaggerExpressOptions)](./configuration.md)
 
+## tags: string[]
+Define custom tags for operation
+- Optional
+
 ## security: {[key: string]: any[]}
 Define security
 - Optional

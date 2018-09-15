@@ -2178,4 +2178,131 @@ describe("SwaggerService", () => {
       );
     });
   });
+
+  describe("tags", () => {
+    // TODO to be refactored in version 2.0.0
+
+    const target: any = {
+      name: "VersionController",
+      constructor: {
+        name: "VersionController"
+      }
+    };
+
+    it("should be declared two tags", () => {
+      SwaggerService.getInstance().addPath(
+        {
+          path: "/versions",
+          name: "Versions"
+        },
+        target
+      );
+
+      SwaggerService.getInstance().addOperationGet(
+        {
+          description: "Get versions objects list",
+          summary: "Get versions list",
+          responses: {
+            200: {
+              type: SwaggerDefinitionConstant.Response.Type.ARRAY,
+              model: "Version"
+            }
+          }
+        },
+        target,
+        "getVersions"
+      );
+
+      SwaggerService.getInstance().addOperationPost(
+        {
+          description: "Post version object",
+          summary: "Post new version",
+          parameters: {
+            body: {
+              description: "New version",
+              required: true,
+              model: "Version"
+            }
+          },
+          responses: {
+            200: {
+              model: "Version"
+            },
+            400: { description: "Parameters fail" }
+          },
+          tags: ["Authors"]
+        },
+        target,
+        "saveVersion"
+      );
+
+      SwaggerService.getInstance().buildSwagger();
+
+      expect(SwaggerService.getInstance().getData().tags).to.deep.equal([
+        { name: "Authors" },
+        { name: "Versions" }
+      ]);
+    });
+
+    it("should be declared one distinct tag", () => {
+      SwaggerService.getInstance().addPath(
+        {
+          path: "/versions",
+          name: "Versions"
+        },
+        target
+      );
+
+      const newTarget = {
+        name: "VersionController",
+        constructor: {
+          name: "VersionController"
+        }
+      };
+
+      SwaggerService.getInstance().addPath(
+        {
+          path: "/versions/{id}",
+          name: "Versions"
+        },
+        newTarget
+      );
+
+      SwaggerService.getInstance().addOperationGet(
+        {
+          description: "Get versions objects list",
+          summary: "Get versions list",
+          responses: {
+            200: {
+              type: SwaggerDefinitionConstant.Response.Type.ARRAY,
+              model: "Version"
+            }
+          }
+        },
+        target,
+        "getVersions"
+      );
+
+      SwaggerService.getInstance().addOperationGet(
+        {
+          description: "Get versions objects list",
+          summary: "Get versions list",
+          responses: {
+            200: {
+              type: SwaggerDefinitionConstant.Response.Type.ARRAY,
+              model: "Version"
+            }
+          }
+        },
+        newTarget,
+        "getVersion"
+      );
+
+      SwaggerService.getInstance().buildSwagger();
+
+      expect(SwaggerService.getInstance().getData().tags).to.deep.equal([
+        { name: "Versions" }
+      ]);
+    });
+  });
 });

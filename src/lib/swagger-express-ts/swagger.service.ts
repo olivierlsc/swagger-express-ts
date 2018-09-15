@@ -10,7 +10,8 @@ import {
   ISwaggerOperationParameter,
   ISwaggerOperationResponse,
   ISwaggerOperationSchema,
-  ISwaggerPath
+  ISwaggerPath,
+  ISwaggerTag
 } from "./i-swagger";
 import { IApiPathArgs } from "./api-path.decorator";
 import { IApiOperationPostArgs } from "./api-operation-post.decorator";
@@ -350,13 +351,21 @@ export class SwaggerService {
         } else {
           data.paths[controller.path] = {};
         }
-        data.tags.push({
-          name: _.upperFirst(controller.name),
-          description: controller.description
-        });
+
+        const tag: ISwaggerTag = {
+          name: controller.name
+        };
+
+        if (controller.description) {
+          tag.description = controller.description;
+        }
+
+        this.addTag(data.tags, tag);
       }
     }
+
     this.data = data;
+    this.data.tags = Array.from(this.data.tags);
   }
 
   public addApiModel(args: IApiModelArgs, target: any): any {
@@ -493,6 +502,21 @@ export class SwaggerService {
     }
 
     this.controllerMap[target.constructor.name] = currentController;
+
+    _.map(args.tags, tag => ({ name: _.upperFirst(tag) })).forEach(tag =>
+      this.addTag(this.data.tags, tag)
+    );
+  }
+
+  @Validate
+  private addTag(
+    tags: ISwaggerTag[],
+    @Pattern({ pattern: PatternEnum.URI, path: "externalDocs", nullable: true })
+    tag: ISwaggerTag
+  ) {
+    if (!_.some(tags, tag)) {
+      tags.push(tag);
+    }
   }
 
   private buildOperation(
