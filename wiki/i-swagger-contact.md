@@ -12,3 +12,4 @@ Define url of contact.
 ## email: string
 Define email of contact.
 - Optional
+- in EMAIL format

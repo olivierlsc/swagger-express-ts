@@ -2,7 +2,8 @@ import * as _ from "lodash";
 
 export enum PatternEnum {
   URI,
-  HOST
+  HOST,
+  EMAIL
 }
 
 const URI_PATTERN = new RegExp(
@@ -11,9 +12,12 @@ const URI_PATTERN = new RegExp(
 
 const HOST_PATTERN = new RegExp("^[^{}/ :\\\\]+(?::\\d+)?$");
 
+const EMAIL_PATTERN = /^(?=.{1,254}$)(?=.{1,64}@)[-!#$%&'*+/0-9=?A-Z^_`a-z{|}~]+(\.[-!#$%&'*+/0-9=?A-Z^_`a-z{|}~]+)*@[A-Za-z0-9]([A-Za-z0-9-]{0,61}[A-Za-z0-9])?(\.[A-Za-z0-9]([A-Za-z0-9-]{0,61}[A-Za-z0-9])?)*$/;
+
 const PATTERNS: { [pattern: string]: RegExp } = {
   URI: URI_PATTERN,
-  HOST: HOST_PATTERN
+  HOST: HOST_PATTERN,
+  EMAIL: EMAIL_PATTERN
 };
 
 export const PATTERN_KEY = Symbol("PATTERN_KEY");

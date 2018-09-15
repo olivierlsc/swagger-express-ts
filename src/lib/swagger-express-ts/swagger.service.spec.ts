@@ -16,7 +16,6 @@ const expect = chai.expect;
 describe("SwaggerService", () => {
   beforeEach(() => {
     SwaggerService.getInstance().resetData();
-    console.log("reset");
   });
 
   describe("setBasePath", () => {
@@ -100,6 +99,16 @@ describe("SwaggerService", () => {
       expect(() => {
         SwaggerService.getInstance().setInfo(info);
       }).to.throw("url has to be valid URI");
+    });
+
+    it("should fail when invalid mail set for contact", () => {
+      info.contact = {
+        email: "badmail"
+      };
+
+      expect(() => {
+        SwaggerService.getInstance().setInfo(info);
+      }).to.throw("email has to be valid EMAIL");
     });
 
     it("should not fail when license with valid url set", () => {

@@ -426,6 +426,7 @@ export class SwaggerService {
   @Validate
   private setContact(
     @Pattern({ pattern: PatternEnum.URI, path: "url", nullable: true })
+    @Pattern({ pattern: PatternEnum.EMAIL, path: "email", nullable: true })
     contact: ISwaggerContact
   ) {
     this.data.info.contact = contact;

@@ -276,6 +276,21 @@ describe("Validators", () => {
         validatePattern("www.test.com:8080", { pattern: PatternEnum.HOST });
       });
     });
+
+    describe("EMAIL", () => {
+      it("should fail when invalid mail", () => {
+        expect(() => {
+          validatePattern("mail", {
+            pattern: PatternEnum.EMAIL,
+            path: propertyName
+          });
+        }).to.throw("testProperty has to be valid EMAIL");
+      });
+
+      it("should pass when test@test.test", () => {
+        validatePattern("test@test.test", { pattern: PatternEnum.EMAIL });
+      });
+    });
   });
 
   describe("Pattern", () => {
