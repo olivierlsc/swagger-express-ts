@@ -229,12 +229,18 @@ describe("SwaggerService", () => {
       expect(SwaggerService.getInstance().getData().host).to.be.not.exist;
     });
 
-    it("expect host when it defined", () => {
+    it("should be set host", () => {
       const host: string = "host";
 
       SwaggerService.getInstance().setHost(host);
 
       expect(SwaggerService.getInstance().getData().host).to.equal(host);
+    });
+
+    it("should fail when set bad host", () => {
+      expect(() => {
+        SwaggerService.getInstance().setHost("http://host");
+      }).to.throw("host has to be valid HOST");
     });
   });
 
