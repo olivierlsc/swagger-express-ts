@@ -28,15 +28,14 @@ export function express(options?: ISwaggerExpressOptions): Router {
       build(options.definition);
     }
   }
-  const router = buildRouter(path);
-  return router;
+  return buildRouter(path);
 }
 
 function buildRouter(path: string): Router {
   const router: Router = Router();
   router.get(
     path,
-    (request: Request, response: Response, next: NextFunction) => {
+    (request: Request, response: Response) => {
       const data: ISwagger = SwaggerService.getInstance().getData();
       response.json(data);
     }

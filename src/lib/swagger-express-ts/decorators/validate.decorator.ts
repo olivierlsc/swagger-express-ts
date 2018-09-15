@@ -6,11 +6,21 @@ const pattern = new RegExp(
 
 export const URI_KEY = Symbol("URI_KEY");
 
-export interface IValidateFieldPath {
-  path: string;
+/**
+ *
+ */
+export interface URIValidateArguments {
+  /**
+   * dotted notation for retrieve value from object to be validated against
+   */
+  path?: string;
+  /**
+   * flag when you want to validate only if value occurs (not null or undefined) default - false
+   */
+  nullable?: boolean;
 }
 
-export function URI(fieldPath?: IValidateFieldPath): ParameterDecorator {
+export function URI(uriArguments?: URIValidateArguments): ParameterDecorator {
   return (
     target: any,
     propertyKey: string | symbol,
@@ -18,12 +28,12 @@ export function URI(fieldPath?: IValidateFieldPath): ParameterDecorator {
   ) => {
     const existingURIParameters: Array<{
       key: number;
-      path: string;
+      arguments: URIValidateArguments;
     }> =
       Reflect.getOwnMetadata(URI_KEY, target, propertyKey) || [];
     existingURIParameters.push({
       key: parameterIndex,
-      path: fieldPath ? fieldPath.path : null
+      arguments: uriArguments
     });
     Reflect.defineMetadata(URI_KEY, existingURIParameters, target, propertyKey);
   };
@@ -47,8 +57,23 @@ export function getProperty(object: any, propertyName: string | symbol): any {
   return property;
 }
 
-export function validateURIPattern(object: any, propertyName: string | symbol) {
+export function validateURIPattern(
+  object: any,
+  uriArguments: URIValidateArguments
+) {
+  let propertyName: string | symbol;
+  let nullable: boolean;
+
+  if (uriArguments) {
+    propertyName = uriArguments.path;
+    nullable = uriArguments.nullable;
+  }
+
   if (!object) {
+    if (nullable) {
+      return;
+    }
+
     throw new Error(
       (propertyName ? (propertyName as string) : "Validated property").concat(
         " is empty. Has to be valid URI"
@@ -60,6 +85,18 @@ export function validateURIPattern(object: any, propertyName: string | symbol) {
 
   if (propertyName && typeof object === "object") {
     foundURI = getProperty(object, propertyName);
+  }
+
+  if (!foundURI) {
+    if (nullable) {
+      return;
+    }
+
+    throw new Error(
+      (propertyName ? (propertyName as string) : foundURI).concat(
+        " has to be valid URI"
+      )
+    );
   }
 
   if (!foundURI.match(pattern)) {
@@ -81,14 +118,14 @@ export function Validate(
   descriptor.value = function() {
     const existingURIParameters: Array<{
       key: number;
-      path: string;
+      arguments: URIValidateArguments;
     }> =
       Reflect.getOwnMetadata(URI_KEY, target, propertyName) || [];
     if (existingURIParameters) {
       let argument;
       for (const it of existingURIParameters) {
         argument = arguments[it.key];
-        validateURIPattern(argument, it.path);
+        validateURIPattern(argument, it.arguments);
       }
     }
 
@@ -104,7 +141,7 @@ export function Validate(
   const method = descriptor.value;
   console.log(arguments);
   /*descriptor.value = function () {
-      const existingURIParameters: Array<{key: number, fieldPath: IValidateFieldPath}> = Reflect.getOwnMetadata(URI_KEY, target, propertyName) || [];
+      const existingURIParameters: Array<{key: number, fieldPath: URIValidateArguments}> = Reflect.getOwnMetadata(URI_KEY, target, propertyName) || [];
       if(existingURIParameters){
         let argument;
         for (let it of existingURIParameters) {

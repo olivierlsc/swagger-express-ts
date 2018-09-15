@@ -1,3 +1,4 @@
+import "reflect-metadata";
 import { SwaggerService } from "./swagger.service";
 import * as chai from "chai";
 import { ISwaggerExternalDocs, ISwaggerInfo, ISwaggerPath } from "./i-swagger";
@@ -49,25 +50,86 @@ describe("SwaggerService", () => {
   });
 
   describe("setInfo", () => {
-    it("expect default info", () => {
-      expect(SwaggerService.getInstance().getData().info.title).to.equal("");
-      expect(SwaggerService.getInstance().getData().info.version).to.equal("");
-    });
+    let info: ISwaggerInfo;
 
-    it("expect info when it defined", () => {
-      const info: ISwaggerInfo = {
+    beforeEach(() => {
+      info = {
         title: "Title",
         version: "1.0.1"
       };
+    });
 
-      SwaggerService.getInstance().setInfo(info);
-
+    it("expect default info", () => {
       expect(SwaggerService.getInstance().getData().info.title).to.equal(
-        info.title
+        "Generated swagger project"
       );
       expect(SwaggerService.getInstance().getData().info.version).to.equal(
-        info.version
+        "1.0.0"
       );
+    });
+
+    it("expect info when it defined", () => {
+      SwaggerService.getInstance().setInfo(info);
+
+      expect(SwaggerService.getInstance().getData().info).to.deep.equal(info);
+    });
+
+    it("should not fail when contact with valid url set", () => {
+      info.contact = {
+        url: "http://localhost:8080"
+      };
+
+      SwaggerService.getInstance().setInfo(info);
+      expect(SwaggerService.getInstance().getData().info).to.deep.equal(info);
+    });
+
+    it("should not fail when contact with no url set", () => {
+      info.contact = {
+        name: "contactName"
+      };
+
+      SwaggerService.getInstance().setInfo(info);
+      expect(SwaggerService.getInstance().getData().info).to.deep.equal(info);
+    });
+
+    it("should fail when contact with invalid url set", () => {
+      info.contact = {
+        url: "localhost"
+      };
+
+      expect(() => {
+        SwaggerService.getInstance().setInfo(info);
+      }).to.throw("url has to be valid URI");
+    });
+
+    it("should not fail when license with valid url set", () => {
+      info.license = {
+        name: "license",
+        url: "http://localhost:8080"
+      };
+
+      SwaggerService.getInstance().setInfo(info);
+      expect(SwaggerService.getInstance().getData().info).to.deep.equal(info);
+    });
+
+    it("should not fail when license with no url set", () => {
+      info.license = {
+        name: "license"
+      };
+
+      SwaggerService.getInstance().setInfo(info);
+      expect(SwaggerService.getInstance().getData().info).to.deep.equal(info);
+    });
+
+    it("should fail when license with invalid url set", () => {
+      info.license = {
+        name: "license",
+        url: "localhost"
+      };
+
+      expect(() => {
+        SwaggerService.getInstance().setInfo(info);
+      }).to.throw("url has to be valid URI");
     });
   });
 
@@ -99,7 +161,7 @@ describe("SwaggerService", () => {
 
     it("expect externalDocs when it defined", () => {
       const externalDocs: ISwaggerExternalDocs = {
-        url: "Mon url"
+        url: "http://localhost:8080"
       };
 
       SwaggerService.getInstance().setExternalDocs(externalDocs);
@@ -107,6 +169,16 @@ describe("SwaggerService", () => {
       expect(SwaggerService.getInstance().getData().externalDocs.url).to.equal(
         externalDocs.url
       );
+    });
+
+    it("expect fail when invalid externalDocs value set", () => {
+      const externalDocs: ISwaggerExternalDocs = {
+        url: "localhost"
+      };
+
+      expect(() => {
+        SwaggerService.getInstance().setExternalDocs(externalDocs);
+      }).to.throw("url has to be valid URI");
     });
   });
 
@@ -199,7 +271,7 @@ describe("SwaggerService", () => {
   });
 
   describe("addPath", () => {
-    it("expect new path", () => {
+    it("expect new arguments", () => {
       const args: IApiPathArgs = {
         path: "/versions",
         name: "version"

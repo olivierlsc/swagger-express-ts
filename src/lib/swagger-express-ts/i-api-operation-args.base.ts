@@ -54,7 +54,7 @@ export interface IApiOperationArgsBase {
   tags?: string[];
 
   /**
-   * Define path
+   * Define arguments
    * Optional.
    */
   path?: string;
