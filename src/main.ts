@@ -51,6 +51,7 @@ server.setConfig((app: any) => {
           title: "My api",
           version: "1.0"
         },
+        host: "localhost:9001",
         models: {
           //    Version : {
           //        properties : {

@@ -124,7 +124,11 @@ export class SwaggerService {
     this.data.consumes = consumes;
   }
 
-  public setHost(host: string): void {
+  @Validate
+  public setHost(
+    @Pattern({ pattern: PatternEnum.HOST, path: "host" })
+    host: string
+  ): void {
     this.data.host = host;
   }
 
