@@ -54,6 +54,7 @@
     "@types/lodash": "^4.14.109",
     "express": "^4.16.3",
     "lodash": "^4.17.10",
+    "npm": "^6.4.1",
     "reflect-metadata": "^0.1.10"
   },
   "devDependencies": {
