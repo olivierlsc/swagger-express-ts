@@ -324,6 +324,22 @@ After review it will be merged into sources, just follow the basic rules
 * Write Unit tests for all work you do
 * Use strict Type definitions instead of any (or pure JS - use TypeScript instead)
 
+### Steps before create pull request
+
+1. *npm run tslint* - to be sure your code is clean by tslint configuration
+2. *npm run test* - run all tests in this task will be also source formatted by prettier library so there will not be any unnecessary conflicts based on formating
+3. *npm run start* - just start example application (`VersionController`)
+4. show *http://localhost:9001/api-docs/swagger.json* and put content into https://editor.swagger.io/ to validate result
+5. commit with reference of issue (if not exists please create one)
+    * commit should looks like standard commit 
+        * \#{issue number} - title of commit.
+        * empty line
+        * description of changes (for example change of interface, added property and so on)
+    * push into your repository
+    * create pull request into repository
+6. wait for codereview and if necessary do the changes
+        
+
 ## License
 
 License under the MIT License (MIT)
