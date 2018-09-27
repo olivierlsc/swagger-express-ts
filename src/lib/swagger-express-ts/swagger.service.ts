@@ -341,6 +341,7 @@ export class SwaggerService {
                   controller
                 );
               }
+
               if (path.path && path.path.length > 0) {
                 data.paths[controller.path.concat(path.path)] = swaggerPath;
               } else {
@@ -458,6 +459,7 @@ export class SwaggerService {
     let currentController: IController = {
       paths: {}
     };
+
     for (const index in this.controllerMap) {
       if (this.controllerMap[index]) {
         const controller = this.controllerMap[index];
@@ -468,18 +470,33 @@ export class SwaggerService {
     }
 
     let currentPath: IPath;
+
+    let path;
     if (args.path && args.path.length > 0) {
-      if (!currentController.paths[args.path]) {
-        currentController.paths[args.path] = {};
-      }
-      currentPath = currentController.paths[args.path];
-      currentPath.path = args.path;
+      path = args.path;
+      currentPath = { path };
     } else {
-      if (!currentController.paths["/"]) {
-        currentController.paths["/"] = {};
-      }
-      currentPath = currentController.paths["/"];
+      path = "/";
     }
+
+    if (currentController.paths[path]) {
+      if ((currentController.paths[path] as any)[operation]) {
+        {
+          throw new Error(
+            "Multiple operations defined under target = "
+              .concat(currentController.path)
+              .concat(", path = ")
+              .concat(path)
+              .concat(", operation = ")
+              .concat(operation)
+          );
+        }
+      }
+    } else {
+      currentController.paths[path] = {};
+    }
+
+    currentPath = _.mergeWith(currentController.paths[path], currentPath);
 
     if ("get" === operation) {
       currentPath.get = this.buildOperation(args, target, propertyKey);
@@ -500,8 +517,6 @@ export class SwaggerService {
     if ("delete" === operation) {
       currentPath.delete = this.buildOperation(args, target, propertyKey);
     }
-
-    this.controllerMap[target.constructor.name] = currentController;
 
     _.map(args.tags, tag => ({ name: _.upperFirst(tag) })).forEach(tag =>
       this.addTag(this.data.tags, tag)

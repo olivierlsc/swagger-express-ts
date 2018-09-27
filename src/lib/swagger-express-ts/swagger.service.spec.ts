@@ -10,6 +10,7 @@ import { IApiOperationPatchArgs } from "./api-operation-patch.decorator";
 import { IApiOperationDeleteArgs } from "./api-operation-delete.decorator";
 import { SwaggerDefinitionConstant } from "./swagger-definition.constant";
 import { ISwaggerBuildDefinitionModel } from "./swagger.builder";
+import { VersionsController } from "../../version/versions.controller";
 
 const expect = chai.expect;
 
@@ -2183,9 +2184,9 @@ describe("SwaggerService", () => {
     // TODO to be refactored in version 2.0.0
 
     const target: any = {
-      name: "VersionController",
+      name: "VersionsController",
       constructor: {
-        name: "VersionController"
+        name: "VersionsController"
       }
     };
 
@@ -2303,6 +2304,161 @@ describe("SwaggerService", () => {
       expect(SwaggerService.getInstance().getData().tags).to.deep.equal([
         { name: "Versions" }
       ]);
+    });
+  });
+
+  // TODO in 2.0.0 refactor under operation builder
+  describe("operations", () => {
+    const pathArgs: IApiPathArgs = {
+      path: "/versions",
+      name: "Version"
+    };
+    const pathTarget: any = {
+      name: "VersionsController"
+    };
+    const operationTarget: any = {
+      constructor: {
+        name: "VersionsController"
+      }
+    };
+
+    const expectedPaths = {
+      "/versions": {
+        get: {
+          description: "Get versions objects list",
+          summary: "Get versions list",
+          consumes: [SwaggerDefinitionConstant.Consume.JSON],
+          operationId: "getVersions",
+          produces: [SwaggerDefinitionConstant.Produce.JSON],
+          responses: {
+            200: {
+              description: "Success",
+              schema: {
+                type: SwaggerDefinitionConstant.Response.Type.ARRAY,
+                items: {
+                  $ref: "#/definitions/Version"
+                }
+              }
+            }
+          },
+          tags: ["Version"]
+        }
+      },
+      "/versions/:id": {
+        get: {
+          description: "Get version",
+          summary: "Get version",
+          consumes: [SwaggerDefinitionConstant.Consume.JSON],
+          operationId: "getVersion",
+          produces: [SwaggerDefinitionConstant.Produce.JSON],
+          responses: {
+            200: {
+              description: "Success",
+              schema: {
+                $ref: "#/definitions/Version"
+              }
+            }
+          },
+          tags: ["Version"]
+        }
+      }
+    };
+
+    const operationArgs = {
+      description: "Get versions objects list",
+      summary: "Get versions list",
+      responses: {
+        200: {
+          type: SwaggerDefinitionConstant.Response.Type.ARRAY,
+          model: "Version"
+        }
+      }
+    };
+
+    const operationArgs2 = {
+      description: "Get version",
+      summary: "Get version",
+      path: "/:id",
+      responses: {
+        200: {
+          type: SwaggerDefinitionConstant.Response.Type.OBJECT,
+          model: "Version"
+        }
+      }
+    };
+
+    const opereationArgsSame = {
+      description: "Get versions objects list duplicate",
+      summary: "Get versions list duplicate",
+      responses: {
+        200: {
+          type: SwaggerDefinitionConstant.Response.Type.ARRAY,
+          model: "Version"
+        }
+      }
+    };
+
+    beforeEach(() => {
+      SwaggerService.getInstance().addPath(pathArgs, pathTarget);
+    });
+
+    it("should create two get operations", () => {
+      SwaggerService.getInstance().addOperationGet(
+        operationArgs,
+        operationTarget,
+        "getVersions"
+      );
+
+      SwaggerService.getInstance().addOperationGet(
+        operationArgs2,
+        operationTarget,
+        "getVersion"
+      );
+
+      SwaggerService.getInstance().buildSwagger();
+
+      expect(SwaggerService.getInstance().getData().paths).to.deep.equal(
+        expectedPaths
+      );
+    });
+
+    it("should fail when double operations under same path - path undefined", () => {
+      SwaggerService.getInstance().addOperationGet(
+        operationArgs,
+        operationTarget,
+        "getVersions"
+      );
+
+      expect(() => {
+        SwaggerService.getInstance().addOperationGet(
+          opereationArgsSame,
+          operationTarget,
+          "getVersionsDuplicate"
+        );
+      }).to.throw(
+        "Multiple operations defined under target = /versions, path = /, operation = get"
+      );
+    });
+
+    it("should fail when double operations under same path - path defined", () => {
+      SwaggerService.getInstance().addOperationGet(
+        operationArgs,
+        operationTarget,
+        "getVersions"
+      );
+
+      const operation: IApiOperationGetArgs = { ...opereationArgsSame };
+      operation.path = "/";
+
+      expect(() => {
+        SwaggerService.getInstance().addOperationGet(
+          operation,
+          operationTarget,
+          "getVersionsDuplicate"
+        );
+      }).to.throw(
+        "Multiple operations defined under target = /versions, path = /, operation = get"
+      );
     });
   });
 });

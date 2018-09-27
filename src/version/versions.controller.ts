@@ -53,6 +53,29 @@ export class VersionsController implements interfaces.Controller {
     response.json(this.versionsService.getVersions());
   }
 
+  @ApiOperationGet({
+    path: "/:id",
+    description: "Get version object list",
+    summary: "Get version",
+    responses: {
+      200: {
+        type: SwaggerDefinitionConstant.Response.Type.OBJECT,
+        model: "Version"
+      }
+    },
+    security: {
+      apiKeyHeader: []
+    }
+  })
+  @httpGet("/:id")
+  public getVersion(
+    request: express.Request,
+    response: express.Response,
+    next: express.NextFunction
+  ): void {
+    response.json(new VersionModel());
+  }
+
   @ApiOperationPost({
     description: "Post version object",
     summary: "Post new version",

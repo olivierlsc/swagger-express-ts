@@ -9,7 +9,6 @@ import {
 } from "inversify-express-utils";
 import { VersionsController } from "./version/versions.controller";
 import * as swagger from "./lib/swagger-express-ts";
-import { VersionController } from "./version/version.controller";
 import { VersionsService } from "./version/versions.service";
 import * as _ from "lodash";
 // import models
@@ -25,11 +24,6 @@ container
   .to(VersionsController)
   .inSingletonScope()
   .whenTargetNamed(VersionsController.TARGET_NAME);
-container
-  .bind<interfaces.Controller>(TYPE.Controller)
-  .to(VersionController)
-  .inSingletonScope()
-  .whenTargetNamed(VersionController.TARGET_NAME);
 container
   .bind<VersionsService>(VersionsService.TARGET_NAME)
   .to(VersionsService)
