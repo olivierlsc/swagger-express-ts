@@ -12,10 +12,10 @@ import {
 import {
   ApiPath,
   ApiOperationGet,
-  ApiOperationPost
-} from "../lib/swagger-express-ts/index";
-import { SwaggerDefinitionConstant } from "../lib/swagger-express-ts/swagger-definition.constant";
-import { ApiOperationPut } from "../lib/swagger-express-ts/api-operation-put.decorator";
+  ApiOperationPost,
+  SwaggerDefinitionConstant,
+  ApiOperationPut
+} from "swagger-express-ts";
 import { VersionsService } from "./versions.service";
 import { VersionModel } from "./version.model";
 

@@ -6,22 +6,26 @@ var sourcemaps = require('gulp-sourcemaps')
 var path = {
     src: 'src',
     built: 'built',
+    dist: 'dist/swagger-express-ts',
+    lib: {
+        src: 'lib/swagger-express-ts-lib/src/**/*.ts',
+    },
     app: {
         src: 'src/**/*.ts',
         built: 'built/**/*.js',
     },
 }
 
-var tsProject = ts.createProject('tsconfig.json', {
-    typescript: require('typescript'),
+var tsProjectApp = ts.createProject('tsconfig.json', {
+    declaration: true,
 })
-gulp.task('build:ts', function() {
+gulp.task('build:app', function() {
     console.info('Compiling files .ts...')
     return (
         gulp
             .src([path.app.src])
             .pipe(sourcemaps.init({ loadMaps: true }))
-            .pipe(tsProject())
+            .pipe(tsProjectApp())
             //.on ("error", function (err) {
             //    process.exit (1);
             //})
@@ -30,11 +34,36 @@ gulp.task('build:ts', function() {
     )
 })
 
-gulp.task('watch', function() {
-    gulp.watch(path.app.src, ['build'])
+var tsProjectLib = ts.createProject('tsconfig.package.json', {
+    declaration: true,
+})
+gulp.task('build:lib', ['copy:files'], function() {
+    console.info('Compiling files .ts...')
+    return (
+        gulp
+            .src([path.lib.src])
+            .pipe(sourcemaps.init({ loadMaps: true }))
+            .pipe(tsProjectLib())
+            //.on ("error", function (err) {
+            //    process.exit (1);
+            //})
+            .js.pipe(sourcemaps.write('../'.concat(path.dist)))
+            .pipe(gulp.dest(path.dist))
+    )
 })
 
-gulp.task('build', ['build:ts'])
+gulp.task('copy:files', function() {
+    return gulp
+        .src(['./README.md', './LICENSE', './CHANGELOG.md', './lib/swagger-express-ts-lib/package.json'])
+        .pipe(gulp.dest(path.dist))
+})
+
+gulp.task('watch', function() {
+    gulp.watch(path.app.src, ['build'])
+    gulp.watch(path.lib.src, ['build'])
+})
+
+gulp.task('build', ['build:app', 'build:lib'])
 gulp.task('dev', ['build', 'watch'], function() {
     nodemon({
         script: 'built/main.js',

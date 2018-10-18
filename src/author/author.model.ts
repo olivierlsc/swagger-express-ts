@@ -2,7 +2,7 @@ import {
     ApiModel,
     ApiModelProperty,
     SwaggerDefinitionConstant,
-} from '../lib/swagger-express-ts'
+} from 'swagger-express-ts'
 import { VersionModel } from '../version/version.model'
 
 @ApiModel({
