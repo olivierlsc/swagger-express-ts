@@ -8,7 +8,7 @@
         "no-unused-expression": false,
         "no-shadowed-variable": false,
         "no-var-requires": false,
-        "no-implicit-dependencies": true
+        "no-implicit-dependencies": false
     },
     "rulesDirectory": []
 }
