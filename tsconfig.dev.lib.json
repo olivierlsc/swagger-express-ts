@@ -1,0 +1,6 @@
+{
+    "extends": "./tsconfig.lib.json",
+    "compilerOptions": {
+        "outDir": "./node_modules/swagger-express-ts"
+    }
+}

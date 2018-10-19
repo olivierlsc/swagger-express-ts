@@ -1,13 +1,14 @@
 {
-  "defaultSeverity": "error",
-  "extends": ["tslint:latest", "tslint-config-prettier"],
-  "jsRules": {},
-  "rules": {
-    "no-console": false,
-    "ordered-imports": false,
-    "no-unused-expression": false,
-    "no-shadowed-variable": false,
-    "no-var-requires": false
-  },
-  "rulesDirectory": []
+    "defaultSeverity": "error",
+    "extends": ["tslint:latest", "tslint-config-prettier"],
+    "jsRules": {},
+    "rules": {
+        "no-console": false,
+        "ordered-imports": false,
+        "no-unused-expression": false,
+        "no-shadowed-variable": false,
+        "no-var-requires": false,
+        "no-implicit-dependencies": true
+    },
+    "rulesDirectory": []
 }

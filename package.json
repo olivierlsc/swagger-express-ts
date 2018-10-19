@@ -1,121 +1,121 @@
 {
-  "name": "swagger-express-ts",
-  "version": "1.0.0",
-  "description": "Generate and serve swagger.json",
-  "main": "index.js",
-  "types": "index.d.ts",
-  "typings": "index.d.ts",
-  "scripts": {
-    "build:lib": "echo \"Building lib...\" && npm run clean:dist && tsc -p tsconfig.lib.json && gulp copy:files",
-    "build:app": "echo \"Building app...\" && npm run clean:built && tsc -p tsconfig.json",
-    "build": "echo \"Building...\" && npm run build:lib && npm run build:app",
-    "clean:built": "echo \"Cleaning built...\" && gulp clean:built",
-    "clean:dist": "echo \"Cleaning dist...\" && gulp clean:dist",
-    "clean": "echo \"Cleaning...\" && npm run clean:dist && npm run clean:built",
-    "test": "echo \"Testing...\" && process.env.NODE_ENV = 'test' && nyc mocha",
-    "test:coverage": "echo \"Testing coverage...\" && nyc --reporter=lcov npm test",
-    "dev": "echo \"Developing...\" && gulp dev",
-    "start": "echo \"Starting...\" && npm run build && node built/main.js",
-    "precommit": "pretty-quick --staged",
-    "publish": "npm publish dist/swagger-express-ts"
-  },
-  "repository": {
-    "type": "git",
-    "url": "git+https://github.com/olivierlsc/swagger-specification-ts.git"
-  },
-  "author": "Olivier LIN-SI-CHENG",
-  "license": "MIT",
-  "keywords": [
-    "inversify",
-    "inversifyjs",
-    "swagger",
-    "swagger2",
-    "swagger-ui",
-    "typescript",
-    "expressjs",
-    "express",
-    "api rest",
-    "documentation",
-    "decorator",
-    "generator",
-    "swagger.json",
-    "json",
-    "rest"
-  ],
-  "bugs": {
-    "url": "https://github.com/olivierlsc/swagger-specification-ts/issues"
-  },
-  "homepage": "https://github.com/olivierlsc/swagger-specification-ts#readme",
-  "dependencies": {
-    "@types/body-parser": "^1.17.0",
-    "@types/compression": "0.0.35",
-    "@types/express": "^4.16.0",
-    "@types/helmet": "0.0.37",
-    "@types/inversify": "^2.0.33",
-    "@types/lodash": "^4.14.109",
-    "body-parser": "^1.18.3",
-    "compression": "^1.7.2",
-    "express": "^4.16.4",
-    "helmet": "^3.12.1",
-    "inversify": "^4.13.0",
-    "inversify-express-utils": "^4.2.2",
-    "lodash": "^4.17.10",
-    "reflect-metadata": "^0.1.10"
-  },
-  "devDependencies": {
-    "@types/chai": "^4.1.3",
-    "@types/mocha": "^2.2.48",
-    "@types/sinon": "^4.3.3",
-    "chai": "^4.1.2",
-    "gulp": "^3.9.1",
-    "gulp-clean": "^0.4.0",
-    "gulp-nodemon": "^2.2.1",
-    "gulp-sourcemaps": "^2.6.4",
-    "gulp-typescript": "^3.2.4",
-    "mocha": "^4.0.1",
-    "nodemon": "^1.18.4",
-    "nyc": "^13.1.0",
-    "prettier": "1.12.0",
-    "pretty-quick": "^1.4.1",
-    "rimraf": "^2.6.2",
-    "sinon": "^4.5.0",
-    "source-map-support": "^0.5.9",
-    "swagger-ui-dist": "^3.17.0",
-    "ts-node": "^7.0.1",
-    "tslint": "^5.10.0",
-    "tslint-config-prettier": "^1.10.0",
-    "typescript": "^3.1.3"
-  },
-  "nyc": {
-    "include": [
-      "src/**/*.ts"
+    "name": "swagger-express-ts",
+    "version": "1.0.0",
+    "description": "Generate and serve swagger.json",
+    "main": "index.js",
+    "types": "index.d.ts",
+    "typings": "index.d.ts",
+    "scripts": {
+        "build:lib":
+            "echo \"Building lib...\" && npm run clean:dist && tsc -p tsconfig.lib.json && gulp copy:files",
+        "build:module":
+            "echo \"Building node_modules/swagger-express-ts...\" && npm run clean:module && tsc -p tsconfig.dev.lib.json",
+        "build:app":
+            "echo \"Building app...\" && npm run clean:built && tsc -p tsconfig.json",
+        "build":
+            "echo \"Building...\" && npm run build:module && npm run build:app",
+        "clean:built": "echo \"Cleaning built...\" && gulp clean:built",
+        "clean:module":
+            "echo \"Cleaning node_modules/swagger-express-ts...\" && gulp clean:module",
+        "clean:dist": "echo \"Cleaning dist...\" && gulp clean:dist",
+        "clean":
+            "echo \"Cleaning...\" && npm run clean:dist && npm run clean:built && npm run clean:module",
+        "test":
+            "echo \"Testing...\" && process.env.NODE_ENV = 'test' && nyc mocha",
+        "test:coverage":
+            "echo \"Testing coverage...\" && nyc --reporter=lcov npm test",
+        "dev": "echo \"Developing...\" && gulp dev",
+        "start": "echo \"Starting...\" && npm run build && node built/main.js",
+        "precommit": "pretty-quick --staged",
+        "publish": "npm publish dist/swagger-express-ts"
+    },
+    "repository": {
+        "type": "git",
+        "url": "git+https://github.com/olivierlsc/swagger-specification-ts.git"
+    },
+    "author": "Olivier LIN-SI-CHENG",
+    "license": "MIT",
+    "keywords": [
+        "inversify",
+        "inversifyjs",
+        "swagger",
+        "swagger2",
+        "swagger-ui",
+        "typescript",
+        "expressjs",
+        "express",
+        "api rest",
+        "documentation",
+        "decorator",
+        "generator",
+        "swagger.json",
+        "json",
+        "rest"
     ],
-    "extension": [
-      ".ts"
-    ],
-    "require": [
-      "ts-node/register"
-    ],
-    "reporter": [
-      "html"
-    ],
-    "sourceMap": true,
-    "instrument": true
-  },
-  "nodemonConfig": {
-    "restartable": "rs",
-    "watch": [
-      "built/"
-    ],
-    "ext": "js",
-    "ignore": [
-      "src/*",
-      "test/*",
-      "wiki/*",
-      "swagger/*",
-      "node_modules/*",
-      "dist/*"
-    ],
-    "delay": "2500"
-  }
+    "bugs": {
+        "url": "https://github.com/olivierlsc/swagger-specification-ts/issues"
+    },
+    "homepage": "https://github.com/olivierlsc/swagger-specification-ts#readme",
+    "dependencies": {
+        "@types/body-parser": "^1.17.0",
+        "@types/compression": "0.0.35",
+        "@types/express": "^4.16.0",
+        "@types/helmet": "0.0.37",
+        "@types/inversify": "^2.0.33",
+        "@types/lodash": "^4.14.109",
+        "body-parser": "^1.18.3",
+        "compression": "^1.7.2",
+        "express": "^4.16.4",
+        "helmet": "^3.12.1",
+        "inversify": "^4.13.0",
+        "inversify-express-utils": "^4.2.2",
+        "lodash": "^4.17.10",
+        "reflect-metadata": "^0.1.10"
+    },
+    "devDependencies": {
+        "@types/chai": "^4.1.3",
+        "@types/mocha": "^2.2.48",
+        "@types/sinon": "^4.3.3",
+        "chai": "^4.1.2",
+        "gulp": "^3.9.1",
+        "gulp-clean": "^0.4.0",
+        "gulp-nodemon": "^2.2.1",
+        "gulp-sourcemaps": "^2.6.4",
+        "gulp-typescript": "^3.2.4",
+        "mocha": "^4.0.1",
+        "nodemon": "^1.18.4",
+        "nyc": "^13.1.0",
+        "prettier": "1.12.0",
+        "pretty-quick": "^1.4.1",
+        "rimraf": "^2.6.2",
+        "sinon": "^4.5.0",
+        "source-map-support": "^0.5.9",
+        "swagger-ui-dist": "^3.17.0",
+        "ts-node": "^7.0.1",
+        "tslint": "^5.10.0",
+        "tslint-config-prettier": "^1.10.0",
+        "typescript": "^3.1.3"
+    },
+    "nyc": {
+        "include": ["src/**/*.ts"],
+        "extension": [".ts"],
+        "require": ["ts-node/register"],
+        "reporter": ["html"],
+        "sourceMap": true,
+        "instrument": true
+    },
+    "nodemonConfig": {
+        "restartable": "rs",
+        "watch": ["built/"],
+        "ext": "js",
+        "ignore": [
+            "src/*",
+            "test/*",
+            "wiki/*",
+            "swagger/*",
+            "node_modules/*",
+            "dist/*"
+        ],
+        "delay": "2500"
+    }
 }
