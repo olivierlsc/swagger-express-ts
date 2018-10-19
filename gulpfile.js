@@ -2,6 +2,7 @@ var gulp = require('gulp')
 var ts = require('gulp-typescript')
 var nodemon = require('gulp-nodemon')
 var sourcemaps = require('gulp-sourcemaps')
+var clean = require('gulp-clean')
 
 var path = {
     src: 'src',
@@ -16,10 +17,25 @@ var path = {
     },
 }
 
+gulp.task('clean:dist', function () {
+    return gulp.src(['dist'], {read: false})
+        .pipe(clean());
+});
+
+gulp.task('clean:built', function () {
+    return gulp.src([path.built], {read: false})
+        .pipe(clean());
+});
+
+gulp.task('clean',['clean:built', 'clean:dist'],function () {
+    return gulp.src(['coverage'], {read: false})
+        .pipe(clean());
+});
+
 var tsProjectApp = ts.createProject('tsconfig.json', {
     declaration: true,
 })
-gulp.task('build:app', function() {
+gulp.task('build:app', ['clean:built'], function() {
     console.info('Compiling files .ts...')
     return (
         gulp
@@ -37,7 +53,7 @@ gulp.task('build:app', function() {
 var tsProjectLib = ts.createProject('tsconfig.package.json', {
     declaration: true,
 })
-gulp.task('build:lib', ['copy:files'], function() {
+gulp.task('build:lib', ['clean:dist', 'copy:files'], function() {
     console.info('Compiling files .ts...')
     return (
         gulp
@@ -54,7 +70,12 @@ gulp.task('build:lib', ['copy:files'], function() {
 
 gulp.task('copy:files', function() {
     return gulp
-        .src(['./README.md', './LICENSE', './CHANGELOG.md', './lib/swagger-express-ts-lib/package.json'])
+        .src([
+            './README.md',
+            './LICENSE',
+            './CHANGELOG.md',
+            './lib/swagger-express-ts-lib/package.json',
+        ])
         .pipe(gulp.dest(path.dist))
 })
 

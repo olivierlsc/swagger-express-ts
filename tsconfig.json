@@ -15,7 +15,7 @@
         "declaration": false /* Generates corresponding '.d.ts' file. */,
         "sourceMap": true /* Generates corresponding '.map' file. */,
         //"outFile": "index.js",                       /* Concatenate and emit output to single file. */
-        "outDir": "built" /* Redirect output structure to the directory. */,
+        "outDir": "./built" /* Redirect output structure to the directory. */,
         //"rootDir": "./",                       /* Specify the root directory of input files. Use to control the output directory structure with --outDir. */
         // "removeComments": true,                /* Do not emit comments to output. */
         // "noEmit": true,                        /* Do not emit outputs. */
@@ -40,13 +40,15 @@
         "moduleResolution":
             "node" /* Specify module resolution strategy: 'node' (Node.js) or 'classic' (TypeScript pre-1.6). */,
         "baseUrl":
-            "." /* Base directory to resolve non-absolute module names. */,
+            "./" /* Base directory to resolve non-absolute module names. */,
         "paths": {
             "swagger-express-ts": ["dist/swagger-express-ts"],
             "swagger-express-ts/*": ["dist/swagger-express-ts/*"]
         } /* A series of entries which re-map imports to lookup locations relative to the 'baseUrl'. */,
         // "rootDirs": [],                        /* List of root folders whose combined content represents the structure of the project at runtime. */
-        // "typeRoots": [],                       /* List of folders to include type definitions from. */
+        "typeRoots": [
+            "node_modules/@types"
+        ] /* List of folders to include type definitions from. */,
         "types": [
             "express",
             "inversify",
