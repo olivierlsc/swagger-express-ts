@@ -5,7 +5,7 @@ export interface IApiModelPropertyArgs {
    * Define if property is required.
    * Optional. Default is false.
    */
-  required?: boolean;
+    ?: boolean;
 
   /**
    * Define format of property. Example: SwaggerDefinitionConstant.Definition.Property.Format.INT_64
@@ -47,7 +47,7 @@ export interface IApiModelPropertyArgs {
    * Define an example for the property.
    * Optional.
    */
-  example?: string|[string];
+  example?: string| [string] | number | boolean;
 }
 
 export function ApiModelProperty(
