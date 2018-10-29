@@ -42,6 +42,12 @@ export interface IApiModelPropertyArgs {
    * Optional.
    */
   itemType?: string;
+
+  /**
+   * Define an example for the property.
+   * Optional.
+   */
+  example?: string|[string];
 }
 
 export function ApiModelProperty(
