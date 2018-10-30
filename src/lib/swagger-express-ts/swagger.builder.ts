@@ -60,6 +60,12 @@ export interface ISwaggerBuildDefinitionModelProperty {
    * Optional.
    */
   itemType?: string;
+
+  /**
+   * Define an example for the property.
+   * Optional.
+   */
+  example?: string | string[] | number | boolean;
 }
 
 export interface ISwaggerBuildDefinitionModel {
@@ -91,6 +97,30 @@ export interface ISwaggerSecurityDefinition {
    * Optional.
    */
   name?: string;
+
+  /**
+   * Define the flow type (e.g. accessCode) of oAuth2 security.
+   * Optional.
+   */
+  flow?: string;
+
+  /**
+   * Define the authorization url for accessCode code flow of oAuth2 security.
+   * Optional.
+   */
+  authorizationUrl?: string;
+
+  /**
+   * Define the token url for oAuth2 security.
+   * Optional.
+   */
+  tokenUrl?: string;
+
+  /**
+   * Define the scopes object of oAuth2 security.
+   * Optional.
+   */
+  scopes?: any;
 }
 
 export interface ISwaggerBuildDefinition {

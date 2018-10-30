@@ -134,8 +134,7 @@ export class SwaggerService {
       const model = namedModel.definition;
       const newDefinition: ISwaggerDefinition = {
         type: SwaggerDefinitionConstant.Model.Type.OBJECT,
-        properties: {},
-        required: []
+        properties: {}
       };
       if (model.description) {
         newDefinition.description = model.description;
@@ -152,6 +151,10 @@ export class SwaggerService {
 
         if (property.description) {
           newProperty.description = property.description;
+        }
+
+        if (property.example) {
+          newProperty.example = property.example;
         }
 
         if (property.enum) {
@@ -177,6 +180,9 @@ export class SwaggerService {
           }
         }
         if (property.required) {
+          if(!newDefinition.required) {
+            newDefinition.required = [];
+          }
           newDefinition.required.push(propertyIndex);
         }
         newDefinition.properties[propertyIndex] = newProperty;
@@ -666,6 +672,7 @@ export class SwaggerService {
       swaggerBuildDefinitionModelProperty.description = args.description;
       swaggerBuildDefinitionModelProperty.enum = args.enum;
       swaggerBuildDefinitionModelProperty.itemType = args.itemType;
+      swaggerBuildDefinitionModelProperty.example = args.example;
       if (args.model) {
         swaggerBuildDefinitionModelProperty.model = args.model;
         if (!_.isEqual("Array", propertyType)) {
