@@ -65,7 +65,7 @@ export interface ISwaggerBuildDefinitionModelProperty {
    * Define an example for the property.
    * Optional.
    */
-  example?: string| [string] | number | boolean;
+  example?: string | string[] | number | boolean;
 }
 
 export interface ISwaggerBuildDefinitionModel {

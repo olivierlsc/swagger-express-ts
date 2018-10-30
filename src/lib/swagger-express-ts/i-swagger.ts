@@ -103,7 +103,7 @@ export interface ISwaggerDefinitionProperty {
   enum?: string[];
   items?: ISwaggerDefinitionPropertyItems;
   $ref?: string;
-  example?: string| [string] | number | boolean;
+  example?: string | string[] | number | boolean;
 }
 
 export interface ISwaggerDefinitionXML {
