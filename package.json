@@ -65,7 +65,6 @@
         "chai": "^4.1.2",
         "gulp": "^4.0.0",
         "gulp-clean": "^0.4.0",
-        "gulp-nodemon": "^2.2.1",
         "gulp-sourcemaps": "^2.6.4",
         "gulp-typescript": "^3.2.4",
         "mocha": "^4.0.1",

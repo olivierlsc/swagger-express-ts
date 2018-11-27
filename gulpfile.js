@@ -1,6 +1,5 @@
 const gulp = require('gulp');
 const ts = require('gulp-typescript');
-const nodemon = require('gulp-nodemon');
 const sourcemaps = require('gulp-sourcemaps');
 const clean = require('gulp-clean');
 
