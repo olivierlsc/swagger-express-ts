@@ -6,27 +6,13 @@
     "types": "index.d.ts",
     "typings": "index.d.ts",
     "scripts": {
-        "build:lib":
-            "echo \"Building lib...\" && npm run clean:dist && tsc -p tsconfig.lib.json && gulp copy:files",
-        "build:module":
-            "echo \"Building node_modules/swagger-express-ts...\" && npm run clean:module && tsc -p tsconfig.dev.lib.json",
-        "build:app":
-            "echo \"Building app...\" && npm run clean:built && tsc -p tsconfig.json",
-        "build":
-            "echo \"Building...\" && npm run build:module && npm run build:app",
-        "clean:built": "echo \"Cleaning built...\" && gulp clean:built",
-        "clean:module":
-            "echo \"Cleaning node_modules/swagger-express-ts...\" && gulp clean:module",
-        "clean:dist": "echo \"Cleaning dist...\" && gulp clean:dist",
-        "clean":
-            "echo \"Cleaning...\" && npm run clean:dist && npm run clean:built && npm run clean:module",
-        "test":
-            "echo \"Testing...\" && process.env.NODE_ENV = 'test' && nyc mocha",
-        "test:coverage":
-            "echo \"Testing coverage...\" && nyc --reporter=lcov npm test",
-        "dev": "echo \"Developing...\" && gulp dev",
-        "start": "echo \"Starting...\" && npm run build && node built/main.js",
-        "precommit": "pretty-quick --staged",
+        "build:lib": "echo \"Building lib...\" && gulp build:lib",
+        "build": "echo \"Building...\" && gulp build",
+        "clean": "echo \"Cleaning...\" && gulp clean",
+        "test": "echo \"Testing...\" && nyc mocha",
+        "dev": "echo \"Developing...\" && nodemon",
+        "start":
+            "echo \"Starting...\" && npm run build && ts-node --project tsconfig.json src/index.ts",
         "publish": "npm publish dist/swagger-express-ts"
     },
     "repository": {
@@ -77,7 +63,7 @@
         "@types/mocha": "^2.2.48",
         "@types/sinon": "^4.3.3",
         "chai": "^4.1.2",
-        "gulp": "^3.9.1",
+        "gulp": "^4.0.0",
         "gulp-clean": "^0.4.0",
         "gulp-nodemon": "^2.2.1",
         "gulp-sourcemaps": "^2.6.4",
@@ -98,6 +84,7 @@
     },
     "nyc": {
         "include": ["src/**/*.ts"],
+        "exclude": ["src/index.ts"],
         "extension": [".ts"],
         "require": ["ts-node/register"],
         "reporter": ["html"],
@@ -106,16 +93,15 @@
     },
     "nodemonConfig": {
         "restartable": "rs",
-        "watch": ["built/"],
-        "ext": "js",
-        "ignore": [
-            "src/*",
-            "test/*",
-            "wiki/*",
-            "swagger/*",
-            "node_modules/*",
-            "dist/*"
-        ],
-        "delay": "2500"
+        "watch": ["src/**/*.ts", "lib/**/*.ts"],
+        "ext": "ts",
+        "ignore": ["test/*", "wiki/*", "swagger/*", "node_modules/*", "dist/*"],
+        "delay": "2500",
+        "exec": "gulp build && ts-node --project tsconfig.json src/index.ts"
+    },
+    "husky": {
+        "hooks": {
+            "pre-commit": "pretty-quick --staged"
+        }
     }
 }
