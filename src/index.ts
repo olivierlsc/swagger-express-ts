@@ -55,43 +55,22 @@ server.setConfig((app: any) => {
                     version: '1.0',
                 },
                 models: {
-                    //    Version : {
-                    //        properties : {
-                    //            id : {
-                    //                type : SwaggerDefinitionConstant.Model.Property.Type.STRING,
-                    //                required : true
-                    //            },
-                    //            name : {
-                    //                type : SwaggerDefinitionConstant.Model.Property.Type.STRING,
-                    //                required : true
-                    //            },
-                    //            description : {
-                    //                type : SwaggerDefinitionConstant.Model.Property.Type.STRING
-                    //            },
-                    //            version : {
-                    //                type : SwaggerDefinitionConstant.Model.Property.Type.STRING
-                    //            },
-                    //            author: {
-                    //                model: "Author"
-                    //            }
-                    //        }
-                    //    },
-                    // Author: {
-                    //   properties: {
-                    //     id: {
-                    //       description: "Id of author",
-                    //       type: SwaggerDefinitionConstant.Model.Property.Type.STRING,
-                    //       required: true
-                    //     },
-                    //     name: {
-                    //       description: "Name of author",
-                    //       type: SwaggerDefinitionConstant.Model.Property.Type.ARRAY,
-                    //       itemType:
-                    //         SwaggerDefinitionConstant.Model.Property.ItemType.STRING,
-                    //       required: true
-                    //     }
-                    //   }
-                    // }
+                    ApiError: {
+                        properties: {
+                            code: {
+                                type:
+                                    SwaggerDefinitionConstant.Model.Property
+                                        .Type.STRING,
+                                example: ['400'],
+                            },
+                            message: {
+                                type:
+                                    SwaggerDefinitionConstant.Model.Property
+                                        .Type.STRING,
+                                example: ['Name of car is required.'],
+                            },
+                        },
+                    },
                 },
                 responses: {
                     500: {},
