@@ -83,7 +83,8 @@ export class VersionModel {
 
     @ApiModelProperty( {
         description : "Id of version" ,
-        required : true
+        required : true,
+        example: ['123456789']
     } )
     id : number;
 

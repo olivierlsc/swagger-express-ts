@@ -7,17 +7,17 @@ import {
     InversifyExpressServer,
     TYPE,
 } from 'inversify-express-utils';
-import { VersionsController } from './version/versions.controller';
+import { CarsController } from './cars/cars.controller';
 import * as swagger from 'swagger-express-ts';
 import { SwaggerDefinitionConstant } from 'swagger-express-ts';
 const config = require('../config.json');
-import { VersionController } from './version/version.controller';
-import { VersionsService } from './version/versions.service';
+import { CarController } from './cars/car.controller';
+import { CarsService } from './cars/cars.service';
 import * as _ from 'lodash';
 
 // import models
-import './version/version.model';
-import './author/author.model';
+import './cars/car.model';
+import './constructors/constructor.model';
 
 // set up container
 const container = new Container();
@@ -25,17 +25,17 @@ const container = new Container();
 // note that you *must* bind your controllers to Controller
 container
     .bind<interfaces.Controller>(TYPE.Controller)
-    .to(VersionsController)
+    .to(CarsController)
     .inSingletonScope()
-    .whenTargetNamed(VersionsController.TARGET_NAME);
+    .whenTargetNamed(CarsController.name);
 container
     .bind<interfaces.Controller>(TYPE.Controller)
-    .to(VersionController)
+    .to(CarController)
     .inSingletonScope()
-    .whenTargetNamed(VersionController.TARGET_NAME);
+    .whenTargetNamed(CarController.name);
 container
-    .bind<VersionsService>(VersionsService.TARGET_NAME)
-    .to(VersionsService)
+    .bind<CarsService>(CarsService.name)
+    .to(CarsService)
     .inSingletonScope();
 // create server
 const server = new InversifyExpressServer(container);

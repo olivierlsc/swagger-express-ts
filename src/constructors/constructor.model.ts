@@ -3,21 +3,20 @@ import {
     ApiModelProperty,
     SwaggerDefinitionConstant,
 } from 'swagger-express-ts';
-import { VersionModel } from '../version/version.model';
 
 @ApiModel({
-    description: 'Description Author.',
-    name: 'Author',
+    description: 'Description Constructor.',
+    name: 'Constructor',
 })
-export class AuthorModel {
+export class ConstructorModel {
     @ApiModelProperty({
-        description: 'Id of author',
+        description: 'Id of Constructor',
         required: true,
     })
     id: string;
 
     @ApiModelProperty({
-        description: 'Name of author',
+        description: 'Name of Constructor',
         required: true,
         itemType: SwaggerDefinitionConstant.Model.Property.Type.STRING,
     })

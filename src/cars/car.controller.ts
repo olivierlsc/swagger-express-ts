@@ -12,24 +12,21 @@ import {
     ApiOperationGet,
 } from 'swagger-express-ts';
 import * as express from 'express';
-import { VersionsService } from './versions.service';
+import { CarsService } from './cars.service';
 
 @ApiPath({
-    name: 'Versions',
-    path: '/versions/{id}',
+    name: 'Cars',
+    path: '/cars/{id}',
 })
-@controller('/versions/:id')
+@controller('/cars/:id')
 @injectable()
-export class VersionController implements interfaces.Controller {
-    public static TARGET_NAME: string = 'VersionController';
-
+export class CarController implements interfaces.Controller {
     constructor(
-        @inject(VersionsService.TARGET_NAME)
-        private versionsService: VersionsService
+        @inject(CarsService.name) private carsService: CarsService
     ) {}
 
     @ApiOperationGet({
-        description: 'Get version object',
+        description: 'Get car object',
         parameters: {
             path: {
                 id: {
@@ -40,18 +37,18 @@ export class VersionController implements interfaces.Controller {
         },
         responses: {
             200: {
-                model: 'Version',
+                model: 'Car',
             },
             400: {},
         },
     })
     @httpGet('/')
-    public getVersion(
+    public getCar(
         @requestParam('id') id: string,
         request: express.Request,
         response: express.Response,
         next: express.NextFunction
     ): void {
-        response.json(this.versionsService.getVersionById(id));
+        response.json(this.carsService.getCarById(id));
     }
 }

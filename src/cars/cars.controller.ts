@@ -16,27 +16,22 @@ import {
     SwaggerDefinitionConstant,
     ApiOperationPut,
 } from 'swagger-express-ts';
-import { VersionsService } from './versions.service';
-import { VersionModel } from './version.model';
+import { CarsService } from './cars.service';
+import { CarModel } from './car.model';
 
 @ApiPath({
-    path: '/versions',
-    name: 'Versions',
+    path: '/cars',
+    name: 'Cars',
     security: { apiKeyHeader: [] },
 })
-@controller('/versions')
+@controller('/cars')
 @injectable()
-export class VersionsController implements interfaces.Controller {
-    public static TARGET_NAME: string = 'VersionsController';
-
-    constructor(
-        @inject(VersionsService.TARGET_NAME)
-        private versionsService: VersionsService
-    ) {}
+export class CarsController implements interfaces.Controller {
+    constructor(@inject(CarsService.name) private carsService: CarsService) {}
 
     @ApiOperationGet({
-        description: 'Get versions objects list',
-        summary: 'Get versions list',
+        description: 'Get cars objects list',
+        summary: 'Get cars list',
         responses: {
             200: {
                 type: SwaggerDefinitionConstant.Response.Type.ARRAY,
@@ -48,33 +43,33 @@ export class VersionsController implements interfaces.Controller {
         },
     })
     @httpGet('/')
-    public getVersions(
+    public getCars(
         request: express.Request,
         response: express.Response,
         next: express.NextFunction
     ): void {
-        response.json(this.versionsService.getVersions());
+        response.json(this.carsService.getCars());
     }
 
     @ApiOperationPost({
-        description: 'Post version object',
-        summary: 'Post new version',
+        description: 'Post car object',
+        summary: 'Post new car',
         parameters: {
             body: {
-                description: 'New version',
+                description: 'New car',
                 required: true,
-                model: 'Version',
+                model: 'Car',
             },
         },
         responses: {
             200: {
-                model: 'Version',
+                model: 'Car',
             },
             400: { description: 'Parameters fail' },
         },
     })
     @httpPost('/')
-    public postVersion(
+    public postCar(
         request: express.Request,
         response: express.Response,
         next: express.NextFunction
@@ -82,12 +77,12 @@ export class VersionsController implements interfaces.Controller {
         if (!request.body) {
             return response.status(400).end();
         }
-        let newVersion = new VersionModel();
-        newVersion.id = request.body.id;
-        newVersion.name = request.body.name;
-        newVersion.description = request.body.description;
-        newVersion.author = request.body.author;
-        this.versionsService.addVersion(request.body);
+        let newCar = new CarModel();
+        newCar.id = request.body.id;
+        newCar.name = request.body.name;
+        newCar.description = request.body.description;
+        newCar.author = request.body.author;
+        this.carsService.addCar(request.body);
         response.json(request.body);
     }
 }
