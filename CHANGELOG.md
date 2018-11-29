@@ -1,3 +1,98 @@
+<a name="1.0.1"></a>
+
+# [1.0.1](2018-11-29)
+
+## Features
+
+### example
+
+Example:
+
+```ts
+...
+@ApiModelProperty({
+        description: 'Id of car',
+        required: true,
+        example: ['123456789', '12345'],
+    })
+    id: string;
+    ...
+}
+```
+
+or
+
+```ts
+...
+app.use(
+    swagger.express({
+            ...
+            models: {
+                ApiError: {
+                    properties: {
+                        code: {
+                            type:
+                                SwaggerDefinitionConstant.Model.Property
+                                    .Type.STRING,
+                            example: ['400'],
+                        },
+                        message: {
+                            type:
+                                SwaggerDefinitionConstant.Model.Property
+                                    .Type.STRING,
+                            example: ['Name of car is required.'],
+                        },
+                    },
+                },
+            },
+            ...
+        },
+    })
+);
+...
+```
+
+### body in parameter
+
+Example:
+
+```ts
+...
+@ApiOperationPost({
+    ...
+    parameters: {
+        body: {
+            description: 'New car',
+            required: true,
+            model: 'Car',
+        },
+    },
+    ...
+})
+...
+```
+
+or
+
+```ts
+...
+@ApiOperationPost({
+    ...
+    parameters: {
+        body: {
+            required: true,
+            properties: {
+              name: { type: SwaggerDefinitionConstant.Parameter.Type.STRING, required: true}
+            }
+        },
+    },
+    ...
+})
+...
+```
+
+
+
 <a name="1.0.0"></a>
 
 # [1.0.0](2018-06-10)

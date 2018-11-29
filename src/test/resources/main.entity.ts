@@ -1,15 +1,18 @@
-import { ApiModelProperty, ApiModel } from "../../lib/swagger-express-ts";
+import {
+    ApiModelProperty,
+    ApiModel,
+} from '../../../node_modules/swagger-express-ts';
 
 export class MainEntity {
-  @ApiModelProperty({
-    description: "main name description",
-    required: true
-  })
-  mainName: string;
+    @ApiModelProperty({
+        description: 'main name description',
+        required: true,
+    })
+    public mainName: string;
 
-  @ApiModelProperty({
-    description: "",
-    required: true
-  })
-  mainNumber: string;
+    @ApiModelProperty({
+        description: '',
+        required: true,
+    })
+    public mainNumber: string;
 }

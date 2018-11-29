@@ -1,26 +1,37 @@
 # IApiOperationArgsBaseParameter
 
+## name: string
+
+Define name of parameter.
+
+*   Optional
+
 ## description: string
+
 Define description of parameter.
-- Optional
+
+*   Optional
 
 ## type: string
+
 Define type of parameter.
-- Optional
+
+*   Optional
 
 ## format: string
+
 Define format of parameter.
-- Optional
+
+*   Optional
 
 ## deprecated: boolean
+
 Define if parameter is deprecated.
-- Optional
+
+*   Optional
 
 ## allowEmptyValue: boolean
-Define if parameter is allow empty value.
-- Optional
 
-## model: string
-Define model reference
-- Optional
-- If you want specify Array of model, you must set type with [SwaggerDefinitionConstant](./swagger-definition-constant.md).Definition.Property.Type.ARRAY
+Define if parameter is allow empty value.
+
+*   Optional
