@@ -10,6 +10,7 @@ import {
     ISwaggerOperationSchema,
     ISwaggerExternalDocs,
     ISwaggerDefinitionProperty,
+    ISwaggerPropertySchemaOperation,
 } from './i-swagger';
 import { IApiPathArgs } from './api-path.decorator';
 import { IApiOperationPostArgs } from './api-operation-post.decorator';
@@ -19,6 +20,7 @@ import {
     IApiOperationArgsBaseParameter,
     IApiOperationArgsBase,
     IApiOperationArgsBaseResponse,
+    IApiBodyOperationArgsBaseParameter,
 } from './i-api-operation-args.base';
 import { IApiOperationGetArgs } from './api-operation-get.decorator';
 import { IApiModelPropertyArgs } from './api-model-property.decorator';
@@ -378,22 +380,10 @@ export class SwaggerService {
                 );
             }
             if (args.parameters.body) {
-                assert.ok(
-                    args.parameters.body.model,
-                    'Definition are required.'
+                operation.parameters = _.concat(
+                    operation.parameters,
+                    this.buildBodyOperationParameter(args.parameters.body)
                 );
-                let newParameterBody: ISwaggerOperationParameter = {
-                    name: SwaggerDefinitionConstant.Parameter.In.BODY,
-                    in: SwaggerDefinitionConstant.Parameter.In.BODY,
-                };
-                if (args.parameters.body.required) {
-                    newParameterBody.required = true;
-                }
-                let swaggerOperationSchema: ISwaggerOperationSchema = {
-                    $ref: this.buildRef(args.parameters.body.model),
-                };
-                newParameterBody.schema = swaggerOperationSchema;
-                operation.parameters.push(newParameterBody);
             }
             if (args.parameters.formData) {
                 operation.parameters = _.concat(
@@ -516,6 +506,58 @@ export class SwaggerService {
         return swaggerOperationResponses;
     }
 
+    private buildBodyOperationParameter(
+        bodyOperationArgsBaseParameter: IApiBodyOperationArgsBaseParameter
+    ): ISwaggerOperationParameter[] {
+        let swaggerOperationParameterList: ISwaggerOperationParameter[] = [];
+        let swaggerOperationParameter = {} as ISwaggerOperationParameter;
+        swaggerOperationParameter.name = bodyOperationArgsBaseParameter.name ? bodyOperationArgsBaseParameter.name : 'body';
+        swaggerOperationParameter.in = 'body';
+        swaggerOperationParameter.type = bodyOperationArgsBaseParameter.type;
+        swaggerOperationParameter.description =
+            bodyOperationArgsBaseParameter.description;
+        swaggerOperationParameter.required =
+            bodyOperationArgsBaseParameter.required;
+        swaggerOperationParameter.format =
+            bodyOperationArgsBaseParameter.format;
+        swaggerOperationParameter.deprecated =
+            bodyOperationArgsBaseParameter.deprecated;
+        swaggerOperationParameter.allowEmptyValue =
+            bodyOperationArgsBaseParameter.allowEmptyValue;
+        swaggerOperationParameter.minimum =
+            bodyOperationArgsBaseParameter.minimum;
+        swaggerOperationParameter.maximum =
+            bodyOperationArgsBaseParameter.maximum;
+        swaggerOperationParameter.default =
+            bodyOperationArgsBaseParameter.default;
+        let schema = {} as ISwaggerOperationSchema;
+        if (bodyOperationArgsBaseParameter.properties) {
+            schema.type = 'object';
+            schema.required = [];
+            schema.properties = {} as {[key: string] : ISwaggerPropertySchemaOperation};
+            for (let propetyIndex in bodyOperationArgsBaseParameter.properties) {
+                let propertyBodyOperationArgsBaseParameter =
+                    bodyOperationArgsBaseParameter.properties[propetyIndex];
+                let propertySchemaOperation = {} as ISwaggerPropertySchemaOperation;
+                propertySchemaOperation.type =
+                    propertyBodyOperationArgsBaseParameter.type;
+                schema.properties[propetyIndex] = propertySchemaOperation;
+                if (propertyBodyOperationArgsBaseParameter.required) {
+                    schema.required.push(propetyIndex);
+                }
+            }
+        }
+        if (bodyOperationArgsBaseParameter.model) {
+            let swaggerOperationSchema: ISwaggerOperationSchema = {
+                $ref: this.buildRef(bodyOperationArgsBaseParameter.model),
+            };
+            schema = swaggerOperationSchema;
+        }
+        swaggerOperationParameter.schema = schema;
+        swaggerOperationParameterList.push(swaggerOperationParameter);
+        return swaggerOperationParameterList;
+    }
+
     private buildOperationSecurity(argsSecurity: {
         [key: string]: any[];
     }): { [key: string]: any[] }[] {
@@ -542,22 +584,18 @@ export class SwaggerService {
                 in: type,
                 type: parameter.type,
             };
-            if (parameter.description) {
-                newSwaggerOperationParameter.description =
-                    parameter.description;
+            if (parameter.name) {
+                newSwaggerOperationParameter.name = parameter.name;
             }
-            if (parameter.required) {
-                newSwaggerOperationParameter.required = true;
-            }
-            if (parameter.format) {
-                newSwaggerOperationParameter.format = parameter.format;
-            }
-            if (parameter.deprecated) {
-                newSwaggerOperationParameter.deprecated = true;
-            }
-            if (parameter.allowEmptyValue) {
-                newSwaggerOperationParameter.allowEmptyValue = true;
-            }
+            newSwaggerOperationParameter.description = parameter.description;
+            newSwaggerOperationParameter.required = parameter.required;
+            newSwaggerOperationParameter.format = parameter.format;
+            newSwaggerOperationParameter.deprecated = parameter.deprecated;
+            newSwaggerOperationParameter.allowEmptyValue =
+                parameter.allowEmptyValue;
+            newSwaggerOperationParameter.minimum = parameter.minimum;
+            newSwaggerOperationParameter.maximum = parameter.maximum;
+            newSwaggerOperationParameter.default = parameter.default;
             swaggerOperationParameter.push(newSwaggerOperationParameter);
         }
         return swaggerOperationParameter;

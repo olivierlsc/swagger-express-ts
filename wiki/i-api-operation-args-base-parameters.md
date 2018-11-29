@@ -8,7 +8,7 @@ Define path parameters.
 Define query parameters.
 - Optional
 
-## body: {[key: string]: [IApiOperationArgsBaseParameter](./i-api-operation-args-base-parameter.md)}
+## body: [IApiBodyOperationArgsBaseParameter](./i-api-body-operation-args-base-parameter.md)
 Define body parameters.
 - Optional
 

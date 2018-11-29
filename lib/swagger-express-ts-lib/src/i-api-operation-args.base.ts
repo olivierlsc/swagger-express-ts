@@ -1,10 +1,24 @@
 export interface IApiOperationArgsBaseParameter {
+    name?: string; // Override [key: string]. Default [key: string].
     description?: string;
     type?: string;
     required?: boolean;
     format?: string;
+    minimum?: number;
+    maximum?: number;
+    default?: number;
     deprecated?: boolean;
     allowEmptyValue?: boolean;
+}
+
+export interface IApiPropertyBodyOperationArgsBaseParameter {
+    type: string;
+    required?: boolean;
+}
+
+export interface IApiBodyOperationArgsBaseParameter
+    extends IApiOperationArgsBaseParameter {
+    properties?: { [key: string]: IApiPropertyBodyOperationArgsBaseParameter };
     model?: string;
 }
 
@@ -17,7 +31,7 @@ export interface IApiOperationArgsBaseResponse {
 export interface IApiOperationArgsBaseParameters {
     path?: { [key: string]: IApiOperationArgsBaseParameter };
     query?: { [key: string]: IApiOperationArgsBaseParameter };
-    body?: IApiOperationArgsBaseParameter; // use only for POST, PUT and PATCH
+    body?: IApiBodyOperationArgsBaseParameter; // use only for POST, PUT and PATCH
     formData?: { [key: string]: IApiOperationArgsBaseParameter };
 }
 

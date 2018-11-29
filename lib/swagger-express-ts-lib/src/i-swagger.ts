@@ -43,9 +43,16 @@ export interface ISwaggerOperationParameter {
     format?: string;
     description?: string;
     required?: boolean;
+    minimum?: number;
+    maximum?: number;
+    default?: number;
     deprecated?: boolean;
     allowEmptyValue?: boolean;
     schema?: ISwaggerOperationSchema;
+}
+
+export interface ISwaggerPropertySchemaOperation {
+    type: string;
 }
 
 export interface ISwaggerOperationSchema {
@@ -53,6 +60,8 @@ export interface ISwaggerOperationSchema {
     items?: { $ref: string };
     $ref?: string;
     format?: string;
+    required?: string[]; // Array content name of property
+    properties?: {[key: string] : ISwaggerPropertySchemaOperation}
 }
 
 export interface ISwaggerOperationSchemaItems {
