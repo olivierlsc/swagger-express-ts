@@ -1,6 +1,6 @@
 {
     "name": "swagger-express-ts",
-    "version": "1.0.0",
+    "version": "1.0.1",
     "description": "Generate and serve swagger.json",
     "main": "index.js",
     "types": "index.d.ts",
