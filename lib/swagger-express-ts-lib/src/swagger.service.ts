@@ -142,17 +142,10 @@ export class SwaggerService {
                 let newProperty: ISwaggerDefinitionProperty = {
                     type: property.type,
                 };
-                if (property.format) {
-                    newProperty.format = property.format;
-                }
-
-                if (property.description) {
-                    newProperty.description = property.description;
-                }
-
-                if (property.enum) {
-                    newProperty.enum = property.enum;
-                }
+                newProperty.format = property.format;
+                newProperty.description = property.description;
+                newProperty.enum = property.enum;
+                newProperty.example = property.example;
                 if (property.itemType) {
                     newProperty.items = <ISwaggerDefinitionPropertyItems>{
                         type: property.itemType,
@@ -511,7 +504,9 @@ export class SwaggerService {
     ): ISwaggerOperationParameter[] {
         let swaggerOperationParameterList: ISwaggerOperationParameter[] = [];
         let swaggerOperationParameter = {} as ISwaggerOperationParameter;
-        swaggerOperationParameter.name = bodyOperationArgsBaseParameter.name ? bodyOperationArgsBaseParameter.name : 'body';
+        swaggerOperationParameter.name = bodyOperationArgsBaseParameter.name
+            ? bodyOperationArgsBaseParameter.name
+            : 'body';
         swaggerOperationParameter.in = 'body';
         swaggerOperationParameter.type = bodyOperationArgsBaseParameter.type;
         swaggerOperationParameter.description =
@@ -534,7 +529,9 @@ export class SwaggerService {
         if (bodyOperationArgsBaseParameter.properties) {
             schema.type = 'object';
             schema.required = [];
-            schema.properties = {} as {[key: string] : ISwaggerPropertySchemaOperation};
+            schema.properties = {} as {
+                [key: string]: ISwaggerPropertySchemaOperation;
+            };
             for (let propetyIndex in bodyOperationArgsBaseParameter.properties) {
                 let propertyBodyOperationArgsBaseParameter =
                     bodyOperationArgsBaseParameter.properties[propetyIndex];
@@ -715,6 +712,7 @@ export class SwaggerService {
             swaggerBuildDefinitionModelProperty.description = args.description;
             swaggerBuildDefinitionModelProperty.enum = args.enum;
             swaggerBuildDefinitionModelProperty.itemType = args.itemType;
+            swaggerBuildDefinitionModelProperty.example = args.example;
             if (args.model) {
                 swaggerBuildDefinitionModelProperty.model = args.model;
                 if (!_.isEqual('Array', propertyType)) {

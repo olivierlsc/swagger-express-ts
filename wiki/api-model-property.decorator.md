@@ -25,33 +25,47 @@ export class VersionModel {
 ## required: boolean
 
 Define if property is required.
-- Optional
+
+*   Optional
 
 ## format: string
 
 Define format.
-- Optional
+
+*   Optional
 
 ## type: string
 
 Define type of property.
-- Optional
+
+*   Optional
 
 ## description: string
+
 Define description of property.
-- Optional
+
+*   Optional
 
 ## enum: string[]
 
 Define enum of property.
-- Optional
+
+*   Optional
 
 ## model: string
 
 Define model
-- Optional
+
+*   Optional
 
 ## itemType: string
 
 Define item type.
-- Optional
+
+*   Optional
+
+## example: any[]
+
+Define example.
+
+*   Optional

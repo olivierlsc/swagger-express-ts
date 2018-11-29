@@ -59,6 +59,11 @@ export interface ISwaggerBuildDefinitionModelProperty {
      * Optional.
      */
     itemType?: string;
+
+    /**
+     * Define example.
+     */
+    example?: any[];
 }
 
 export interface ISwaggerBuildDefinitionModel {
