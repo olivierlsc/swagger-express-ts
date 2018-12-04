@@ -35,7 +35,7 @@ export class CarsController implements interfaces.Controller {
         responses: {
             200: {
                 type: SwaggerDefinitionConstant.Response.Type.ARRAY,
-                model: 'Version',
+                model: 'Car',
             },
         },
         security: {

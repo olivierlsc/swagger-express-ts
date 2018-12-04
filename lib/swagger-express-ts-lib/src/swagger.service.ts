@@ -1,36 +1,38 @@
+import * as assert from 'assert';
+import * as _ from 'lodash';
+import { IApiModelArgs } from '.';
+import { IApiModelPropertyArgs } from './api-model-property.decorator';
+import { IApiOperationGetArgs } from './api-operation-get.decorator';
+import { IApiOperationPostArgs } from './api-operation-post.decorator';
+import { IApiPathArgs } from './api-path.decorator';
+import {
+    IApiBodyOperationArgsBaseParameter,
+    IApiOperationArgsBase,
+    IApiOperationArgsBaseParameter,
+    IApiOperationArgsBaseResponse,
+} from './i-api-operation-args.base';
 import {
     ISwagger,
-    ISwaggerInfo,
-    ISwaggerTag,
-    ISwaggerPath,
     ISwaggerDefinition,
+    ISwaggerDefinitionProperty,
+    ISwaggerDefinitionPropertyItems,
+    ISwaggerExternalDocs,
+    ISwaggerInfo,
     ISwaggerOperation,
     ISwaggerOperationParameter,
     ISwaggerOperationResponse,
     ISwaggerOperationSchema,
-    ISwaggerExternalDocs,
-    ISwaggerDefinitionProperty,
+    ISwaggerOperationSchemaItems,
+    ISwaggerPath,
     ISwaggerPropertySchemaOperation,
+    ISwaggerTag,
 } from './i-swagger';
-import { IApiPathArgs } from './api-path.decorator';
-import { IApiOperationPostArgs } from './api-operation-post.decorator';
 import { SwaggerDefinitionConstant } from './swagger-definition.constant';
-import * as _ from 'lodash';
 import {
-    IApiOperationArgsBaseParameter,
-    IApiOperationArgsBase,
-    IApiOperationArgsBaseResponse,
-    IApiBodyOperationArgsBaseParameter,
-} from './i-api-operation-args.base';
-import { IApiOperationGetArgs } from './api-operation-get.decorator';
-import { IApiModelPropertyArgs } from './api-model-property.decorator';
-import { IApiModelArgs } from '.';
-import * as assert from 'assert';
-import { ISwaggerSecurityDefinition } from './swagger.builder';
-import { ISwaggerOperationSchemaItems } from './i-swagger';
-import { ISwaggerBuildDefinitionModel } from './swagger.builder';
-import { ISwaggerDefinitionPropertyItems } from './i-swagger';
-import { ISwaggerBuildDefinitionModelProperty } from './swagger.builder';
+    ISwaggerBuildDefinitionModel,
+    ISwaggerBuildDefinitionModelProperty,
+    ISwaggerSecurityDefinition,
+} from './swagger.builder';
 
 interface IPath {
     path: string;
@@ -51,7 +53,6 @@ interface IController {
 }
 
 export class SwaggerService {
-
     public static getInstance(): SwaggerService {
         if (!SwaggerService.instance) {
             const newSwaggerService: SwaggerService = new SwaggerService();
@@ -377,8 +378,6 @@ export class SwaggerService {
         }
         this.setDefinitions(this.modelsMap);
     }
-
-    private constructeur() {}
 
     private initData(): void {
         this.data = {

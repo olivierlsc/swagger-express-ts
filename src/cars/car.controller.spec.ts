@@ -17,14 +17,12 @@ describe('CarController', () => {
 
     describe('getCar', () => {
         it('expect car', () => {
-            let request: express.Request;
+            const request: express.Request = null;
             const response: express.Response = {} as express.Response;
-            let next: express.NextFunction;
+            const next: express.NextFunction = null;
             const id: string = '1';
             const car: CarModel = {} as CarModel;
-            const carsServiceGetCarByIdStub = sinon
-                .stub()
-                .returns(car);
+            const carsServiceGetCarByIdStub = sinon.stub().returns(car);
             carService.getCarById = carsServiceGetCarByIdStub;
             const responseJsonSpy = sinon.spy();
             response.json = responseJsonSpy;

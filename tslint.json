@@ -8,7 +8,12 @@
         "no-unused-expression": false,
         "no-shadowed-variable": false,
         "no-var-requires": false,
-        "no-implicit-dependencies": false
+        "member-ordering": false,
+        "no-implicit-dependencies": false,
+        "no-empty-interface": false,
+        "object-literal-sort-keys": false,
+        "no-object-literal-type-assertion": false,
+        "forin": false
     },
     "rulesDirectory": []
 }

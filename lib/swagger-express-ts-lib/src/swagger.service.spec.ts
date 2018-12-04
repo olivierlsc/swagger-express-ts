@@ -194,10 +194,12 @@ describe('SwaggerService', () => {
                 Version: {
                     properties: {
                         id: {
+                            description: 'Id of Version',
                             type:
                                 SwaggerDefinitionConstant.Model.Property.Type
                                     .STRING,
-                        } as ISwaggerDefinitionProperty,
+                            example: ['123456789'],
+                        },
                     },
                 },
             };
@@ -208,7 +210,13 @@ describe('SwaggerService', () => {
             ).to.deep.equal({
                 Version: {
                     properties: {
-                        id: { type: 'string' },
+                        id: {
+                            description: 'Id of Version',
+                            example: ['123456789'],
+                            type: 'string',
+                            enum: undefined,
+                            format: undefined,
+                        },
                     },
                     required: [],
                     type: 'object',
@@ -629,7 +637,13 @@ describe('SwaggerService', () => {
                     post: {
                         parameters: [
                             {
+                                allowEmptyValue: undefined,
+                                default: undefined,
+                                deprecated: undefined,
                                 description: 'New versions',
+                                format: undefined,
+                                maximum: undefined,
+                                minimum: undefined,
                                 in: SwaggerDefinitionConstant.Parameter.In.BODY,
                                 name:
                                     SwaggerDefinitionConstant.Parameter.In.BODY,
@@ -637,6 +651,7 @@ describe('SwaggerService', () => {
                                 schema: {
                                     $ref: '#/definitions/Version',
                                 },
+                                type: undefined,
                             },
                         ],
                         consumes: [SwaggerDefinitionConstant.Consume.JSON],
@@ -685,9 +700,7 @@ describe('SwaggerService', () => {
             );
 
             SwaggerService.getInstance().buildSwagger();
-            console.log(
-                JSON.stringify(SwaggerService.getInstance().getData().paths)
-            );
+
             expect(SwaggerService.getInstance().getData().paths).to.deep.equal(
                 expectedPaths
             );
@@ -850,8 +863,14 @@ describe('SwaggerService', () => {
                     put: {
                         parameters: [
                             {
+                                allowEmptyValue: undefined,
+                                default: undefined,
+                                deprecated: undefined,
                                 in: 'path',
+                                format: undefined,
                                 description: 'Id of version',
+                                maximum: undefined,
+                                minimum: undefined,
                                 name: 'id',
                                 required: true,
                                 type:
@@ -859,14 +878,21 @@ describe('SwaggerService', () => {
                                         .STRING,
                             },
                             {
+                                allowEmptyValue: undefined,
+                                default: undefined,
+                                deprecated: undefined,
                                 description: 'New versions',
+                                format: undefined,
                                 in: SwaggerDefinitionConstant.Parameter.In.BODY,
+                                maximum: undefined,
+                                minimum: undefined,
                                 name:
                                     SwaggerDefinitionConstant.Parameter.In.BODY,
                                 required: true,
                                 schema: {
                                     $ref: '#/definitions/Version',
                                 },
+                                type: undefined,
                             },
                         ],
                         consumes: [SwaggerDefinitionConstant.Consume.JSON],
@@ -1103,8 +1129,14 @@ describe('SwaggerService', () => {
                     patch: {
                         parameters: [
                             {
+                                allowEmptyValue: undefined,
+                                default: undefined,
+                                deprecated: undefined,
                                 in: 'path',
+                                maximum: undefined,
+                                minimum: undefined,
                                 description: 'Id of version',
+                                format: undefined,
                                 name: 'id',
                                 required: true,
                                 type:
@@ -1112,14 +1144,22 @@ describe('SwaggerService', () => {
                                         .STRING,
                             },
                             {
+                                allowEmptyValue: undefined,
+                                default: undefined,
+                                deprecated: undefined,
                                 description: 'New versions',
+                                format: undefined,
                                 in: SwaggerDefinitionConstant.Parameter.In.BODY,
+                                maximum: undefined,
+                                minimum: undefined,
+
                                 name:
                                     SwaggerDefinitionConstant.Parameter.In.BODY,
                                 required: true,
                                 schema: {
                                     $ref: '#/definitions/Version',
                                 },
+                                type: undefined,
                             },
                         ],
                         consumes: [SwaggerDefinitionConstant.Consume.JSON],
@@ -1358,8 +1398,14 @@ describe('SwaggerService', () => {
                         operationId: propertyKey,
                         parameters: [
                             {
+                                allowEmptyValue: undefined,
+                                default: undefined,
+                                deprecated: undefined,
                                 in: 'path',
+                                format: undefined,
                                 description: 'Id of version',
+                                maximum: undefined,
+                                minimum: undefined,
                                 name: 'id',
                                 required: true,
                                 type:

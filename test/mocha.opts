@@ -2,4 +2,4 @@
 --require source-map-support/register
 --full-trace
 --bail
-src/**/*.spec.ts
+src/**/*.spec.ts lib/swagger-express-ts-lib/src/**/*.spec.ts
