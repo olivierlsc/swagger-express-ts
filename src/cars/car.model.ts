@@ -16,6 +16,7 @@ export class CarModel {
     @ApiModelProperty({
         description: '',
         required: true,
+        example: 'Customer Name',
     })
     public name: string;
 

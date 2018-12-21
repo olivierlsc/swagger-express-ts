@@ -47,7 +47,7 @@ export interface IApiModelPropertyArgs {
     /**
      * Define example.
      */
-    example?: any[];
+    example?: any;
 }
 
 export function ApiModelProperty(
