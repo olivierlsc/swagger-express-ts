@@ -304,10 +304,13 @@ export class SwaggerService {
                 const swaggerPath: ISwaggerPath = {};
                 data.paths[controller.path] = swaggerPath;
             }
-            data.tags.push({
-                name: _.upperFirst(controller.name),
-                description: controller.description,
-            } as ISwaggerTag);
+
+            if (!_.find(data.tags, (tag: ISwaggerTag) => tag.name === _.upperFirst(controller.name))) {
+              data.tags.push({
+                  name: _.upperFirst(controller.name),
+                  description: controller.description,
+              } as ISwaggerTag);
+            }
         }
         this.data = data;
     }
