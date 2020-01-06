@@ -74,7 +74,7 @@ export function ApiModelProperty(
                 }
             }
         }
-
+        
         SwaggerService.getInstance().addApiModelProperty(
             args,
             target,
