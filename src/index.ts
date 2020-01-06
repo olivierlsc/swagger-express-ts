@@ -9,14 +9,17 @@ import {
 } from 'inversify-express-utils';
 import { CarsController } from './cars/cars.controller';
 import * as swagger from 'swagger-express-ts';
+// tslint:disable-next-line: no-duplicate-imports
 import { SwaggerDefinitionConstant } from 'swagger-express-ts';
 const config = require('../config.json');
 import { CarController } from './cars/car.controller';
 import { CarsService } from './cars/cars.service';
+
 import * as _ from 'lodash';
 
 // import models
-import './cars/car.model';
+import { CarModel } from './cars/car.model';
+import { WheelModel } from './cars/wheel.model';
 import './constructors/constructor.model';
 
 // set up container
@@ -37,6 +40,11 @@ container
     .bind<CarsService>(CarsService.name)
     .to(CarsService)
     .inSingletonScope();
+
+container.bind<CarModel>(CarModel.name).to(CarModel);
+container.bind<WheelModel>(WheelModel.name).to(WheelModel);
+
+
 // create server
 const server = new InversifyExpressServer(container);
 
