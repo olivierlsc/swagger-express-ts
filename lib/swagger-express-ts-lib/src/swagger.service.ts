@@ -402,12 +402,14 @@ export class SwaggerService {
         target: any,
         propertyKey: string | symbol
     ): void {
+        const targetName = target.constructor.name || target.name;
+          
         let currentController: IController = {
             paths: {},
         };
         for (const index in this.controllerMap) {
             const controller = this.controllerMap[index];
-            if (index === target.constructor.name) {
+            if (index === targetName) {
                 currentController = controller;
             }
         }
@@ -446,7 +448,7 @@ export class SwaggerService {
             currentPath.delete = this.buildOperation(args, target, propertyKey);
         }
 
-        this.controllerMap[target.constructor.name] = currentController;
+        this.controllerMap[targetName] = currentController;
     }
 
     private buildOperation(
