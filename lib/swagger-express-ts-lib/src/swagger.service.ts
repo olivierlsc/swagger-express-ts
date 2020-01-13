@@ -402,7 +402,7 @@ export class SwaggerService {
         target: any,
         propertyKey: string | symbol
     ): void {
-        const targetName = target.constructor.name || target.name;
+        const targetName = target.constructor.name !== 'Function' ? target.constructor.name : target.name;
           
         let currentController: IController = {
             paths: {},
