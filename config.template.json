@@ -1,6 +1,3 @@
 {
-    "port": 9200,
-    "build": {
-        "path": "dist"
-    }
+    "port": 9200
 }

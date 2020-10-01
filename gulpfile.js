@@ -3,11 +3,10 @@ const ts = require('gulp-typescript');
 const sourcemaps = require('gulp-sourcemaps');
 const clean = require('gulp-clean');
 const tslint = require('gulp-tslint');
-const config = require('./config.json');
 
 const path = {
     src: 'src/**/*.ts',
-    dist: config.build.path,
+    dist: 'dist',
     module: 'node_modules/swagger-express-ts',
     lib: {
         src: 'lib/swagger-express-ts-lib/src/**/*.ts',
