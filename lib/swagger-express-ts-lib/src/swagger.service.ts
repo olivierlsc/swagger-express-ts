@@ -673,13 +673,13 @@ export class SwaggerService {
                 $ref: this.buildRef(bodyOperationArgsBaseParameter.model),
             };
 
-            if (bodyOperationArgsBaseParameter.type === 'array') {
+            if (bodyOperationArgsBaseParameter.type !== 'array') {
+                schema = swaggerOperationSchema;
+            } else {
                 schema.type = bodyOperationArgsBaseParameter.type;
                 schema.items = {
                     $ref: this.buildRef(bodyOperationArgsBaseParameter.model),
                 };
-            } else {
-                schema = swaggerOperationSchema;
             }
         }
         swaggerOperationParameter.schema = schema;
