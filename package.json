@@ -12,7 +12,8 @@
         "test": "echo \"Testing...\" && npm run build && nyc mocha",
         "dev": "echo \"Developing...\" && nodemon",
         "start": "echo \"Starting...\" && npm run build && ts-node --project tsconfig.json src/index.ts",
-        "publish": "npm publish dist/swagger-express-ts"
+        "publish": "npm publish dist/swagger-express-ts",
+        "prepare": "npm run build:lib"
     },
     "repository": {
         "type": "git",
