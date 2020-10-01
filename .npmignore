@@ -1,5 +1,7 @@
 src
 swagger
+lib
+node_modules
 test
 wiki
 config.*
@@ -11,6 +13,9 @@ lib-cov
 .jshintignore
 .jshintrc
 .travis.yml
+.prettierrc
+tsconfig.*
+tslint.*
 lcov.info
 logo.svg
 CHANGELOG.MD
