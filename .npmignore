@@ -1,0 +1,16 @@
+src
+swagger
+test
+wiki
+config.*
+docs
+examples
+test
+lib-cov
+.editorconfig
+.jshintignore
+.jshintrc
+.travis.yml
+lcov.info
+logo.svg
+CHANGELOG.MD
