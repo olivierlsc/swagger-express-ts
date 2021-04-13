@@ -82,7 +82,7 @@ export interface ISwaggerOperation {
     produces?: string[];
     consumes?: string[];
     responses?: { [key: string]: ISwaggerOperationResponse };
-    security?: Array<{ [key: string]: any[] }>;
+    security?: { [key: string]: any[] }[];
     deprecated?: boolean;
 }
 
