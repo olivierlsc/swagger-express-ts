@@ -70,6 +70,7 @@ export class SwaggerDefinitionConstant {
 
     public static Parameter = {
         In: {
+            HEADER: 'header',
             BODY: 'body',
             FORM_DATA: 'formData',
             PATH: 'path',

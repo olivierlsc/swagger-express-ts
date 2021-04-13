@@ -478,6 +478,15 @@ export class SwaggerService {
 
         if (args.parameters) {
             operation.parameters = [];
+            if (args.parameters.header) {
+                operation.parameters = _.concat(
+                    operation.parameters,
+                    this.buildParameters(
+                        SwaggerDefinitionConstant.Parameter.In.HEADER,
+                        args.parameters.header
+                    )
+                );
+            }
             if (args.parameters.path) {
                 operation.parameters = _.concat(
                     operation.parameters,
