@@ -681,7 +681,15 @@ export class SwaggerService {
             const swaggerOperationSchema: ISwaggerOperationSchema = {
                 $ref: this.buildRef(bodyOperationArgsBaseParameter.model),
             };
-            schema = swaggerOperationSchema;
+
+            if (bodyOperationArgsBaseParameter.type !== 'array') {
+                schema = swaggerOperationSchema;
+            } else {
+                schema.type = bodyOperationArgsBaseParameter.type;
+                schema.items = {
+                    $ref: this.buildRef(bodyOperationArgsBaseParameter.model),
+                };
+            }
         }
         swaggerOperationParameter.schema = schema;
         swaggerOperationParameterList.push(swaggerOperationParameter);

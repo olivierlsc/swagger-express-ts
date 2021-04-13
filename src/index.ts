@@ -12,6 +12,7 @@ import * as swagger from 'swagger-express-ts';
 import { SwaggerDefinitionConstant } from 'swagger-express-ts';
 const config = require('../config.json');
 import { CarController } from './cars/car.controller';
+import { CarBulkController } from './cars/carbulk.controller';
 import { CarsService } from './cars/cars.service';
 import * as _ from 'lodash';
 
@@ -28,6 +29,11 @@ container
     .to(CarsController)
     .inSingletonScope()
     .whenTargetNamed(CarsController.name);
+container
+    .bind<interfaces.Controller>(TYPE.Controller)
+    .to(CarBulkController)
+    .inSingletonScope()
+    .whenTargetNamed(CarBulkController.name);
 container
     .bind<interfaces.Controller>(TYPE.Controller)
     .to(CarController)
