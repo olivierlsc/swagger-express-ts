@@ -97,7 +97,8 @@
             "ts-node/register"
         ],
         "reporter": [
-            "html", "cobertura"
+            "html",
+            "cobertura"
         ],
         "sourceMap": true,
         "instrument": true
