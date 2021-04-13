@@ -340,6 +340,7 @@ export class SwaggerService {
             swaggerBuildDefinitionModelProperty.enum = args.enum;
             swaggerBuildDefinitionModelProperty.itemType = args.itemType;
             swaggerBuildDefinitionModelProperty.example = args.example;
+            swaggerBuildDefinitionModelProperty.format = args.format;
             if (args.model) {
                 swaggerBuildDefinitionModelProperty.model = args.model;
                 if (!_.isEqual('Array', propertyType)) {
