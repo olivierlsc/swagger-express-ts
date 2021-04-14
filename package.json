@@ -12,12 +12,12 @@
         "test": "echo \"Testing...\" && npm run build && nyc mocha",
         "dev": "echo \"Developing...\" && nodemon",
         "start": "echo \"Starting...\" && npm run build && ts-node --project tsconfig.json src/index.ts",
-        "publish": "npm publish dist/swagger-express-ts",
+        "publish": "npm publish dist",
         "prepare": "npm run build:lib"
     },
     "repository": {
         "type": "git",
-        "url": "git+https://github.com/olivierlsc/swagger-specification-ts.git"
+        "url": "git+https://github.com/olivierlsc/swagger-express-ts.git"
     },
     "author": "Olivier LIN-SI-CHENG",
     "license": "MIT",
@@ -39,9 +39,9 @@
         "rest"
     ],
     "bugs": {
-        "url": "https://github.com/olivierlsc/swagger-specification-ts/issues"
+        "url": "https://github.com/olivierlsc/swagger-express-ts/issues"
     },
-    "homepage": "https://github.com/olivierlsc/swagger-specification-ts#readme",
+    "homepage": "https://github.com/olivierlsc/swagger-express-ts#readme",
     "dependencies": {
         "@types/body-parser": "^1.19.0",
         "@types/compression": "1.7.0",
