@@ -35,14 +35,12 @@ export class CarBulkController implements interfaces.Controller {
     @httpPost('/')
     public postBulkCar(
         request: express.Request,
-        response: express.Response,
-        next: express.NextFunction
+        response: express.Response
     ): void {
         if (!request.body) {
             return response.status(400).end();
         }
-        console.log(request.body);
-        console.log(this.carsService);
+
         response.json(request.body);
     }
 
