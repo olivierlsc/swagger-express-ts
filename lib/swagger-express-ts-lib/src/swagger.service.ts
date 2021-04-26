@@ -62,13 +62,13 @@ export class SwaggerService {
         return SwaggerService.instance;
     }
     private static instance: SwaggerService;
-    private controllerMap: IController[] = [];
+    private controllerMap: { [key: string]: IController } = {};
     private data: ISwagger;
     private modelsMap: { [key: string]: ISwaggerBuildDefinitionModel } = {};
     private globalResponses: { [key: string]: IApiOperationArgsBaseResponse };
 
     public resetData(): void {
-        this.controllerMap = [];
+        this.controllerMap = {};
         this.initData();
     }
 
