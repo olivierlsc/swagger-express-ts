@@ -1,7 +1,7 @@
 import { injectable, inject } from 'inversify';
 import 'reflect-metadata';
-import { interfaces, controller, httpPost } from 'inversify-express-utils';
-import { ApiPath, ApiOperationPost } from 'swagger-express-ts';
+import { interfaces, controller, httpPost, httpGet } from 'inversify-express-utils';
+import { ApiPath, ApiOperationPost, ApiOperationGet, SwaggerDefinitionConstant } from 'swagger-express-ts';
 import * as express from 'express';
 import { CarsService } from './cars.service';
 
@@ -35,14 +35,44 @@ export class CarBulkController implements interfaces.Controller {
     @httpPost('/')
     public postBulkCar(
         request: express.Request,
-        response: express.Response,
-        next: express.NextFunction
+        response: express.Response
     ): void {
         if (!request.body) {
             return response.status(400).end();
         }
-        console.log(request.body);
-        console.log(this.carsService);
+
         response.json(request.body);
+    }
+
+    @ApiOperationGet({
+      description: 'Get cars objects list by ids',
+      summary: 'Get cars list by ids',
+      parameters: {
+        query: {
+          ids: {
+            type: 'array',
+            required: true,
+            items: {
+              type: 'string'
+            }
+          }
+        },
+      },
+      responses: {
+        200: {
+          type: SwaggerDefinitionConstant.Response.Type.ARRAY,
+          model: 'Car',
+        },
+      },
+      security: {
+        apiKeyHeader: [],
+      },
+    })
+    @httpGet('/')
+    public getCarsByIds(
+      request: express.Request,
+      response: express.Response
+    ): void {
+      response.json(this.carsService.getCarsByIds(request.query.ids as string[]));
     }
 }

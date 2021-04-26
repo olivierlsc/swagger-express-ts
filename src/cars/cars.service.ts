@@ -32,6 +32,10 @@ export class CarsService {
         return this.carsList;
     }
 
+    public getCarsByIds(ids: string[]): CarModel[] {
+      return this.carsList.filter(car => ids.includes(car.id));
+    }
+
     public addCar(car: CarModel): CarModel {
         this.carsList.push(car);
         return car;

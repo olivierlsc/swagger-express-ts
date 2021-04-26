@@ -729,6 +729,7 @@ export class SwaggerService {
                 name: parameterIndex,
                 in: type,
                 type: parameter.type,
+                items: parameter.items
             };
             if (parameter.name) {
                 newSwaggerOperationParameter.name = parameter.name;

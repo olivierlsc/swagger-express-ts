@@ -40,6 +40,9 @@ export interface ISwaggerOperationParameter {
     name: string;
     in: string;
     type?: string;
+    items?: {
+      type?: string;
+    };
     format?: string;
     description?: string;
     required?: boolean;

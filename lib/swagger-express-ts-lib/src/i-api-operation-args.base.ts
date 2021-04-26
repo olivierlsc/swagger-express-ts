@@ -9,6 +9,9 @@ export interface IApiOperationArgsBaseParameter {
     default?: number;
     deprecated?: boolean;
     allowEmptyValue?: boolean;
+    items?: {
+      type?: string;
+    }
 }
 
 export interface IApiPropertyBodyOperationArgsBaseParameter {
