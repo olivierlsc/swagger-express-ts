@@ -15,7 +15,7 @@ export class CarsService {
                 id: '1',
                 name: ['John DOE'],
             },
-        } as CarModel,
+        } as unknown as CarModel,
         {
             id: '2',
             name: 'Car 2',
@@ -25,7 +25,7 @@ export class CarsService {
                 id: '1',
                 name: ['John DOE'],
             },
-        } as CarModel,
+        } as unknown as CarModel,
     ];
 
     public getCars(): CarModel[] {
