@@ -293,9 +293,7 @@ export class SwaggerService {
                         );
                     }
                     if (path.path && path.path.length > 0) {
-                        data.paths[
-                            controller.path.concat(path.path)
-                        ] = swaggerPath;
+                        data.paths[controller.path.concat(path.path)] = {...data.paths[controller.path.concat(path.path)],...swaggerPath};
                     } else {
                         data.paths[controller.path] = swaggerPath;
                     }
