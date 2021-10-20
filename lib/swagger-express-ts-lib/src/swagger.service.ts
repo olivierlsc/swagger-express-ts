@@ -62,13 +62,13 @@ export class SwaggerService {
         return SwaggerService.instance;
     }
     private static instance: SwaggerService;
-    private controllerMap: IController[] = [];
+    private controllerMap: { [key: string]: IController } = {};
     private data: ISwagger;
     private modelsMap: { [key: string]: ISwaggerBuildDefinitionModel } = {};
     private globalResponses: { [key: string]: IApiOperationArgsBaseResponse };
 
     public resetData(): void {
-        this.controllerMap = [];
+        this.controllerMap = {};
         this.initData();
     }
 
@@ -293,9 +293,7 @@ export class SwaggerService {
                         );
                     }
                     if (path.path && path.path.length > 0) {
-                        data.paths[
-                            controller.path.concat(path.path)
-                        ] = swaggerPath;
+                        data.paths[controller.path.concat(path.path)] = {...data.paths[controller.path.concat(path.path)],...swaggerPath};
                     } else {
                         data.paths[controller.path] = swaggerPath;
                     }
@@ -304,10 +302,13 @@ export class SwaggerService {
                 const swaggerPath: ISwaggerPath = {};
                 data.paths[controller.path] = swaggerPath;
             }
-            data.tags.push({
-                name: _.upperFirst(controller.name),
-                description: controller.description,
-            } as ISwaggerTag);
+
+            if (!_.find(data.tags, (tag: ISwaggerTag) => tag.name === _.upperFirst(controller.name))) {
+              data.tags.push({
+                  name: _.upperFirst(controller.name),
+                  description: controller.description,
+              } as ISwaggerTag);
+            }
         }
         this.data = data;
     }
@@ -337,6 +338,7 @@ export class SwaggerService {
             swaggerBuildDefinitionModelProperty.enum = args.enum;
             swaggerBuildDefinitionModelProperty.itemType = args.itemType;
             swaggerBuildDefinitionModelProperty.example = args.example;
+            swaggerBuildDefinitionModelProperty.format = args.format;
             if (args.model) {
                 swaggerBuildDefinitionModelProperty.model = args.model;
                 if (!_.isEqual('Array', propertyType)) {
@@ -474,12 +476,25 @@ export class SwaggerService {
             operation.consumes = args.consumes;
         }
 
+        if (args.tags && args.tags.length > 0) {
+            operation.tags = args.tags;
+        }
+
         if (args.deprecated) {
             operation.deprecated = args.deprecated;
         }
 
         if (args.parameters) {
             operation.parameters = [];
+            if (args.parameters.header) {
+                operation.parameters = _.concat(
+                    operation.parameters,
+                    this.buildParameters(
+                        SwaggerDefinitionConstant.Parameter.In.HEADER,
+                        args.parameters.header
+                    )
+                );
+            }
             if (args.parameters.path) {
                 operation.parameters = _.concat(
                     operation.parameters,
@@ -674,7 +689,15 @@ export class SwaggerService {
             const swaggerOperationSchema: ISwaggerOperationSchema = {
                 $ref: this.buildRef(bodyOperationArgsBaseParameter.model),
             };
-            schema = swaggerOperationSchema;
+
+            if (bodyOperationArgsBaseParameter.type !== 'array') {
+                schema = swaggerOperationSchema;
+            } else {
+                schema.type = bodyOperationArgsBaseParameter.type;
+                schema.items = {
+                    $ref: this.buildRef(bodyOperationArgsBaseParameter.model),
+                };
+            }
         }
         swaggerOperationParameter.schema = schema;
         swaggerOperationParameterList.push(swaggerOperationParameter);
@@ -683,7 +706,7 @@ export class SwaggerService {
 
     private buildOperationSecurity(argsSecurity: {
         [key: string]: any[];
-    }): Array<{ [key: string]: any[] }> {
+    }): { [key: string]: any[] }[] {
         const securityToReturn = [];
         for (const securityIndex in argsSecurity) {
             const security: any[] = argsSecurity[securityIndex];
@@ -706,6 +729,7 @@ export class SwaggerService {
                 name: parameterIndex,
                 in: type,
                 type: parameter.type,
+                items: parameter.items
             };
             if (parameter.name) {
                 newSwaggerOperationParameter.name = parameter.name;
@@ -748,7 +772,11 @@ export class SwaggerService {
                 operation.responses
             );
         }
-        operation.tags = [_.upperFirst(controller.name)];
+        if (operation.tags && operation.tags.length > 0) {
+            operation.tags.unshift(_.upperFirst(controller.name));
+        } else {
+            operation.tags = [_.upperFirst(controller.name)];
+        }
         return operation;
     }
 

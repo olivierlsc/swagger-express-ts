@@ -15,7 +15,7 @@ export class CarsService {
                 id: '1',
                 name: ['John DOE'],
             },
-        } as CarModel,
+        } as unknown as CarModel,
         {
             id: '2',
             name: 'Car 2',
@@ -25,11 +25,15 @@ export class CarsService {
                 id: '1',
                 name: ['John DOE'],
             },
-        } as CarModel,
+        } as unknown as CarModel,
     ];
 
     public getCars(): CarModel[] {
         return this.carsList;
+    }
+
+    public getCarsByIds(ids: string[]): CarModel[] {
+      return this.carsList.filter(car => ids.includes(car.id));
     }
 
     public addCar(car: CarModel): CarModel {

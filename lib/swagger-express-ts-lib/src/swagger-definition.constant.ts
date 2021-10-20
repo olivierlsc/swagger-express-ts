@@ -46,6 +46,14 @@ export class SwaggerDefinitionConstant {
         Property: {
             Format: {
                 INT_64: 'int64',
+                INT_32: 'int32',
+                FLOAT: 'float',
+                DOUBLE: 'double',
+                BYTE: 'byte',
+                BINARY: 'binary',
+                DATE: 'date',
+                DATE_TIME: 'date-time',
+                PASSWORD: 'password'
             },
             ItemType: {
                 BOOLEAN: SwaggerDefinitionConstant.BOOLEAN,
@@ -70,6 +78,7 @@ export class SwaggerDefinitionConstant {
 
     public static Parameter = {
         In: {
+            HEADER: 'header',
             BODY: 'body',
             FORM_DATA: 'formData',
             PATH: 'path',

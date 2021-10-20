@@ -1,5 +1,6 @@
 import { ApiModel, ApiModelProperty } from 'swagger-express-ts';
 import { ConstructorModel } from '../constructors/constructor.model';
+import { WheelModel } from './wheel.model';
 
 @ApiModel({
     description: 'Car description',
@@ -30,4 +31,11 @@ export class CarModel {
         model: 'Constructor',
     })
     public author: ConstructorModel;
+
+    @ApiModelProperty({
+        description: 'Wheel car has. This is to demonstarte a cicrular reference works.',
+        required: true,
+        model: 'Wheel'
+    })
+    public wheel: WheelModel | undefined;
 }
