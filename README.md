@@ -312,6 +312,7 @@ You can quickly test swagger-express-ts with the project example [example-swagge
 - [@ApiOperationPut](./wiki/api-operation-put.decorator.md)
 - [@ApiOperationPatch](./wiki/api-operation-patch.decorator.md)
 - [@ApiOperationDelete](./wiki/api-operation-delete.decorator.md)
+- [@ApiOperationHead](./wiki/api-operation-head.decorator.md)
 
 ## For any questions, suggestions, or feature requests
 

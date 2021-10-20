@@ -100,6 +100,7 @@ export interface ISwaggerPath {
     put?: ISwaggerOperation;
     patch?: ISwaggerOperation;
     delete?: ISwaggerOperation;
+    head?: ISwaggerOperation;
 }
 
 export interface ISwaggerDefinitionPropertyItems {

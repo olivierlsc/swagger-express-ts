@@ -15,6 +15,7 @@ import { IApiOperationPatchArgs } from './api-operation-patch.decorator';
 import { IApiOperationDeleteArgs } from './api-operation-delete.decorator';
 import { SwaggerDefinitionConstant } from './swagger-definition.constant';
 import { ISwaggerBuildDefinitionModel } from './swagger.builder';
+import { IApiOperationHeadArgs } from './api-operation-head.decorator';
 const expect = chai.expect;
 
 describe('SwaggerService', () => {
@@ -243,6 +244,69 @@ describe('SwaggerService', () => {
             });
         });
     });
+
+    describe('addOperationHead', () => {
+      const pathArgs: IApiPathArgs = {
+          path: '/versions',
+          name: 'Version',
+      };
+      const pathTarget: any = {
+          name: 'VersionsController',
+      };
+      const operationHeadTarget: any = {
+          constructor: {
+              name: 'VersionsController',
+          },
+      };
+      let propertyKey: string | symbol;
+      let expectedPaths: { [key: string]: ISwaggerPath };
+
+      beforeEach(() => {
+          SwaggerService.getInstance().addPath(pathArgs, pathTarget);
+      });
+
+      describe('expect no content', () => {
+          beforeEach(() => {
+              propertyKey = 'getVersions';
+              expectedPaths = {
+                  '/versions': {
+                      head: {
+                          consumes: [SwaggerDefinitionConstant.Consume.JSON],
+                          operationId: 'getVersions',
+                          produces: [SwaggerDefinitionConstant.Produce.JSON],
+                          responses: {
+                              204: {
+                                  description: 'Success',
+                              },
+                          },
+                          tags: ['Version'],
+                      },
+                  },
+              };
+          });
+
+          it('expect default', () => {
+              const operationHeadArgs: IApiOperationHeadArgs = {
+                  responses: {
+                      204: {
+                        description: 'Success',
+                    },
+                  },
+              };
+
+              SwaggerService.getInstance().addOperationHead(
+                  operationHeadArgs,
+                  operationHeadTarget,
+                  propertyKey
+              );
+
+              SwaggerService.getInstance().buildSwagger();
+              expect(
+                  SwaggerService.getInstance().getData().paths
+              ).to.deep.equal(expectedPaths);
+          });
+      });
+  });
 
     describe('addOperationGet', () => {
         const pathArgs: IApiPathArgs = {

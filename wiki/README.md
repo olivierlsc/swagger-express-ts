@@ -18,6 +18,7 @@ Welcome to the SwaggerExpressTS wiki!
 - [@ApiOperationPut](./api-operation-put.decorator.md)
 - [@ApiOperationPatch](./api-operation-patch.decorator.md)
 - [@ApiOperationDelete](./api-operation-delete.decorator.md)
+- [@ApiOperationHead](./api-operation-head.decorator.md)
 
 ## Test
 
