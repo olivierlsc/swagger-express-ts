@@ -1,6 +1,6 @@
 import * as assert from 'assert';
 import * as _ from 'lodash';
-import { IApiModelArgs } from '.';
+import { IApiModelArgs, IApiOperationHeadArgs } from '.';
 import { IApiModelPropertyArgs } from './api-model-property.decorator';
 import { IApiOperationGetArgs } from './api-operation-get.decorator';
 import { IApiOperationPostArgs } from './api-operation-post.decorator';
@@ -41,6 +41,7 @@ interface IPath {
     put?: ISwaggerOperation;
     patch?: ISwaggerOperation;
     delete?: ISwaggerOperation;
+    head?: ISwaggerOperation;
 }
 
 interface IController {
@@ -190,6 +191,19 @@ export class SwaggerService {
         );
     }
 
+    public addOperationHead(
+      args: IApiOperationHeadArgs,
+      target: any,
+      propertyKey: string | symbol
+  ): void {
+      assert.ok(args, 'Args are required.');
+      assert.ok(args.responses, 'Responses are required.');
+      if (args.parameters) {
+          assert.ok(!args.parameters.body, 'Parameter body is not required.');
+      }
+      this.addOperation('head', args, target, propertyKey);
+  }
+
     public addOperationGet(
         args: IApiOperationGetArgs,
         target: any,
@@ -292,6 +306,12 @@ export class SwaggerService {
                             controller
                         );
                     }
+                    if (path.head) {
+                      swaggerPath.head = this.buildSwaggerOperation(
+                          path.head,
+                          controller
+                      );
+                  }
                     if (path.path && path.path.length > 0) {
                         data.paths[controller.path.concat(path.path)] = {...data.paths[controller.path.concat(path.path)],...swaggerPath};
                     } else {
@@ -405,7 +425,7 @@ export class SwaggerService {
         propertyKey: string | symbol
     ): void {
         const targetName = target.constructor.name !== 'Function' ? target.constructor.name : target.name;
-          
+
         let currentController: IController = {
             paths: {},
         };
@@ -448,6 +468,10 @@ export class SwaggerService {
 
         if ('delete' === operation) {
             currentPath.delete = this.buildOperation(args, target, propertyKey);
+        }
+
+        if ('head' === operation) {
+          currentPath.head = this.buildOperation(args, target, propertyKey);
         }
 
         this.controllerMap[targetName] = currentController;

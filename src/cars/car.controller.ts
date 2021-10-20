@@ -5,11 +5,13 @@ import {
     controller,
     httpGet,
     requestParam,
+    httpHead,
 } from 'inversify-express-utils';
 import {
     ApiPath,
     SwaggerDefinitionConstant,
     ApiOperationGet,
+    ApiOperationHead,
 } from 'swagger-express-ts';
 import * as express from 'express';
 import { CarsService } from './cars.service';
@@ -57,4 +59,29 @@ export class CarController implements interfaces.Controller {
     ): void {
         response.json(this.carsService.getCarById(id));
     }
+
+    @ApiOperationHead({
+      description: 'validate car',
+      parameters: {
+          path: {
+              id: {
+                  required: true,
+                  type: SwaggerDefinitionConstant.Parameter.Type.STRING,
+              },
+          },
+      },
+      responses: {
+          204: {
+              description: 'ok',
+          },
+      },
+  })
+  @httpHead('/')
+  public validateCar(
+      request: express.Request,
+      response: express.Response,
+      next: express.NextFunction
+  ): void {
+      response.status(204);
+  }
 }

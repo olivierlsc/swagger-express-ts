@@ -21,6 +21,10 @@ export {
     IApiOperationDeleteArgs,
     ApiOperationDelete,
 } from './api-operation-delete.decorator';
+export {
+  IApiOperationHeadArgs,
+  ApiOperationHead,
+} from './api-operation-head.decorator';
 
 export {
     IApiModelPropertyArgs,
