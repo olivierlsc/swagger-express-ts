@@ -28,6 +28,12 @@ export class CarController implements interfaces.Controller {
     @ApiOperationGet({
         description: 'Get car object',
         parameters: {
+            header: {
+                'x-custom-header': {
+                    required: true,
+                    type: SwaggerDefinitionConstant.Parameter.Type.STRING,
+                },
+            },
             path: {
                 id: {
                     required: true,

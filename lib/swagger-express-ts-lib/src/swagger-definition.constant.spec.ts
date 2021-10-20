@@ -77,6 +77,9 @@ describe('SwaggerDefinitionConstant', () => {
             expectType(SwaggerDefinitionConstant.Parameter.Type);
         });
         describe('In', () => {
+            it('expect HEADER', () => {
+                expect(SwaggerDefinitionConstant.Parameter.In.HEADER).exist;
+            });
             it('expect PATH', () => {
                 expect(SwaggerDefinitionConstant.Parameter.In.PATH).exist;
             });

@@ -40,6 +40,9 @@ export interface ISwaggerOperationParameter {
     name: string;
     in: string;
     type?: string;
+    items?: {
+      type?: string;
+    };
     format?: string;
     description?: string;
     required?: boolean;
@@ -82,7 +85,7 @@ export interface ISwaggerOperation {
     produces?: string[];
     consumes?: string[];
     responses?: { [key: string]: ISwaggerOperationResponse };
-    security?: Array<{ [key: string]: any[] }>;
+    security?: { [key: string]: any[] }[];
     deprecated?: boolean;
 }
 
