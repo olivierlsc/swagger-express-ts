@@ -69,7 +69,7 @@
         "gulp-sourcemaps": "^3.0.0",
         "gulp-tslint": "^8.1.4",
         "gulp-typescript": "^5.0.1",
-        "mocha": "^8.4.0",
+        "mocha": "^10.1.0",
         "nodemon": "^2.0.7",
         "nyc": "^15.1.0",
         "prettier": "2.2.1",
