@@ -1,126 +1,33 @@
-import * as bodyParser from 'body-parser';
-import * as express from 'express';
 import 'reflect-metadata';
-import { Container } from 'inversify';
-import {
-    interfaces,
-    InversifyExpressServer,
-    TYPE,
-} from 'inversify-express-utils';
-import { CarsController } from './cars/cars.controller';
-import * as swagger from 'swagger-express-ts';
-// tslint:disable-next-line: no-duplicate-imports
-import { SwaggerDefinitionConstant } from 'swagger-express-ts';
-const config = require('../config.json');
-import { CarController } from './cars/car.controller';
-import { CarBulkController } from './cars/carbulk.controller';
-import { CarsService } from './cars/cars.service';
 
-import * as _ from 'lodash';
+export { IApiPathArgs, ApiPath } from '@/api-path.decorator';
+export {
+  IApiOperationGetArgs,
+  ApiOperationGet,
+} from '@/api-operation-get.decorator';
+export {
+  IApiOperationPostArgs,
+  ApiOperationPost,
+} from '@/api-operation-post.decorator';
+export {
+  IApiOperationPutArgs,
+  ApiOperationPut,
+} from '@/api-operation-put.decorator';
+export {
+  IApiOperationPatchArgs,
+  ApiOperationPatch,
+} from '@/api-operation-patch.decorator';
+export {
+  IApiOperationDeleteArgs,
+  ApiOperationDelete,
+} from '@/api-operation-delete.decorator';
 
-// import models
-import { CarModel } from './cars/car.model';
-import { WheelModel } from './cars/wheel.model';
-import './constructors/constructor.model';
+export {
+  IApiModelPropertyArgs,
+  ApiModelProperty,
+} from '@/api-model-property.decorator';
+export { IApiModelArgs, ApiModel } from '@/api-model.decorator';
 
-// set up container
-const container = new Container();
-
-// note that you *must* bind your controllers to Controller
-container
-    .bind<interfaces.Controller>(TYPE.Controller)
-    .to(CarsController)
-    .inSingletonScope()
-    .whenTargetNamed(CarsController.name);
-container
-    .bind<interfaces.Controller>(TYPE.Controller)
-    .to(CarBulkController)
-    .inSingletonScope()
-    .whenTargetNamed(CarBulkController.name);
-container
-    .bind<interfaces.Controller>(TYPE.Controller)
-    .to(CarController)
-    .inSingletonScope()
-    .whenTargetNamed(CarController.name);
-container
-    .bind<CarsService>(CarsService.name)
-    .to(CarsService)
-    .inSingletonScope();
-
-container.bind<CarModel>(CarModel.name).to(CarModel);
-container.bind<WheelModel>(WheelModel.name).to(WheelModel);
-
-
-// create server
-const server = new InversifyExpressServer(container);
-
-server.setConfig((app: any) => {
-    app.use('/api-docs/swagger', express.static('swagger'));
-    app.use(
-        '/api-docs/swagger/assets',
-        express.static('node_modules/swagger-ui-dist')
-    );
-    app.use(bodyParser.json());
-    app.use(
-        swagger.express({
-            definition: {
-                info: {
-                    title: 'My api',
-                    version: '1.0',
-                },
-                models: {
-                    ApiError: {
-                        properties: {
-                            code: {
-                                type:
-                                    SwaggerDefinitionConstant.Model.Property
-                                        .Type.STRING,
-                                example: ['400'],
-                            },
-                            message: {
-                                type:
-                                    SwaggerDefinitionConstant.Model.Property
-                                        .Type.STRING,
-                                example: ['Name of car is required.'],
-                            },
-                        },
-                    },
-                },
-                responses: {
-                    500: {},
-                },
-                externalDocs: {
-                    url: 'My url',
-                },
-                securityDefinitions: {
-                    apiKeyHeader: {
-                        type: SwaggerDefinitionConstant.Security.Type.API_KEY,
-                        in: SwaggerDefinitionConstant.Security.In.HEADER,
-                        name: 'apiHeader',
-                    },
-                },
-            },
-        })
-    );
-});
-
-server.setErrorConfig((app: any) => {
-    app.use(
-        (
-            err: Error,
-            request: express.Request,
-            response: express.Response,
-            next: express.NextFunction
-        ) => {
-            console.error(err.stack);
-            response.status(500).send('Something broke!');
-        }
-    );
-});
-
-const app = server.build();
-
-if (!_.isEqual(process.env.NODE_ENV, 'test')) {
-    app.listen(config.port);
-    console.info('Server is listening on port : ' + config.port);
-}
+export { SwaggerDefinitionConstant } from '@/swagger-definition.constant';
+export { express, ISwaggerExpressOptions } from '@/express.configurator';
+export { build } from '@/swagger.builder';
