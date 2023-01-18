@@ -1,6 +1,6 @@
 {
-    "name": "swagger-ts-decorators",
-    "version": "1.1.0",
+    "name": "@mje0002/swagger-ts-decorators",
+    "version": "1.0.1",
     "description": "Generate and serve swagger.json",
     "main": "index.js",
     "types": "index.d.ts",
@@ -114,5 +114,8 @@
         "express": "^4.18.2",
         "lodash": "^4.17.21",
         "reflect-metadata": "^0.1.13"
+    },
+    "directories": {
+        "test": "test"
     }
 }

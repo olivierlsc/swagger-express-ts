@@ -1,21 +1,20 @@
 ![](wiki/img/logo.png)
 
-# swagger-express-ts
+# swagger-ts-decorators
 Automatically generate and serve swagger.json v2.0.
 
 ## Getting started
 
-First, install [swagger-express-ts](https://www.npmjs.com/package/swagger-express-ts).
+First, install [swagger-ts-decorators](https://www.npmjs.com/package/swagger-ts-decorators).
+Then, install [swagger-ui-dist](https://www.npmjs.com/package/swagger-ui-dist).
 
 ```sh
-npm install swagger-express-ts --save
+npm install swagger-ts-decorators swagger-ui-dist --save
 ```
 
 and [init tsconfig.json](./wiki/installation.md)
 
 ## The Basics
-
-In the examples below, we use [inversify-express-utils](https://www.npmjs.com/package/inversify-express-utils). inversify-express-utils is not required to work with swagger-express-ts.
 
 ### Step 1: configure express
 
@@ -23,24 +22,12 @@ In the examples below, we use [inversify-express-utils](https://www.npmjs.com/pa
 import * as bodyParser from "body-parser";
 import * as express from "express";
 import "reflect-metadata";
-import { Container } from "inversify";
-import { interfaces, InversifyExpressServer, TYPE } from "inversify-express-utils";
-import { VersionController } from "./version/version.controller";
-import * as swagger from "swagger-express-ts";
-import { SwaggerDefinitionConstant } from "swagger-express-ts";
-const config = require ( "../config.json" );
+...
+import * as swagger from "swagger-ts-decorators";
+import { SwaggerDefinitionConstant } from "swagger-ts-decorators";
 
-// set up container
-const container = new Container ();
+...
 
-// note that you *must* bind your controllers to Controller
-container.bind<interfaces.Controller> ( TYPE.Controller )
-    .to( VersionController ).inSingletonScope().whenTargetNamed( VersionController.TARGET_NAME );
-
-// create server
-const server = new InversifyExpressServer ( container );
-
-server.setConfig( ( app : any ) => {
     app.use( '/api-docs/swagger' , express.static( 'swagger' ) );
     app.use( '/api-docs/swagger/assets' , express.static( 'node_modules/swagger-ui-dist' ) );
     app.use( bodyParser.json() );
@@ -58,16 +45,7 @@ server.setConfig( ( app : any ) => {
             }
         }
     ) );
-} );
-
-server.setErrorConfig( ( app : any ) => {
-    app.use( ( err : Error , request : express.Request , response : express.Response , next : express.NextFunction ) => {
-        console.error( err.stack );
-        response.status( 500 ).send( "Something broke!" );
-    } );
-} );
-
-const app = server.build();
+...
 
 app.listen( config.port );
 console.info( "Server is listening on port : " + config.port );
@@ -114,8 +92,7 @@ export class VersionModel {
 })
 @controller("/versions")
 @injectable()
-export class VersionController implements interfaces.Controller {
-    public static TARGET_NAME: string = "VersionController";
+export class VersionController {
     
     private data = [{
             id: "1",
@@ -172,15 +149,9 @@ export class VersionController implements interfaces.Controller {
 
 Start your server and test on url : /api-docs/swagger.json
 
-## Extra
-
-### Serve swagger-ui in your API
+### Step 5: Serve swagger-ui in your API
 
 You can serve swagger.json and swagger-ui in your API.
-
-```sh
-npm install swagger-ui-dist --save
-```
 
 Create index.html in new directory "swagger".
 
@@ -284,22 +255,6 @@ Create index.html in new directory "swagger".
 </html>
 
 ```
-
-Configure your server like that.
-
-```ts
-app.use( '/api-docs/swagger', express.static( 'swagger' ) );
-app.use( '/api-docs/swagger/assets', express.static( 'node_modules/swagger-ui-dist' ) );
-```
-
-Test it on url "/api-docs/swagger".
-
-![](./wiki/img/swagger-ui.png)
-
-## Project example
-
-You can quickly test swagger-express-ts with the project example [example-swagger-express-ts](https://github.com/olivierlsc/example-swagger-express-ts).
-
 ## Features and API
 
 - [Installation](./wiki/installation.md)
@@ -315,8 +270,5 @@ You can quickly test swagger-express-ts with the project example [example-swagge
 
 ## For any questions, suggestions, or feature requests
 
-[Please file an issue](https://github.com/olivierlsc/swagger-express-ts/issues)!
+[Please file an issue](https://github.com/mje0002/swagger-ts-decorators/issues)!
 
-## Help wanted
-
-swagger-express-ts wants additional maintainers! To maintain and continue to develop this young library, [Please post in this issue](https://github.com/olivierlsc/swagger-express-ts/issues/34).

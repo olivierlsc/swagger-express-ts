@@ -7,7 +7,7 @@ Example:
 ```ts
 import { injectable } from "inversify";
 import "reflect-metadata";
-import { ApiPath } from "swagger-express-ts";
+import { ApiPath } from "swagger-ts-decorators";
 import { controller } from "inversify-express-utils";
 
 @ApiPath( {
